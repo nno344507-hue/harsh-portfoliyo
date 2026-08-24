@@ -689,6 +689,23 @@ function playEpicGlassShatter(ctx: AudioContext) {
   }
 }
 
+/* Play YouTube Exact Glass Shatter Audio with fallback */
+function playYouTubeGlassShatter(ctx?: AudioContext | null) {
+  try {
+    const audio = new Audio('/sounds/glass-shatter.webm');
+    audio.volume = 1.0;
+    audio.currentTime = 0;
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        if (ctx) playEpicGlassShatter(ctx);
+      });
+    }
+  } catch {
+    if (ctx) playEpicGlassShatter(ctx);
+  }
+}
+
 type SpringState = { rx: number; ry: number; tz: number; px: number; py: number; sc: number };
 
 function baseOf(id: string, seed: number): SpringState {
@@ -787,7 +804,7 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
       audioRef.current ??= new AudioContext();
       const ctx = audioRef.current;
       if (ctx.state === 'suspended') ctx.resume().catch(() => {});
-      playEpicGlassShatter(ctx);
+      playYouTubeGlassShatter(ctx);
     } catch {
       // ignore
     }
