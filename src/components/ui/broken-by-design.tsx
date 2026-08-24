@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Volume2, VolumeX } from 'lucide-react';
+import { Volume2, VolumeX } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 /* Inlined styles for self-contained 3D Glass Fracture */
@@ -1149,25 +1149,6 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
               </div>
             </>
           )}
-        </div>
-
-        {/* Interactive "Click to Shatter & Enter" Action Bar */}
-        <div className="absolute bottom-8 sm:bottom-12 left-0 right-0 z-50 flex flex-col items-center justify-center space-y-3 px-4 pointer-events-auto">
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleShatter();
-            }}
-            className="group inline-flex items-center space-x-3 px-8 sm:px-10 py-4 sm:py-4.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black font-black text-xs sm:text-sm uppercase tracking-widest transition-all duration-300 shadow-[0_0_45px_rgba(245,158,11,0.7)] hover:shadow-[0_0_60px_rgba(245,158,11,0.9)] animate-pulse active:scale-95"
-          >
-            <span className="w-2.5 h-2.5 rounded-full bg-black animate-ping" />
-            <span>CLICK TO BREAK GLASS & ENTER</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
-          </button>
-          <span className="text-[11px] sm:text-xs font-mono text-zinc-400 tracking-wider">
-            Hover over glass pieces for audio feedback • Click to shatter
-          </span>
         </div>
 
         {/* Sound Toggle */}
