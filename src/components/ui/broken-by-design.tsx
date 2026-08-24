@@ -9,7 +9,8 @@ const BBD2_CSS = `/* broken by design. -----------------------------------------
   position: fixed;
   inset: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
   overflow: hidden;
   isolation: isolate;
   background: #030407;
@@ -17,6 +18,9 @@ const BBD2_CSS = `/* broken by design. -----------------------------------------
   container-type: inline-size;
   font-family: 'Space Grotesk', system-ui, sans-serif;
   user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
   z-index: 100;
 }
 
@@ -34,7 +38,13 @@ const BBD2_CSS = `/* broken by design. -----------------------------------------
 
 .bbd2-stage {
   position: absolute;
-  inset: 6% 4.5%;
+  inset: 4% 3%;
+}
+
+@media (min-width: 640px) {
+  .bbd2-stage {
+    inset: 6% 4.5%;
+  }
 }
 
 /* ------- title ------------------------------------------------------ */
@@ -67,15 +77,18 @@ const BBD2_CSS = `/* broken by design. -----------------------------------------
 
 .bbd2--portrait .bbd2-title,
 .bbd2--portrait .bbd2-slice {
-  font-size: clamp(32px, 14cqw, 130px);
+  font-size: clamp(22px, 10.5cqw, 60px);
+  white-space: normal;
+  text-align: center;
+  padding: 0 12px;
 }
 
 .bbd2-stack {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.08em;
-  transform: rotate(-6deg);
+  gap: 0.14em;
+  transform: rotate(-3deg);
   line-height: 0.95;
 }
 
@@ -704,11 +717,17 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
   const [flash, setFlash] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia('(max-aspect-ratio: 1/1)');
-    const apply = () => setPortrait(mq.matches);
-    apply();
-    mq.addEventListener('change', apply);
-    return () => mq.removeEventListener('change', apply);
+    const checkPortrait = () => {
+      const isPort = window.innerWidth <= 768 || window.matchMedia('(max-aspect-ratio: 1/1)').matches;
+      setPortrait(isPort);
+    };
+    checkPortrait();
+    window.addEventListener('resize', checkPortrait);
+    window.addEventListener('orientationchange', checkPortrait);
+    return () => {
+      window.removeEventListener('resize', checkPortrait);
+      window.removeEventListener('orientationchange', checkPortrait);
+    };
   }, []);
 
   const pieces = portrait ? MOBILE : DESKTOP;
@@ -764,12 +783,14 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
     };
     window.addEventListener('pointermove', unlockAudio, { once: true });
     window.addEventListener('pointerdown', unlockAudio, { once: true });
+    window.addEventListener('touchstart', unlockAudio, { once: true });
 
     return () => {
       cancelled = true;
       clearTimeout(timeout);
       window.removeEventListener('pointermove', unlockAudio);
       window.removeEventListener('pointerdown', unlockAudio);
+      window.removeEventListener('touchstart', unlockAudio);
     };
   }, [assetsBase, setKey]);
 
@@ -1043,9 +1064,15 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
         wake();
       };
 
+      const onTouchHover = () => {
+        if (isShattered) return;
+        onEnterHover();
+      };
+
       el.addEventListener('pointermove', onMove);
       el.addEventListener('pointerenter', onEnterHover);
       el.addEventListener('pointerleave', onLeaveHover);
+      el.addEventListener('touchstart', onTouchHover, { passive: true });
       el.addEventListener('click', handleShatter);
     });
 
