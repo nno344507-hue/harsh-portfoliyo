@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Volume2, VolumeX } from 'lucide-react';
+import confetti from 'canvas-confetti';
 
 /* Inlined styles for self-contained 3D Glass Fracture */
 const BBD2_CSS = `/* broken by design. ---------------------------------------------------- */
@@ -25,9 +27,9 @@ const BBD2_CSS = `/* broken by design. -----------------------------------------
   z-index: 0;
   background:
     radial-gradient(ellipse 62% 50% at 50% 42%,
-      rgba(245, 158, 11, 0.08), transparent 62%),
+      rgba(245, 158, 11, 0.12), transparent 62%),
     radial-gradient(ellipse 100% 80% at 50% 118%,
-      rgba(56, 189, 248, 0.12), transparent 60%),
+      rgba(56, 189, 248, 0.15), transparent 60%),
     #030407;
 }
 
@@ -106,18 +108,18 @@ const BBD2_CSS = `/* broken by design. -----------------------------------------
 }
 
 .bbd2-cracks-line path {
-  stroke: rgba(245, 158, 11, 0.45);
-  stroke-width: 1.2;
+  stroke: rgba(245, 158, 11, 0.55);
+  stroke-width: 1.4;
 }
 
 .bbd2-cracks-glow path {
-  stroke: rgba(245, 158, 11, 0.20);
-  stroke-width: 3.5;
+  stroke: rgba(245, 158, 11, 0.25);
+  stroke-width: 4;
 }
 
 .bbd2-cracks-fine path {
-  stroke: rgba(56, 189, 248, 0.35);
-  stroke-width: 0.85;
+  stroke: rgba(56, 189, 248, 0.45);
+  stroke-width: 1;
 }
 
 /* ------- glass ------------------------------------------------------ */
@@ -136,14 +138,15 @@ const BBD2_CSS = `/* broken by design. -----------------------------------------
   pointer-events: auto;
   will-change: transform, opacity, filter;
   transition: filter 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
 }
 
 .bbd2-shard--hot {
   z-index: 40 !important;
   filter:
-    brightness(1.3)
-    drop-shadow(0 42px 54px rgba(0, 0, 0, 0.8))
-    drop-shadow(0 0 35px rgba(245, 158, 11, 0.35));
+    brightness(1.35)
+    drop-shadow(0 42px 54px rgba(0, 0, 0, 0.85))
+    drop-shadow(0 0 35px rgba(245, 158, 11, 0.45)) !important;
 }
 
 .bbd2-inlay {
@@ -171,22 +174,22 @@ const BBD2_CSS = `/* broken by design. -----------------------------------------
   background:
     linear-gradient(
       132deg,
-      rgba(245, 158, 11, 0.15) 0%,
-      rgba(56, 189, 248, 0.08) 30%,
+      rgba(245, 158, 11, 0.18) 0%,
+      rgba(56, 189, 248, 0.12) 30%,
       transparent 46%,
       transparent 60%,
-      rgba(236, 72, 153, 0.1) 100%
+      rgba(236, 72, 153, 0.14) 100%
     );
   mix-blend-mode: screen;
 }
 
 .bbd2-slice > span,
 .bbd2-slice > .bbd2-stack {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.9);
   mix-blend-mode: screen;
   filter: blur(0.3px);
   transform: var(--jt);
-  text-shadow: 0 0 16px rgba(245, 158, 11, 0.4);
+  text-shadow: 0 0 18px rgba(245, 158, 11, 0.5);
 }
 
 .bbd2-slice > .bbd2-stack {
@@ -200,20 +203,19 @@ const BBD2_CSS = `/* broken by design. -----------------------------------------
   background:
     radial-gradient(
       42% 42% at var(--mx, 50%) var(--my, 50%),
-      rgba(255, 240, 200, 0.45),
-      rgba(245, 158, 11, 0.15) 46%,
+      rgba(255, 240, 200, 0.55),
+      rgba(245, 158, 11, 0.2) 46%,
       transparent 72%
     );
   mix-blend-mode: screen;
-  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .bbd2-shard--hot .bbd2-specular {
   opacity: 1;
 }
 
-/* Shatter Animation Effect */
-.bbd2-shattered .bbd2-shard {
+.bbd2-shattered {
   pointer-events: none !important;
 }
 `;
@@ -546,44 +548,118 @@ function jitter(seed: number) {
   };
 }
 
-function playCrack(ctx: AudioContext) {
+/* Audible High-Frequency Glass Shard Hover Scratch & Chime */
+function playGlassHoverChime(ctx: AudioContext) {
   const now = ctx.currentTime;
-  const size = Math.floor(ctx.sampleRate * 0.09);
+
+  // 1. Crystal sine chime tone with subtle pitch slide
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  const freq = 1800 + Math.random() * 800; // 1800Hz - 2600Hz crystal chime
+
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(freq, now);
+  osc.frequency.exponentialRampToValueAtTime(freq * 1.3, now + 0.08);
+
+  gain.gain.setValueAtTime(0.08, now);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+
+  osc.start(now);
+  osc.stop(now + 0.12);
+
+  // 2. Crisp glass edge friction scratch noise
+  const size = Math.floor(ctx.sampleRate * 0.06);
   const buffer = ctx.createBuffer(1, size, ctx.sampleRate);
   const data = buffer.getChannelData(0);
-  for (let i = 0; i < size; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / size) ** 2;
+  for (let i = 0; i < size; i++) {
+    data[i] = (Math.random() * 2 - 1) * (1 - i / size) ** 2;
+  }
+
   const noise = ctx.createBufferSource();
   noise.buffer = buffer;
-  const hp = ctx.createBiquadFilter();
-  hp.type = 'highpass';
-  hp.frequency.value = 3000;
-  const g = ctx.createGain();
-  g.gain.setValueAtTime(0.22, now);
-  g.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
-  noise.connect(hp);
-  hp.connect(g);
-  g.connect(ctx.destination);
+
+  const filter = ctx.createBiquadFilter();
+  filter.type = 'bandpass';
+  filter.frequency.setValueAtTime(4500, now);
+  filter.Q.setValueAtTime(4, now);
+
+  const noiseGain = ctx.createGain();
+  noiseGain.gain.setValueAtTime(0.12, now);
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+
+  noise.connect(filter);
+  filter.connect(noiseGain);
+  noiseGain.connect(ctx.destination);
+
   noise.start(now);
 }
 
-function playShatterExplosion(ctx: AudioContext) {
+/* Multi-layered Heavy Cinematic Glass Shatter & Explosion Sound */
+function playEpicGlassShatter(ctx: AudioContext) {
   const now = ctx.currentTime;
-  const size = Math.floor(ctx.sampleRate * 0.35);
-  const buffer = ctx.createBuffer(1, size, ctx.sampleRate);
-  const data = buffer.getChannelData(0);
-  for (let i = 0; i < size; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / size) ** 1.5;
-  const noise = ctx.createBufferSource();
-  noise.buffer = buffer;
-  const hp = ctx.createBiquadFilter();
-  hp.type = 'highpass';
-  hp.frequency.value = 1800;
-  const g = ctx.createGain();
-  g.gain.setValueAtTime(0.6, now);
-  g.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-  noise.connect(hp);
-  hp.connect(g);
-  g.connect(ctx.destination);
-  noise.start(now);
+
+  // Layer 1: Heavy Sub-Bass Impact Thud
+  const bassOsc = ctx.createOscillator();
+  const bassGain = ctx.createGain();
+  bassOsc.type = 'sine';
+  bassOsc.frequency.setValueAtTime(140, now);
+  bassOsc.frequency.exponentialRampToValueAtTime(35, now + 0.35);
+
+  bassGain.gain.setValueAtTime(0.7, now);
+  bassGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+
+  bassOsc.connect(bassGain);
+  bassGain.connect(ctx.destination);
+  bassOsc.start(now);
+  bassOsc.stop(now + 0.4);
+
+  // Layer 2: High-Pass Violent Glass Fracture Crash
+  const noiseSize = Math.floor(ctx.sampleRate * 0.6);
+  const noiseBuffer = ctx.createBuffer(1, noiseSize, ctx.sampleRate);
+  const noiseData = noiseBuffer.getChannelData(0);
+  for (let i = 0; i < noiseSize; i++) {
+    noiseData[i] = (Math.random() * 2 - 1) * (1 - i / noiseSize) ** 1.3;
+  }
+
+  const crashNoise = ctx.createBufferSource();
+  crashNoise.buffer = noiseBuffer;
+
+  const crashFilter = ctx.createBiquadFilter();
+  crashFilter.type = 'highpass';
+  crashFilter.frequency.setValueAtTime(2200, now);
+
+  const crashGain = ctx.createGain();
+  crashGain.gain.setValueAtTime(0.85, now);
+  crashGain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
+
+  crashNoise.connect(crashFilter);
+  crashFilter.connect(crashGain);
+  crashGain.connect(ctx.destination);
+  crashNoise.start(now);
+
+  // Layer 3: Cascading Tinkling Crystal Glass Splinters
+  const frequencies = [2400, 3200, 4100, 5200, 6400, 7800];
+  frequencies.forEach((freq, idx) => {
+    const delay = idx * 0.04 + Math.random() * 0.03;
+    const osc = ctx.createOscillator();
+    const g = ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq + (Math.random() - 0.5) * 400, now + delay);
+    osc.frequency.exponentialRampToValueAtTime(freq * 0.7, now + delay + 0.25);
+
+    g.gain.setValueAtTime(0.25, now + delay);
+    g.gain.exponentialRampToValueAtTime(0.0001, now + delay + 0.25);
+
+    osc.connect(g);
+    g.connect(ctx.destination);
+
+    osc.start(now + delay);
+    osc.stop(now + delay + 0.25);
+  });
 }
 
 type SpringState = { rx: number; ry: number; tz: number; px: number; py: number; sc: number };
@@ -624,6 +700,8 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
   const [soundOn, setSoundOn] = useState(true);
   const [ready, setReady] = useState(false);
   const [isShattered, setIsShattered] = useState(false);
+  const [screenShake, setScreenShake] = useState(false);
+  const [flash, setFlash] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia('(max-aspect-ratio: 1/1)');
@@ -671,21 +749,34 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
     };
   }, [assetsBase, setKey]);
 
-  /* Shatter & Enter Handler */
+  /* Dramatic High-Impact Shatter & Enter Handler */
   const handleShatter = () => {
     if (isShattered) return;
     setIsShattered(true);
+    setScreenShake(true);
+    setFlash(true);
 
     try {
       audioRef.current ??= new AudioContext();
       const ctx = audioRef.current;
       if (ctx.state === 'suspended') ctx.resume().catch(() => {});
-      playShatterExplosion(ctx);
+      playEpicGlassShatter(ctx);
     } catch {
       // ignore
     }
 
-    // Explode shards outward
+    // Explode sharp silver & amber glass splinter particles across screen
+    confetti({
+      particleCount: 85,
+      spread: 120,
+      startVelocity: 60,
+      origin: { x: 0.5, y: 0.5 },
+      colors: ['#ffffff', '#f59e0b', '#38bdf8', '#e2e8f0', '#fbbf24'],
+      shapes: ['square'],
+      scalar: 1.2,
+    });
+
+    // High-Velocity 3D Physical Shard Dispersal
     const root = rootRef.current;
     if (root) {
       const shards = Array.from(root.querySelectorAll<HTMLElement>('[data-shard]'));
@@ -697,35 +788,41 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
         const dist = Math.hypot(dx, dy) || 1;
         const ux = dx / dist;
         const uy = dy / dist;
+        const randomRotX = (Math.random() - 0.5) * 540;
+        const randomRotY = (Math.random() - 0.5) * 540;
+        const randomRotZ = (Math.random() - 0.5) * 360;
 
         el.animate(
           [
             {
               transform: el.style.transform,
               opacity: 1,
-              filter: 'brightness(1.5)',
+              filter: 'brightness(2.2) drop-shadow(0 0 40px #fbbf24)',
             },
             {
-              transform: `translate3d(${ux * 650}px, ${uy * 650}px, 600px) rotateX(${
-                uy * 140
-              }deg) rotateY(${ux * 140}deg) scale(0.2)`,
+              transform: `translate3d(${ux * 1400}px, ${uy * 1400}px, 800px) rotateX(${randomRotX}deg) rotateY(${randomRotY}deg) rotateZ(${randomRotZ}deg) scale(0.15)`,
               opacity: 0,
-              filter: 'brightness(2.5) blur(12px)',
+              filter: 'brightness(3.0) blur(18px)',
             },
           ],
           {
-            duration: 850,
-            easing: 'cubic-bezier(0.12, 0.8, 0.32, 1)',
+            duration: 900,
+            easing: 'cubic-bezier(0.1, 0.9, 0.2, 1)',
             fill: 'forwards',
           }
         );
       });
     }
 
+    setTimeout(() => {
+      setFlash(false);
+      setScreenShake(false);
+    }, 450);
+
     // Call onEnter to reveal main portfolio website
     setTimeout(() => {
       if (onEnter) onEnter();
-    }, 750);
+    }, 800);
   };
 
   /* Portrait vs Landscape title node */
@@ -842,21 +939,25 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
         el.style.setProperty('--my', `${((ly + 0.5) * 100).toFixed(1)}%`);
         wake();
       };
+
       const onEnterHover = () => {
         if (isShattered) return;
         hovered.add(i);
         el.classList.add('bbd2-shard--hot');
+
+        // Play audible crisp glass friction & chime tone on hover!
         if (soundOn) {
           try {
             audioRef.current ??= new AudioContext();
             const ctx = audioRef.current;
             if (ctx.state === 'suspended') ctx.resume().catch(() => {});
-            playCrack(ctx);
+            playGlassHoverChime(ctx);
           } catch {
             /* ignore */
           }
         }
       };
+
       const onLeaveHover = () => {
         hovered.delete(i);
         el.classList.remove('bbd2-shard--hot');
@@ -879,14 +980,37 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
   return (
     <>
       <style>{BBD2_CSS}</style>
-      <section
+      <motion.section
         ref={rootRef}
         onClick={handleShatter}
+        animate={
+          screenShake
+            ? {
+                x: [-12, 12, -8, 8, -4, 4, 0],
+                y: [8, -8, 6, -6, 2, -2, 0],
+                scale: [1, 1.04, 0.98, 1],
+              }
+            : {}
+        }
+        transition={{ duration: 0.45 }}
         className={`bbd2 ${portrait ? 'bbd2--portrait' : ''} ${
-          isShattered ? 'bbd2-shattered pointer-events-none' : 'cursor-pointer'
+          isShattered ? 'bbd2-shattered' : 'cursor-pointer'
         }`}
         aria-label={title}
       >
+        {/* Violent Shatter White/Amber Flash */}
+        <AnimatePresence>
+          {flash && (
+            <motion.div
+              initial={{ opacity: 0.9 }}
+              animate={{ opacity: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              className="absolute inset-0 z-50 bg-gradient-to-tr from-amber-400 via-white to-cyan-300 pointer-events-none mix-blend-overlay"
+            />
+          )}
+        </AnimatePresence>
+
         <div className="bbd2-bg" aria-hidden="true" />
 
         <div className="bbd2-stage">
@@ -984,21 +1108,21 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
         </div>
 
         {/* Interactive "Click to Shatter & Enter" Action Bar */}
-        <div className="absolute bottom-10 left-0 right-0 z-50 flex flex-col items-center justify-center space-y-3 px-4 pointer-events-auto">
+        <div className="absolute bottom-8 sm:bottom-12 left-0 right-0 z-50 flex flex-col items-center justify-center space-y-3 px-4 pointer-events-auto">
           <button
             type="button"
             onClick={(e) => {
               e.stopPropagation();
               handleShatter();
             }}
-            className="group inline-flex items-center space-x-3 px-8 py-4 rounded-full bg-amber-400 hover:bg-amber-300 text-black font-extrabold text-xs sm:text-sm uppercase tracking-widest transition-all duration-300 shadow-[0_0_35px_rgba(245,158,11,0.6)] animate-pulse active:scale-95"
+            className="group inline-flex items-center space-x-3 px-8 sm:px-10 py-4 sm:py-4.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black font-black text-xs sm:text-sm uppercase tracking-widest transition-all duration-300 shadow-[0_0_45px_rgba(245,158,11,0.7)] hover:shadow-[0_0_60px_rgba(245,158,11,0.9)] animate-pulse active:scale-95"
           >
             <span className="w-2.5 h-2.5 rounded-full bg-black animate-ping" />
             <span>CLICK TO BREAK GLASS & ENTER</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
           </button>
-          <span className="text-[11px] font-mono text-zinc-400 tracking-wider">
-            Tap anywhere on the glass to shatter
+          <span className="text-[11px] sm:text-xs font-mono text-zinc-400 tracking-wider">
+            Hover over glass pieces for audio feedback • Click to shatter
           </span>
         </div>
 
@@ -1014,7 +1138,7 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
         >
           {soundOn ? <Volume2 className="w-4 h-4 text-amber-400" /> : <VolumeX className="w-4 h-4 text-zinc-400" />}
         </button>
-      </section>
+      </motion.section>
     </>
   );
 };
