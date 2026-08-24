@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { LiquidBlob } from './LiquidBlob';
 import { FloatingParticles } from './FloatingParticles';
+import { FloatingCrystals } from './FloatingCrystals';
 
 export const LusionScene: React.FC = () => {
   return (
@@ -18,15 +19,17 @@ export const LusionScene: React.FC = () => {
         <color attach="background" args={['#060608']} />
         <fog attach="fog" args={['#060608', 3, 14]} />
 
-        {/* Ambient & soft accent lighting */}
-        <ambientLight intensity={0.4} />
-        <directionalLight position={[4, 6, 4]} intensity={0.8} color="#ffffff" />
-        <directionalLight position={[-4, -3, -2]} intensity={0.5} color="#38bdf8" />
-        <pointLight position={[2, 2, 2]} intensity={1.2} color="#f59e0b" distance={6} />
+        {/* Ambient & soft cinematic accent lighting */}
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[4, 6, 4]} intensity={0.9} color="#ffffff" />
+        <directionalLight position={[-4, -3, -2]} intensity={0.6} color="#38bdf8" />
+        <pointLight position={[2, 2, 2]} intensity={1.4} color="#f59e0b" distance={8} />
+        <pointLight position={[-2, -2, 1]} intensity={1.0} color="#ec4899" distance={6} />
 
         <Suspense fallback={null}>
           <LiquidBlob />
-          <FloatingParticles count={200} />
+          <FloatingCrystals count={14} />
+          <FloatingParticles count={320} />
         </Suspense>
       </Canvas>
     </div>
