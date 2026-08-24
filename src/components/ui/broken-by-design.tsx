@@ -555,30 +555,46 @@ function jitter(seed: number) {
   };
 }
 
-/* Audible High-Frequency Glass Shard Hover Scratch & Chime */
+/* Highly Audible Realistic Broken Glass Touch & Edge Scrape Sound */
 function playGlassHoverChime(ctx: AudioContext) {
   const now = ctx.currentTime;
 
-  // 1. Crystal sine chime tone with subtle pitch slide
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-  const freq = 1800 + Math.random() * 800; // 1800Hz - 2600Hz crystal chime
+  // 1. Crystal Glass Edge Ping / Delicate Clink
+  const pingOsc = ctx.createOscillator();
+  const pingGain = ctx.createGain();
+  const baseFreq = 2600 + Math.random() * 1200; // 2.6kHz - 3.8kHz glass resonance
 
-  osc.type = 'sine';
-  osc.frequency.setValueAtTime(freq, now);
-  osc.frequency.exponentialRampToValueAtTime(freq * 1.3, now + 0.08);
+  pingOsc.type = 'sine';
+  pingOsc.frequency.setValueAtTime(baseFreq, now);
+  pingOsc.frequency.exponentialRampToValueAtTime(baseFreq * 0.96, now + 0.08);
 
-  gain.gain.setValueAtTime(0.08, now);
-  gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+  pingGain.gain.setValueAtTime(0.35, now);
+  pingGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.09);
 
-  osc.connect(gain);
-  gain.connect(ctx.destination);
+  pingOsc.connect(pingGain);
+  pingGain.connect(ctx.destination);
 
-  osc.start(now);
-  osc.stop(now + 0.12);
+  pingOsc.start(now);
+  pingOsc.stop(now + 0.09);
 
-  // 2. Crisp glass edge friction scratch noise
-  const size = Math.floor(ctx.sampleRate * 0.06);
+  // 2. Secondary Harmonic Crystal Ping
+  const ping2 = ctx.createOscillator();
+  const ping2Gain = ctx.createGain();
+  ping2.type = 'triangle';
+  ping2.frequency.setValueAtTime(baseFreq * 1.5, now);
+  ping2.frequency.exponentialRampToValueAtTime(baseFreq * 1.4, now + 0.06);
+
+  ping2Gain.gain.setValueAtTime(0.18, now);
+  ping2Gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.06);
+
+  ping2.connect(ping2Gain);
+  ping2Gain.connect(ctx.destination);
+
+  ping2.start(now);
+  ping2.stop(now + 0.06);
+
+  // 3. Crisp Glass Friction & Edge Scratch
+  const size = Math.floor(ctx.sampleRate * 0.04);
   const buffer = ctx.createBuffer(1, size, ctx.sampleRate);
   const data = buffer.getChannelData(0);
   for (let i = 0; i < size; i++) {
@@ -590,12 +606,12 @@ function playGlassHoverChime(ctx: AudioContext) {
 
   const filter = ctx.createBiquadFilter();
   filter.type = 'bandpass';
-  filter.frequency.setValueAtTime(4500, now);
-  filter.Q.setValueAtTime(4, now);
+  filter.frequency.setValueAtTime(5200, now);
+  filter.Q.setValueAtTime(3.5, now);
 
   const noiseGain = ctx.createGain();
-  noiseGain.gain.setValueAtTime(0.12, now);
-  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+  noiseGain.gain.setValueAtTime(0.28, now);
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
 
   noise.connect(filter);
   filter.connect(noiseGain);
@@ -731,7 +747,7 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
       }
     });
 
-    // Initialize audio decoding
+    // Initialize audio decoding and unlock AudioContext on first pointer activity
     try {
       audioRef.current ??= new AudioContext();
       initShatterAudioBuffer(audioRef.current);
@@ -739,9 +755,22 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
       // ignore
     }
 
+    const unlockAudio = () => {
+      try {
+        audioRef.current ??= new AudioContext();
+        if (audioRef.current.state === 'suspended') {
+          audioRef.current.resume().catch(() => {});
+        }
+      } catch {}
+    };
+    window.addEventListener('pointermove', unlockAudio, { once: true });
+    window.addEventListener('pointerdown', unlockAudio, { once: true });
+
     return () => {
       cancelled = true;
       clearTimeout(timeout);
+      window.removeEventListener('pointermove', unlockAudio);
+      window.removeEventListener('pointerdown', unlockAudio);
     };
   }, [assetsBase, setKey]);
 
