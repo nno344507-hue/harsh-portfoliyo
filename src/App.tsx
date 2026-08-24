@@ -13,11 +13,18 @@ import { AboutSection } from './components/sections/AboutSection';
 import { LabsSection } from './components/sections/LabsSection';
 import { FooterSection } from './components/sections/FooterSection';
 import { BrokenByDesign } from './components/ui/broken-by-design';
+import { GlitchOverlay } from './components/ui/GlitchOverlay';
 
 export const App: React.FC = () => {
   const [isEntered, setIsEntered] = useState(false);
+  const [isGlitching, setIsGlitching] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [timecode, setTimecode] = useState('00:00:00:00');
+
+  const handleEnterSite = () => {
+    setIsEntered(true);
+    setIsGlitching(true);
+  };
 
   // Mouse torch lighting
   const mouseX = useMotionValue(-500);
@@ -53,6 +60,9 @@ export const App: React.FC = () => {
 
   return (
     <AudioProvider>
+      {/* Cybernetic Glitch Transition on Website Reveal */}
+      <GlitchOverlay active={isGlitching} onComplete={() => setIsGlitching(false)} />
+
       {/* 3D Broken Glass Entry Gate */}
       <AnimatePresence>
         {!isEntered && (
@@ -64,7 +74,7 @@ export const App: React.FC = () => {
           >
             <BrokenByDesign
               title="VIEW HARSH PORTFOLIO"
-              onEnter={() => setIsEntered(true)}
+              onEnter={handleEnterSite}
             />
           </motion.div>
         )}
