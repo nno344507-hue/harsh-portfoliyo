@@ -557,108 +557,105 @@ function jitter(seed: number) {
 
 /* Highly Audible Realistic Broken Glass Touch & Edge Scrape Sound */
 function playGlassHoverChime(ctx: AudioContext) {
-  const now = ctx.currentTime;
+  try {
+    const now = ctx.currentTime;
 
-  // 1. Crystal Glass Edge Ping / Delicate Clink
-  const pingOsc = ctx.createOscillator();
-  const pingGain = ctx.createGain();
-  const baseFreq = 2600 + Math.random() * 1200; // 2.6kHz - 3.8kHz glass resonance
+    // 1. Crystal Glass Edge Ping / Delicate Clink
+    const pingOsc = ctx.createOscillator();
+    const pingGain = ctx.createGain();
+    const baseFreq = 2600 + Math.random() * 1200; // 2.6kHz - 3.8kHz glass resonance
 
-  pingOsc.type = 'sine';
-  pingOsc.frequency.setValueAtTime(baseFreq, now);
-  pingOsc.frequency.exponentialRampToValueAtTime(baseFreq * 0.96, now + 0.08);
+    pingOsc.type = 'sine';
+    pingOsc.frequency.setValueAtTime(baseFreq, now);
+    pingOsc.frequency.exponentialRampToValueAtTime(baseFreq * 0.96, now + 0.08);
 
-  pingGain.gain.setValueAtTime(0.35, now);
-  pingGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.09);
+    pingGain.gain.setValueAtTime(0.35, now);
+    pingGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.09);
 
-  pingOsc.connect(pingGain);
-  pingGain.connect(ctx.destination);
+    pingOsc.connect(pingGain);
+    pingGain.connect(ctx.destination);
 
-  pingOsc.start(now);
-  pingOsc.stop(now + 0.09);
+    pingOsc.start(now);
+    pingOsc.stop(now + 0.09);
 
-  // 2. Secondary Harmonic Crystal Ping
-  const ping2 = ctx.createOscillator();
-  const ping2Gain = ctx.createGain();
-  ping2.type = 'triangle';
-  ping2.frequency.setValueAtTime(baseFreq * 1.5, now);
-  ping2.frequency.exponentialRampToValueAtTime(baseFreq * 1.4, now + 0.06);
+    // 2. Secondary Harmonic Crystal Ping
+    const ping2 = ctx.createOscillator();
+    const ping2Gain = ctx.createGain();
+    ping2.type = 'triangle';
+    ping2.frequency.setValueAtTime(baseFreq * 1.5, now);
+    ping2.frequency.exponentialRampToValueAtTime(baseFreq * 1.4, now + 0.06);
 
-  ping2Gain.gain.setValueAtTime(0.18, now);
-  ping2Gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.06);
+    ping2Gain.gain.setValueAtTime(0.18, now);
+    ping2Gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.06);
 
-  ping2.connect(ping2Gain);
-  ping2Gain.connect(ctx.destination);
+    ping2.connect(ping2Gain);
+    ping2Gain.connect(ctx.destination);
 
-  ping2.start(now);
-  ping2.stop(now + 0.06);
+    ping2.start(now);
+    ping2.stop(now + 0.06);
 
-  // 3. Crisp Glass Friction & Edge Scratch
-  const size = Math.floor(ctx.sampleRate * 0.04);
-  const buffer = ctx.createBuffer(1, size, ctx.sampleRate);
-  const data = buffer.getChannelData(0);
-  for (let i = 0; i < size; i++) {
-    data[i] = (Math.random() * 2 - 1) * (1 - i / size) ** 2;
+    // 3. Crisp Glass Friction & Edge Scratch
+    const size = Math.floor(ctx.sampleRate * 0.04);
+    const buffer = ctx.createBuffer(1, size, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < size; i++) {
+      data[i] = (Math.random() * 2 - 1) * (1 - i / size) ** 2;
+    }
+
+    const noise = ctx.createBufferSource();
+    noise.buffer = buffer;
+
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.setValueAtTime(5200, now);
+    filter.Q.setValueAtTime(3.5, now);
+
+    const noiseGain = ctx.createGain();
+    noiseGain.gain.setValueAtTime(0.28, now);
+    noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+
+    noise.connect(filter);
+    filter.connect(noiseGain);
+    noiseGain.connect(ctx.destination);
+
+    noise.start(now);
+  } catch {
+    // ignore
   }
-
-  const noise = ctx.createBufferSource();
-  noise.buffer = buffer;
-
-  const filter = ctx.createBiquadFilter();
-  filter.type = 'bandpass';
-  filter.frequency.setValueAtTime(5200, now);
-  filter.Q.setValueAtTime(3.5, now);
-
-  const noiseGain = ctx.createGain();
-  noiseGain.gain.setValueAtTime(0.28, now);
-  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
-
-  noise.connect(filter);
-  filter.connect(noiseGain);
-  noiseGain.connect(ctx.destination);
-
-  noise.start(now);
 }
 
-/* Preload and auto-detect exact glass breaking impact offset */
-let cachedShatterBuffer: AudioBuffer | null = null;
-let shatterStartOffset = 0.22; // default exact impact start
+/* Standalone, 100% Reliable HTML5 Audio Player for YouTube Glass Shatter */
+let globalShatterAudio: HTMLAudioElement | null = null;
 
-async function initShatterAudioBuffer(ctx: AudioContext) {
-  if (cachedShatterBuffer) return;
+function getShatterAudioInstance(): HTMLAudioElement | null {
+  if (typeof Audio === 'undefined') return null;
+  if (!globalShatterAudio) {
+    globalShatterAudio = new Audio('/sounds/glass-shatter.webm');
+    globalShatterAudio.preload = 'auto';
+    globalShatterAudio.load();
+  }
+  return globalShatterAudio;
+}
+
+function playUserGlassAudio() {
   try {
-    const res = await fetch('/sounds/glass-shatter.webm');
-    const arrayBuffer = await res.arrayBuffer();
-    const decoded = await ctx.decodeAudioData(arrayBuffer);
-    cachedShatterBuffer = decoded;
-
-    // Scan for the exact loud glass impact peak (> 0.06 amplitude)
-    const channelData = decoded.getChannelData(0);
-    for (let i = 0; i < channelData.length; i++) {
-      if (Math.abs(channelData[i]) > 0.06) {
-        // start 10ms right before the impact
-        const sampleIdx = Math.max(0, i - Math.floor(decoded.sampleRate * 0.01));
-        shatterStartOffset = sampleIdx / decoded.sampleRate;
-        break;
-      }
+    const audio = getShatterAudioInstance() || new Audio('/sounds/glass-shatter.webm');
+    audio.currentTime = 0.22; // exact impact point
+    audio.volume = 1.0;
+    const p = audio.play();
+    if (p && typeof p.catch === 'function') {
+      p.catch(() => {});
     }
   } catch {
-    // fallback
+    // ignore
   }
 }
 
-function playUserGlassAudio(ctx?: AudioContext | null) {
+function stopAllIntroAudio() {
   try {
-    if (ctx && cachedShatterBuffer) {
-      const source = ctx.createBufferSource();
-      source.buffer = cachedShatterBuffer;
-      source.connect(ctx.destination);
-      source.start(0, shatterStartOffset);
-    } else {
-      const a = new Audio('/sounds/glass-shatter.webm');
-      a.currentTime = shatterStartOffset || 0.22;
-      a.volume = 1.0;
-      a.play().catch(() => {});
+    if (globalShatterAudio) {
+      globalShatterAudio.pause();
+      globalShatterAudio.currentTime = 0;
     }
   } catch {
     // ignore
@@ -747,17 +744,19 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
       }
     });
 
-    // Initialize audio decoding and unlock AudioContext on first pointer activity
+    // Preload shatter audio
     try {
-      audioRef.current ??= new AudioContext();
-      initShatterAudioBuffer(audioRef.current);
+      getShatterAudioInstance();
     } catch {
       // ignore
     }
 
     const unlockAudio = () => {
       try {
-        audioRef.current ??= new AudioContext();
+        if (!audioRef.current || audioRef.current.state === 'closed') {
+          const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+          audioRef.current = new AudioCtx();
+        }
         if (audioRef.current.state === 'suspended') {
           audioRef.current.resume().catch(() => {});
         }
@@ -771,11 +770,6 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
       clearTimeout(timeout);
       window.removeEventListener('pointermove', unlockAudio);
       window.removeEventListener('pointerdown', unlockAudio);
-      try {
-        if (audioRef.current && audioRef.current.state !== 'closed') {
-          audioRef.current.close().catch(() => {});
-        }
-      } catch {}
     };
   }, [assetsBase, setKey]);
 
@@ -786,13 +780,8 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
     setScreenShake(true);
     setFlash(true);
 
-    try {
-      audioRef.current ??= new AudioContext();
-      if (audioRef.current.state === 'suspended') audioRef.current.resume().catch(() => {});
-      playUserGlassAudio(audioRef.current);
-    } catch {
-      playUserGlassAudio(null);
-    }
+    // Play YouTube exact glass smash audio instantly
+    playUserGlassAudio();
 
     // Multi-Phase Super Ultra Slow-Motion 3D Glass Shatter with Giant Zooming Hero Shard
     const root = rootRef.current;
@@ -902,6 +891,7 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
 
     // Crossfade to main website as the giant shard expands past the camera
     setTimeout(() => {
+      stopAllIntroAudio();
       if (onEnter) onEnter();
     }, 4800);
   };
@@ -957,13 +947,16 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
         c.px += (t.px - c.px) * k;
         c.py += (t.py - c.py) * k;
         c.sc += (t.sc - c.sc) * k;
-        const d =
-          Math.abs(t.rx - c.rx) +
-          Math.abs(t.ry - c.ry) +
-          Math.abs(t.tz - c.tz) +
-          Math.abs(t.px - c.px) +
-          Math.abs(t.py - c.py);
-        if (d > 0.01) alive = true;
+        if (
+          Math.abs(t.rx - c.rx) > 0.01 ||
+          Math.abs(t.ry - c.ry) > 0.01 ||
+          Math.abs(t.tz - c.tz) > 0.05 ||
+          Math.abs(t.px - c.px) > 0.05 ||
+          Math.abs(t.py - c.py) > 0.05 ||
+          Math.abs(t.sc - c.sc) > 0.001
+        ) {
+          alive = true;
+        }
         shards[i].style.transform = toTransform(c);
       }
       if (alive) raf = requestAnimationFrame(tick);
@@ -1029,7 +1022,10 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
         // Play audible crisp glass friction & chime tone on hover!
         if (soundOn) {
           try {
-            audioRef.current ??= new AudioContext();
+            if (!audioRef.current || audioRef.current.state === 'closed') {
+              const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+              audioRef.current = new AudioCtx();
+            }
             const ctx = audioRef.current;
             if (ctx.state === 'suspended') ctx.resume().catch(() => {});
             playGlassHoverChime(ctx);
