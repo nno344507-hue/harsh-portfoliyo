@@ -605,21 +605,43 @@ function playGlassHoverChime(ctx: AudioContext) {
   noise.start(now);
 }
 
-/* Preload and play ONLY user's exact YouTube audio */
-const userShatterAudio = typeof Audio !== 'undefined' ? new Audio('/sounds/glass-shatter.webm') : null;
-if (userShatterAudio) {
-  userShatterAudio.preload = 'auto';
-  userShatterAudio.load();
+/* Preload and auto-detect exact glass breaking impact offset */
+let cachedShatterBuffer: AudioBuffer | null = null;
+let shatterStartOffset = 0.22; // default exact impact start
+
+async function initShatterAudioBuffer(ctx: AudioContext) {
+  if (cachedShatterBuffer) return;
+  try {
+    const res = await fetch('/sounds/glass-shatter.webm');
+    const arrayBuffer = await res.arrayBuffer();
+    const decoded = await ctx.decodeAudioData(arrayBuffer);
+    cachedShatterBuffer = decoded;
+
+    // Scan for the exact loud glass impact peak (> 0.06 amplitude)
+    const channelData = decoded.getChannelData(0);
+    for (let i = 0; i < channelData.length; i++) {
+      if (Math.abs(channelData[i]) > 0.06) {
+        // start 10ms right before the impact
+        const sampleIdx = Math.max(0, i - Math.floor(decoded.sampleRate * 0.01));
+        shatterStartOffset = sampleIdx / decoded.sampleRate;
+        break;
+      }
+    }
+  } catch {
+    // fallback
+  }
 }
 
-function playUserGlassAudio() {
+function playUserGlassAudio(ctx?: AudioContext | null) {
   try {
-    if (userShatterAudio) {
-      userShatterAudio.currentTime = 0;
-      userShatterAudio.volume = 1.0;
-      userShatterAudio.play().catch(() => {});
+    if (ctx && cachedShatterBuffer) {
+      const source = ctx.createBufferSource();
+      source.buffer = cachedShatterBuffer;
+      source.connect(ctx.destination);
+      source.start(0, shatterStartOffset);
     } else {
       const a = new Audio('/sounds/glass-shatter.webm');
+      a.currentTime = shatterStartOffset || 0.22;
       a.volume = 1.0;
       a.play().catch(() => {});
     }
@@ -709,37 +731,51 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
         setReady(true);
       }
     });
+
+    // Initialize audio decoding
+    try {
+      audioRef.current ??= new AudioContext();
+      initShatterAudioBuffer(audioRef.current);
+    } catch {
+      // ignore
+    }
+
     return () => {
       cancelled = true;
       clearTimeout(timeout);
     };
   }, [assetsBase, setKey]);
 
-  /* Cinematic Ultra Slow-Motion Shatter & Enter Handler */
+  /* Cinematic Super Ultra Slow-Motion Shatter & Enter Handler (9.5s) */
   const handleShatter = () => {
     if (isShattered) return;
     setIsShattered(true);
     setScreenShake(true);
     setFlash(true);
 
-    // Play ONLY the user's exact YouTube audio file instantly!
-    playUserGlassAudio();
+    try {
+      audioRef.current ??= new AudioContext();
+      if (audioRef.current.state === 'suspended') audioRef.current.resume().catch(() => {});
+      playUserGlassAudio(audioRef.current);
+    } catch {
+      playUserGlassAudio(null);
+    }
 
-    // Zero-Gravity Ultra Slow-Motion Glass Splinters Confetti
+    // Zero-Gravity Super Ultra Slow-Motion Glass Splinters Confetti
     confetti({
-      particleCount: 130,
-      spread: 160,
-      startVelocity: 24,
-      ticks: 800,
-      gravity: 0.08,
-      decay: 0.985,
+      particleCount: 140,
+      spread: 170,
+      startVelocity: 20,
+      ticks: 1000,
+      gravity: 0.05,
+      decay: 0.99,
       origin: { x: 0.5, y: 0.5 },
       colors: ['#ffffff', '#f59e0b', '#38bdf8', '#e2e8f0', '#fbbf24'],
       shapes: ['square'],
-      scalar: 1.3,
+      scalar: 1.35,
     });
 
-    // Multi-Phase Ultra Slow-Motion 3D Glass Shatter Dispersal (6.5 seconds graceful zero-G float)
+    // Multi-Phase Super Ultra Slow-Motion 3D Glass Shatter Dispersal (9.5 seconds zero-G float)
     const root = rootRef.current;
     if (root) {
       const shards = Array.from(root.querySelectorAll<HTMLElement>('[data-shard]'));
@@ -764,33 +800,33 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
               offset: 0,
             },
             {
-              transform: `translate3d(${ux * 140}px, ${uy * 140}px, 140px) rotateX(${randomRotX * 0.15}deg) rotateY(${randomRotY * 0.15}deg) scale(0.97)`,
+              transform: `translate3d(${ux * 110}px, ${uy * 110}px, 120px) rotateX(${randomRotX * 0.12}deg) rotateY(${randomRotY * 0.12}deg) scale(0.98)`,
               opacity: 1,
               filter: 'brightness(2.0) drop-shadow(0 0 25px rgba(245, 158, 11, 0.7))',
               offset: 0.15,
             },
             {
-              transform: `translate3d(${ux * 420}px, ${uy * 420}px, 300px) rotateX(${randomRotX * 0.42}deg) rotateY(${randomRotY * 0.42}deg) scale(0.85)`,
+              transform: `translate3d(${ux * 340}px, ${uy * 340}px, 260px) rotateX(${randomRotX * 0.35}deg) rotateY(${randomRotY * 0.35}deg) scale(0.88)`,
               opacity: 0.95,
               filter: 'brightness(1.8)',
               offset: 0.45,
             },
             {
-              transform: `translate3d(${ux * 850}px, ${uy * 850}px, 520px) rotateX(${randomRotX * 0.72}deg) rotateY(${randomRotY * 0.72}deg) scale(0.55)`,
-              opacity: 0.75,
+              transform: `translate3d(${ux * 720}px, ${uy * 720}px, 450px) rotateX(${randomRotX * 0.65}deg) rotateY(${randomRotY * 0.65}deg) scale(0.6)`,
+              opacity: 0.8,
               filter: 'brightness(1.8)',
               offset: 0.75,
             },
             {
-              transform: `translate3d(${ux * 1800}px, ${uy * 1800}px, 950px) rotateX(${randomRotX}deg) rotateY(${randomRotY}deg) rotateZ(${randomRotZ}deg) scale(0.05)`,
+              transform: `translate3d(${ux * 1800}px, ${uy * 1800}px, 950px) rotateX(${randomRotX}deg) rotateY(${randomRotY}deg) rotateZ(${randomRotZ}deg) scale(0.04)`,
               opacity: 0,
               filter: 'brightness(3.0) blur(18px)',
               offset: 1,
             },
           ],
           {
-            duration: 6500, // 6.5s ultra slow motion float!
-            easing: 'cubic-bezier(0.05, 0.9, 0.15, 1)',
+            duration: 9500, // 9.5s super ultra slow motion float!
+            easing: 'cubic-bezier(0.04, 0.92, 0.12, 1)',
             fill: 'forwards',
           }
         );
@@ -800,12 +836,12 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
     setTimeout(() => {
       setFlash(false);
       setScreenShake(false);
-    }, 600);
+    }, 700);
 
     // Call onEnter to crossfade into main portfolio website
     setTimeout(() => {
       if (onEnter) onEnter();
-    }, 4000);
+    }, 5500);
   };
 
   /* Portrait vs Landscape title node */
