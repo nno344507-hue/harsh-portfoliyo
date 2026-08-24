@@ -96,6 +96,7 @@ const BBD2_CSS = `/* broken by design. -----------------------------------------
   pointer-events: none;
   opacity: 0;
   animation: bbd2-cracks-in 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.85)) drop-shadow(0 0 4px rgba(255, 255, 255, 0.9));
 }
 
 @keyframes bbd2-cracks-in {
@@ -108,18 +109,18 @@ const BBD2_CSS = `/* broken by design. -----------------------------------------
 }
 
 .bbd2-cracks-line path {
-  stroke: rgba(245, 158, 11, 0.55);
-  stroke-width: 1.4;
+  stroke: #fbbf24;
+  stroke-width: 2.4;
 }
 
 .bbd2-cracks-glow path {
-  stroke: rgba(245, 158, 11, 0.25);
-  stroke-width: 4;
+  stroke: rgba(245, 158, 11, 0.5);
+  stroke-width: 7;
 }
 
 .bbd2-cracks-fine path {
-  stroke: rgba(56, 189, 248, 0.45);
-  stroke-width: 1;
+  stroke: #38bdf8;
+  stroke-width: 1.6;
 }
 
 /* ------- glass ------------------------------------------------------ */
@@ -139,14 +140,18 @@ const BBD2_CSS = `/* broken by design. -----------------------------------------
   will-change: transform, opacity, filter;
   transition: filter 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
+  filter:
+    brightness(1.15)
+    drop-shadow(0 25px 35px rgba(0, 0, 0, 0.95))
+    drop-shadow(0 0 16px rgba(245, 158, 11, 0.35));
 }
 
 .bbd2-shard--hot {
   z-index: 40 !important;
   filter:
-    brightness(1.35)
-    drop-shadow(0 42px 54px rgba(0, 0, 0, 0.85))
-    drop-shadow(0 0 35px rgba(245, 158, 11, 0.45)) !important;
+    brightness(1.45)
+    drop-shadow(0 42px 60px rgba(0, 0, 0, 0.9))
+    drop-shadow(0 0 40px rgba(245, 158, 11, 0.75)) !important;
 }
 
 .bbd2-inlay {
@@ -158,6 +163,7 @@ const BBD2_CSS = `/* broken by design. -----------------------------------------
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   pointer-events: none;
+  border-radius: 8px;
 }
 
 .bbd2-glassimg {
@@ -165,6 +171,8 @@ const BBD2_CSS = `/* broken by design. -----------------------------------------
   inset: 0;
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: inset 0 0 25px rgba(255, 255, 255, 0.2), inset 0 0 10px rgba(245, 158, 11, 0.3);
 }
 
 .bbd2-glassimg::after {
@@ -174,11 +182,11 @@ const BBD2_CSS = `/* broken by design. -----------------------------------------
   background:
     linear-gradient(
       132deg,
-      rgba(245, 158, 11, 0.18) 0%,
-      rgba(56, 189, 248, 0.12) 30%,
+      rgba(245, 158, 11, 0.25) 0%,
+      rgba(56, 189, 248, 0.18) 30%,
       transparent 46%,
       transparent 60%,
-      rgba(236, 72, 153, 0.14) 100%
+      rgba(236, 72, 153, 0.2) 100%
     );
   mix-blend-mode: screen;
 }
@@ -542,9 +550,9 @@ function jitter(seed: number) {
     return s - Math.floor(s);
   };
   return {
-    tx: (r(1) - 0.5) * 14,
-    ty: (r(2) - 0.5) * 10,
-    rot: (r(3) - 0.5) * 2.4,
+    tx: (r(1) - 0.5) * 24,
+    ty: (r(2) - 0.5) * 18,
+    rot: (r(3) - 0.5) * 4.8,
   };
 }
 
@@ -670,11 +678,11 @@ function baseOf(id: string, seed: number): SpringState {
     return s - Math.floor(s);
   };
   return {
-    rx: (r(1) - 0.5) * 3.4,
-    ry: (r(2) - 0.5) * 4.2,
-    tz: r(3) * 16,
-    px: 0,
-    py: 0,
+    rx: (r(1) - 0.5) * 8.5,
+    ry: (r(2) - 0.5) * 9.5,
+    tz: 20 + r(3) * 38,
+    px: (r(4) - 0.5) * 8,
+    py: (r(5) - 0.5) * 8,
     sc: 1,
     ...BASE_POSE[id],
   };
