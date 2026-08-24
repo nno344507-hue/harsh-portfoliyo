@@ -605,104 +605,26 @@ function playGlassHoverChime(ctx: AudioContext) {
   noise.start(now);
 }
 
-/* Authentic Realistic Glass Block & Window Smashing Sound Synthesizer */
-function playEpicGlassShatter(ctx: AudioContext) {
-  const now = ctx.currentTime;
-
-  // 1. Initial Hard Strike / Hammer Impact on Glass Pane
-  const strikeOsc = ctx.createOscillator();
-  const strikeGain = ctx.createGain();
-  strikeOsc.type = 'triangle';
-  strikeOsc.frequency.setValueAtTime(320, now);
-  strikeOsc.frequency.exponentialRampToValueAtTime(75, now + 0.12);
-  strikeGain.gain.setValueAtTime(0.9, now);
-  strikeGain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
-  strikeOsc.connect(strikeGain);
-  strikeGain.connect(ctx.destination);
-  strikeOsc.start(now);
-  strikeOsc.stop(now + 0.15);
-
-  // 2. High-Energy Crunchy Glass Fracture Burst (Sharp glass crunch & smash)
-  const smashBuffer = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.75), ctx.sampleRate);
-  const smashData = smashBuffer.getChannelData(0);
-  for (let i = 0; i < smashData.length; i++) {
-    smashData[i] = (Math.random() * 2 - 1) * (1 - i / smashData.length) ** 1.4;
-  }
-  const smashSource = ctx.createBufferSource();
-  smashSource.buffer = smashBuffer;
-
-  const bandFilter = ctx.createBiquadFilter();
-  bandFilter.type = 'bandpass';
-  bandFilter.frequency.setValueAtTime(3800, now);
-  bandFilter.Q.setValueAtTime(1.8, now);
-
-  const highFilter = ctx.createBiquadFilter();
-  highFilter.type = 'highpass';
-  highFilter.frequency.setValueAtTime(2400, now);
-
-  const smashGain = ctx.createGain();
-  smashGain.gain.setValueAtTime(1.0, now);
-  smashGain.gain.exponentialRampToValueAtTime(0.001, now + 0.75);
-
-  smashSource.connect(bandFilter);
-  bandFilter.connect(highFilter);
-  highFilter.connect(smashGain);
-  smashGain.connect(ctx.destination);
-  smashSource.start(now);
-
-  // 3. Resonant Metallic & Crystal Ring Modes (Glass ringing during fracture)
-  const resonantModes = [2850, 4320, 5740, 7120, 8890, 10400];
-  resonantModes.forEach((freq) => {
-    const osc = ctx.createOscillator();
-    const g = ctx.createGain();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(freq, now);
-    osc.frequency.exponentialRampToValueAtTime(freq * 0.95, now + 0.35);
-    g.gain.setValueAtTime(0.25, now);
-    g.gain.exponentialRampToValueAtTime(0.0001, now + 0.35);
-    osc.connect(g);
-    g.connect(ctx.destination);
-    osc.start(now);
-    osc.stop(now + 0.35);
-  });
-
-  // 4. Realistic Falling & Scattering Glass Shards (35+ falling tinkles on the floor)
-  for (let i = 0; i < 38; i++) {
-    const delay = 0.05 + Math.pow(Math.random(), 1.6) * 1.5; // scattered over 1.5s
-    const shardOsc = ctx.createOscillator();
-    const shardGain = ctx.createGain();
-    const shardFreq = 2200 + Math.random() * 6500; // 2.2kHz - 8.7kHz crystal shards
-
-    shardOsc.type = Math.random() > 0.4 ? 'sine' : 'triangle';
-    shardOsc.frequency.setValueAtTime(shardFreq, now + delay);
-    shardOsc.frequency.exponentialRampToValueAtTime(shardFreq * 0.7, now + delay + 0.09);
-
-    const shardVol = 0.08 + Math.random() * 0.15;
-    shardGain.gain.setValueAtTime(shardVol, now + delay);
-    shardGain.gain.exponentialRampToValueAtTime(0.0001, now + delay + 0.09);
-
-    shardOsc.connect(shardGain);
-    shardGain.connect(ctx.destination);
-
-    shardOsc.start(now + delay);
-    shardOsc.stop(now + delay + 0.09);
-  }
+/* Preload and play ONLY user's exact YouTube audio */
+const userShatterAudio = typeof Audio !== 'undefined' ? new Audio('/sounds/glass-shatter.webm') : null;
+if (userShatterAudio) {
+  userShatterAudio.preload = 'auto';
+  userShatterAudio.load();
 }
 
-/* Play YouTube Exact Glass Shatter Audio with fallback */
-function playYouTubeGlassShatter(ctx?: AudioContext | null) {
+function playUserGlassAudio() {
   try {
-    const audio = new Audio('/sounds/glass-shatter.webm');
-    audio.volume = 1.0;
-    audio.currentTime = 0;
-    const playPromise = audio.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        if (ctx) playEpicGlassShatter(ctx);
-      });
+    if (userShatterAudio) {
+      userShatterAudio.currentTime = 0;
+      userShatterAudio.volume = 1.0;
+      userShatterAudio.play().catch(() => {});
+    } else {
+      const a = new Audio('/sounds/glass-shatter.webm');
+      a.volume = 1.0;
+      a.play().catch(() => {});
     }
   } catch {
-    if (ctx) playEpicGlassShatter(ctx);
+    // ignore
   }
 }
 
@@ -793,37 +715,31 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
     };
   }, [assetsBase, setKey]);
 
-  /* Cinematic Slow-Motion Shatter & Enter Handler */
+  /* Cinematic Ultra Slow-Motion Shatter & Enter Handler */
   const handleShatter = () => {
     if (isShattered) return;
     setIsShattered(true);
     setScreenShake(true);
     setFlash(true);
 
-    try {
-      audioRef.current ??= new AudioContext();
-      const ctx = audioRef.current;
-      if (ctx.state === 'suspended') ctx.resume().catch(() => {});
-      playYouTubeGlassShatter(ctx);
-    } catch {
-      // ignore
-    }
+    // Play ONLY the user's exact YouTube audio file instantly!
+    playUserGlassAudio();
 
     // Zero-Gravity Ultra Slow-Motion Glass Splinters Confetti
     confetti({
-      particleCount: 120,
-      spread: 150,
-      startVelocity: 28,
-      ticks: 600,
-      gravity: 0.14,
-      decay: 0.97,
+      particleCount: 130,
+      spread: 160,
+      startVelocity: 24,
+      ticks: 800,
+      gravity: 0.08,
+      decay: 0.985,
       origin: { x: 0.5, y: 0.5 },
       colors: ['#ffffff', '#f59e0b', '#38bdf8', '#e2e8f0', '#fbbf24'],
       shapes: ['square'],
       scalar: 1.3,
     });
 
-    // Multi-Phase Ultra Slow-Motion 3D Glass Shatter Dispersal (4.2 seconds graceful float)
+    // Multi-Phase Ultra Slow-Motion 3D Glass Shatter Dispersal (6.5 seconds graceful zero-G float)
     const root = rootRef.current;
     if (root) {
       const shards = Array.from(root.querySelectorAll<HTMLElement>('[data-shard]'));
@@ -848,33 +764,33 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
               offset: 0,
             },
             {
-              transform: `translate3d(${ux * 180}px, ${uy * 180}px, 160px) rotateX(${randomRotX * 0.2}deg) rotateY(${randomRotY * 0.2}deg) scale(0.96)`,
+              transform: `translate3d(${ux * 140}px, ${uy * 140}px, 140px) rotateX(${randomRotX * 0.15}deg) rotateY(${randomRotY * 0.15}deg) scale(0.97)`,
               opacity: 1,
               filter: 'brightness(2.0) drop-shadow(0 0 25px rgba(245, 158, 11, 0.7))',
-              offset: 0.2,
+              offset: 0.15,
             },
             {
-              transform: `translate3d(${ux * 580}px, ${uy * 580}px, 380px) rotateX(${randomRotX * 0.55}deg) rotateY(${randomRotY * 0.55}deg) scale(0.8)`,
-              opacity: 0.9,
-              filter: 'brightness(1.7)',
-              offset: 0.55,
-            },
-            {
-              transform: `translate3d(${ux * 1100}px, ${uy * 1100}px, 650px) rotateX(${randomRotX * 0.85}deg) rotateY(${randomRotY * 0.85}deg) scale(0.4)`,
-              opacity: 0.6,
+              transform: `translate3d(${ux * 420}px, ${uy * 420}px, 300px) rotateX(${randomRotX * 0.42}deg) rotateY(${randomRotY * 0.42}deg) scale(0.85)`,
+              opacity: 0.95,
               filter: 'brightness(1.8)',
-              offset: 0.8,
+              offset: 0.45,
             },
             {
-              transform: `translate3d(${ux * 1800}px, ${uy * 1800}px, 950px) rotateX(${randomRotX}deg) rotateY(${randomRotY}deg) rotateZ(${randomRotZ}deg) scale(0.08)`,
+              transform: `translate3d(${ux * 850}px, ${uy * 850}px, 520px) rotateX(${randomRotX * 0.72}deg) rotateY(${randomRotY * 0.72}deg) scale(0.55)`,
+              opacity: 0.75,
+              filter: 'brightness(1.8)',
+              offset: 0.75,
+            },
+            {
+              transform: `translate3d(${ux * 1800}px, ${uy * 1800}px, 950px) rotateX(${randomRotX}deg) rotateY(${randomRotY}deg) rotateZ(${randomRotZ}deg) scale(0.05)`,
               opacity: 0,
               filter: 'brightness(3.0) blur(18px)',
               offset: 1,
             },
           ],
           {
-            duration: 4200, // 4.2s ultra slow motion float!
-            easing: 'cubic-bezier(0.08, 0.9, 0.18, 1)',
+            duration: 6500, // 6.5s ultra slow motion float!
+            easing: 'cubic-bezier(0.05, 0.9, 0.15, 1)',
             fill: 'forwards',
           }
         );
@@ -889,7 +805,7 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
     // Call onEnter to crossfade into main portfolio website
     setTimeout(() => {
       if (onEnter) onEnter();
-    }, 3000);
+    }, 4000);
   };
 
   /* Portrait vs Landscape title node */
