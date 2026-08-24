@@ -38,12 +38,19 @@ const BBD2_CSS = `/* broken by design. -----------------------------------------
 
 .bbd2-stage {
   position: absolute;
-  inset: 4% 3%;
+  inset: 0;
+  margin: auto;
+  width: 96vw;
+  height: 94dvh;
+  max-width: 520px;
 }
 
-@media (min-width: 640px) {
+@media (min-aspect-ratio: 1/1) {
   .bbd2-stage {
-    inset: 6% 4.5%;
+    width: auto;
+    height: auto;
+    inset: 4% 3.5%;
+    max-width: none;
   }
 }
 
@@ -56,7 +63,7 @@ const BBD2_CSS = `/* broken by design. -----------------------------------------
   place-items: center;
   pointer-events: none;
   white-space: nowrap;
-  font-weight: 800;
+  font-weight: 900;
   font-size: clamp(24px, 7.5cqw, 130px);
   letter-spacing: -0.035em;
   line-height: 1;
@@ -78,19 +85,19 @@ const BBD2_CSS = `/* broken by design. -----------------------------------------
 
 .bbd2--portrait .bbd2-title,
 .bbd2--portrait .bbd2-slice {
-  font-size: clamp(22px, 10.5cqw, 60px);
+  font-size: clamp(28px, 9vw, 75px);
   white-space: normal;
   text-align: center;
-  padding: 0 12px;
+  padding: 0 8px;
 }
 
 .bbd2-stack {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.14em;
-  transform: rotate(-3deg);
-  line-height: 0.95;
+  gap: 0.08em;
+  transform: none;
+  line-height: 0.98;
 }
 
 .bbd2-stack em {
@@ -212,7 +219,7 @@ const BBD2_CSS = `/* broken by design. -----------------------------------------
 }
 
 .bbd2-slice > .bbd2-stack {
-  transform: var(--jt) rotate(-3deg);
+  transform: var(--jt);
 }
 
 .bbd2-specular {
