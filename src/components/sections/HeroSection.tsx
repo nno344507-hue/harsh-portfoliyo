@@ -15,7 +15,7 @@ export const HeroSection: React.FC = () => {
   };
 
   return (
-    <section id="hero" className="relative min-h-screen flex flex-col justify-between pt-28 sm:pt-32 pb-8 sm:pb-12 px-4 sm:px-12 md:px-16 z-10 select-none">
+    <section id="hero" className="relative min-h-[100dvh] flex flex-col justify-between pt-20 sm:pt-32 pb-8 sm:pb-12 px-4 sm:px-12 md:px-16 z-10 select-none">
       {/* Decorative Technical Crosshairs on 4 corners */}
       <div className="absolute top-28 left-4 sm:left-12 pointer-events-none opacity-40 sm:opacity-60">
         <div className="tech-cross" />

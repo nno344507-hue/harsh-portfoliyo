@@ -51,25 +51,22 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.4 }}
-          className="fixed inset-0 z-30 bg-[#080808]/95 backdrop-blur-2xl flex flex-col justify-between p-6 sm:p-12 md:p-16 overflow-y-auto"
+          transition={{ duration: 0.35 }}
+          className="fixed inset-0 z-50 bg-[#080808]/98 backdrop-blur-2xl flex flex-col justify-start sm:justify-between p-5 sm:p-10 md:p-14 pt-20 sm:pt-24 overflow-y-auto"
         >
-          {/* Top Bar Spacer */}
-          <div className="h-16" />
-
           {/* Main Grid Content */}
-          <div className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center my-auto">
+          <div className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center my-auto">
             {/* Nav Links Column */}
-            <div className="lg:col-span-7 flex flex-col space-y-4 sm:space-y-6">
+            <div className="lg:col-span-7 flex flex-col space-y-2.5 sm:space-y-5">
               {navLinks.map((link, idx) => (
                 <motion.button
                   key={link.name}
-                  initial={{ opacity: 0, x: -30 }}
+                  initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1 + idx * 0.05, duration: 0.4 }}
+                  transition={{ delay: 0.05 + idx * 0.04, duration: 0.35 }}
                   onClick={() => handleNavClick(link.target)}
                   onMouseEnter={playHoverSound}
-                  className="group flex items-center justify-between text-left text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white/70 hover:text-white transition-all duration-300 py-1"
+                  className="group flex items-center justify-between text-left text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white/80 hover:text-white transition-all duration-300 py-1"
                 >
                   <span className="relative overflow-hidden inline-block">
                     <span className="inline-block transition-transform duration-500 group-hover:-translate-y-full">
@@ -79,13 +76,13 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
                       {link.name}
                     </span>
                   </span>
-                  <ArrowRight className="w-6 h-6 sm:w-8 sm:h-8 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-amber-400" />
+                  <ArrowRight className="w-5 h-5 sm:w-7 sm:h-7 opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-amber-400" />
                 </motion.button>
               ))}
             </div>
 
             {/* Right Column: Labs & Newsletter */}
-            <div className="lg:col-span-5 flex flex-col space-y-8">
+            <div className="lg:col-span-5 flex flex-col space-y-6 pt-4 lg:pt-0">
               {/* Lusion Labs Portal Card */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
