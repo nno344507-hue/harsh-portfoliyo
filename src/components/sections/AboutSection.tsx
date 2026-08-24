@@ -118,20 +118,20 @@ export const AboutSection: React.FC = () => {
   ];
 
   return (
-    <section id="about" className="relative py-28 px-6 sm:px-12 md:px-16 z-10">
+    <section id="about" className="relative py-20 sm:py-28 px-4 sm:px-12 md:px-16 z-10">
       <div className="max-w-6xl mx-auto w-full">
         {/* Top Manifesto Statement */}
-        <div className="mb-24 p-8 sm:p-12 rounded-3xl bg-black/50 border border-white/10 backdrop-blur-xl">
-          <span className="text-xs font-mono uppercase tracking-widest text-amber-400 font-bold block mb-4">
+        <div className="mb-16 sm:mb-24 p-6 sm:p-12 rounded-3xl bg-black/50 border border-white/10 backdrop-blur-xl">
+          <span className="text-xs font-mono uppercase tracking-widest text-amber-400 font-bold block mb-3 sm:mb-4">
             OUR ETHOS // FRAME & MOTION
           </span>
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white leading-[1.18] max-w-4xl drop-shadow-md">
+          <h2 className="text-2xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white leading-[1.2] max-w-4xl drop-shadow-md">
             We work where storytelling meets motion, blending <span className="text-amber-400 font-extrabold drop-shadow-[0_2px_12px_rgba(245,158,11,0.35)]">sharp editing</span> with <span className="text-cyan-400 font-extrabold drop-shadow-[0_2px_12px_rgba(34,211,238,0.35)]">creative direction</span> to craft visuals that <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 font-extrabold">feel extraordinary.</span>
           </h2>
         </div>
 
         {/* Capabilities Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-16 sm:mb-24">
           {capabilities.map((cap, idx) => {
             const Icon = cap.icon;
             return (
@@ -340,7 +340,7 @@ export const AboutSection: React.FC = () => {
                 animate={{ scale: 1, opacity: 1, y: 0 }}
                 exit={{ scale: 0.95, opacity: 0, y: 20 }}
                 transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                className="relative max-w-lg w-full bg-[#111116] border border-white/20 rounded-3xl p-6 sm:p-8 shadow-2xl my-auto"
+                className="relative max-w-lg w-full bg-[#111116] border border-white/20 rounded-3xl p-5 sm:p-8 shadow-2xl my-auto max-h-[90vh] overflow-y-auto"
               >
                 <button
                   onClick={() => setIsReviewModalOpen(false)}

@@ -15,18 +15,18 @@ export const HeroSection: React.FC = () => {
   };
 
   return (
-    <section id="hero" className="relative min-h-screen flex flex-col justify-between pt-32 pb-12 px-6 sm:px-12 md:px-16 z-10 select-none">
+    <section id="hero" className="relative min-h-screen flex flex-col justify-between pt-28 sm:pt-32 pb-8 sm:pb-12 px-4 sm:px-12 md:px-16 z-10 select-none">
       {/* Decorative Technical Crosshairs on 4 corners */}
-      <div className="absolute top-28 left-6 sm:left-12 pointer-events-none opacity-60">
+      <div className="absolute top-28 left-4 sm:left-12 pointer-events-none opacity-40 sm:opacity-60">
         <div className="tech-cross" />
       </div>
-      <div className="absolute top-28 right-6 sm:right-12 pointer-events-none opacity-60">
+      <div className="absolute top-28 right-4 sm:right-12 pointer-events-none opacity-40 sm:opacity-60">
         <div className="tech-cross" />
       </div>
-      <div className="absolute bottom-16 left-6 sm:left-12 pointer-events-none opacity-60">
+      <div className="absolute bottom-16 left-4 sm:left-12 pointer-events-none opacity-40 sm:opacity-60">
         <div className="tech-cross" />
       </div>
-      <div className="absolute bottom-16 right-6 sm:right-12 pointer-events-none opacity-60">
+      <div className="absolute bottom-16 right-4 sm:right-12 pointer-events-none opacity-40 sm:opacity-60">
         <div className="tech-cross" />
       </div>
 
@@ -36,7 +36,7 @@ export const HeroSection: React.FC = () => {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="inline-flex items-center space-x-2.5 px-4 py-2 rounded-full border border-white/20 bg-black/60 backdrop-blur-xl text-xs font-mono tracking-widest uppercase text-zinc-200 mb-8 shadow-lg shadow-black/40"
+          className="inline-flex items-center space-x-2 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/20 bg-black/60 backdrop-blur-xl text-[10px] sm:text-xs font-mono tracking-wider uppercase text-zinc-200 mb-6 sm:mb-8 shadow-lg shadow-black/40"
         >
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
           <span>THE HARSH EDITOR // 3D & MOTION DESIGN</span>
@@ -49,7 +49,7 @@ export const HeroSection: React.FC = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-4xl sm:text-6xl md:text-7xl lg:text-[4.8rem] font-bold tracking-tighter leading-[1.12] text-white max-w-5xl drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)] space-y-1"
+          className="text-3xl sm:text-5xl md:text-7xl lg:text-[4.8rem] font-bold tracking-tighter leading-[1.15] text-white max-w-5xl drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)] space-y-1 sm:space-y-2"
         >
           <span className="block">I cut the story.</span>
           <span className="block">I shape the rhythm.</span>

@@ -62,7 +62,7 @@ export const FooterSection: React.FC = () => {
   };
 
   return (
-    <footer id="contact" className="relative pt-28 pb-14 px-6 sm:px-12 md:px-16 border-t border-white/15 z-10 bg-transparent overflow-hidden">
+    <footer id="contact" className="relative pt-20 sm:pt-28 pb-10 sm:pb-14 px-4 sm:px-12 md:px-16 border-t border-white/15 z-10 bg-transparent overflow-hidden">
       <div className="max-w-6xl mx-auto w-full relative z-10">
         {/* Massive Interactive Spotlight "Let's Talk" Card with 3D Liquid Canvas shining through */}
         <motion.div
@@ -73,21 +73,21 @@ export const FooterSection: React.FC = () => {
             playHoverSound();
           }}
           onMouseLeave={() => setIsHovered(false)}
-          className="relative mb-20 p-8 sm:p-16 rounded-[2.5rem] bg-[#0d0d14]/75 backdrop-blur-md border border-white/20 overflow-hidden shadow-2xl group hover:border-amber-400/60 transition-all duration-500"
+          className="relative mb-16 sm:mb-20 p-6 sm:p-16 rounded-[2rem] sm:rounded-[2.5rem] bg-[#0d0d14]/75 backdrop-blur-md border border-white/20 overflow-hidden shadow-2xl group hover:border-amber-400/60 transition-all duration-500"
         >
           {/* Dynamic Follow-Mouse Radial Aura Spotlight */}
           <motion.div
-            className="pointer-events-none absolute -inset-px rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="pointer-events-none absolute -inset-px rounded-[2rem] sm:rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             style={{
               background: `radial-gradient(600px circle at ${smoothMouseX.get()}px ${smoothMouseY.get()}px, rgba(245, 158, 11, 0.18), rgba(56, 189, 248, 0.1), transparent 70%)`,
             }}
           />
 
           {/* Floating Subtle Ambient Grid Crosshairs */}
-          <div className="absolute top-6 right-6 pointer-events-none opacity-50">
+          <div className="absolute top-6 right-6 pointer-events-none opacity-40">
             <div className="tech-cross" />
           </div>
-          <div className="absolute bottom-6 left-6 pointer-events-none opacity-50">
+          <div className="absolute bottom-6 left-6 pointer-events-none opacity-40">
             <div className="tech-cross" />
           </div>
 
@@ -97,7 +97,7 @@ export const FooterSection: React.FC = () => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500" />
             </span>
-            <span className="text-xs font-mono uppercase tracking-widest text-amber-400 font-bold">
+            <span className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-amber-400 font-bold">
               Have a project in mind?
             </span>
           </div>
@@ -107,7 +107,7 @@ export const FooterSection: React.FC = () => {
             href="mailto:harshdhiman332@gmail.com"
             onClick={playClickSound}
             data-cursor-text="CONTACT"
-            className="group/cta relative inline-flex items-center space-x-4 sm:space-x-10 text-5xl sm:text-7xl md:text-8xl lg:text-[7.8rem] font-bold tracking-tighter text-white hover:text-amber-400 transition-colors duration-300 leading-none py-2"
+            className="group/cta relative inline-flex items-center space-x-3 sm:space-x-10 text-4xl sm:text-7xl md:text-8xl lg:text-[7.8rem] font-bold tracking-tighter text-white hover:text-amber-400 transition-colors duration-300 leading-none py-2"
           >
             <span className="relative z-10 drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]">
               Let's talk
@@ -120,14 +120,14 @@ export const FooterSection: React.FC = () => {
                 rotate: isHovered ? 45 : 0,
               }}
               transition={{ type: 'spring', damping: 15, stiffness: 250 }}
-              className="w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full border-2 border-white/30 bg-white/10 backdrop-blur-xl flex items-center justify-center text-white group-hover/cta:bg-amber-400 group-hover/cta:text-black group-hover/cta:border-amber-400 shadow-2xl transition-colors duration-300"
+              className="w-11 h-11 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full border-2 border-white/30 bg-white/10 backdrop-blur-xl flex items-center justify-center text-white group-hover/cta:bg-amber-400 group-hover/cta:text-black group-hover/cta:border-amber-400 shadow-2xl transition-colors duration-300"
             >
-              <ArrowUpRight className="w-7 h-7 sm:w-10 sm:h-10 md:w-12 md:h-12" />
+              <ArrowUpRight className="w-5 h-5 sm:w-10 sm:h-10 md:w-12 md:h-12" />
             </motion.div>
           </a>
 
           {/* Quick Action Buttons Row */}
-          <div className="mt-10 pt-8 border-t border-white/15 flex flex-wrap items-center gap-4">
+          <div className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-white/15 flex flex-wrap items-center gap-3 sm:gap-4">
             <button
               onClick={handleCopyPhone}
               onMouseEnter={playHoverSound}

@@ -29,12 +29,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenMenu, isMenuOpen }) => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full z-40 px-6 sm:px-10 py-6 transition-all duration-500">
+    <header className="fixed top-0 left-0 w-full z-40 px-3 sm:px-10 py-3 sm:py-6 transition-all duration-500">
       <div
         className={`max-w-7xl mx-auto flex items-center justify-between transition-all duration-500 ${
           scrolled
-            ? 'bg-[#0f0f13]/90 backdrop-blur-xl border border-white/20 px-6 py-3.5 rounded-full shadow-2xl shadow-black/80'
-            : 'bg-black/30 backdrop-blur-md border border-white/10 px-5 py-3 rounded-full'
+            ? 'bg-[#0f0f13]/90 backdrop-blur-xl border border-white/20 px-4 sm:px-6 py-2.5 sm:py-3.5 rounded-full shadow-2xl shadow-black/80'
+            : 'bg-black/40 backdrop-blur-md border border-white/10 px-3.5 sm:px-5 py-2 sm:py-3 rounded-full'
         }`}
       >
         {/* THE HARSH EDITOR Brand Logo */}
@@ -45,8 +45,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenMenu, isMenuOpen }) => {
           className="group relative flex items-center space-x-2 text-white focus:outline-none"
           aria-label="The Harsh Editor Home"
         >
-          <div className="w-2.5 h-2.5 rounded-full bg-amber-400 group-hover:scale-125 transition-transform shadow-[0_0_8px_#fbbf24]" />
-          <span className="text-sm sm:text-base font-extrabold tracking-wider uppercase font-mono text-white group-hover:text-amber-400 transition-colors">
+          <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-amber-400 group-hover:scale-125 transition-transform shadow-[0_0_8px_#fbbf24]" />
+          <span className="text-xs sm:text-base font-extrabold tracking-wider uppercase font-mono text-white group-hover:text-amber-400 transition-colors">
             THE HARSH <span className="text-amber-400 font-black">EDITOR</span>
           </span>
         </a>

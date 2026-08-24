@@ -19,7 +19,7 @@ export const FeaturedProjects: React.FC = () => {
   };
 
   return (
-    <section id="projects" className="relative py-28 px-6 sm:px-12 md:px-16 z-10">
+    <section id="projects" className="relative py-20 sm:py-28 px-4 sm:px-12 md:px-16 z-10">
       <div className="max-w-6xl mx-auto w-full">
         {/* Section Title & Disclaimer */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-8 border-b border-white/15 gap-6 p-6 sm:p-8 rounded-3xl bg-black/40 border border-white/10 backdrop-blur-xl">

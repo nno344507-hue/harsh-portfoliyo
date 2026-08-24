@@ -60,7 +60,7 @@ export const LabsSection: React.FC = () => {
   ];
 
   return (
-    <section id="labs" className="relative py-28 px-6 sm:px-12 md:px-16 z-10">
+    <section id="labs" className="relative py-20 sm:py-28 px-4 sm:px-12 md:px-16 z-10">
       <div className="max-w-6xl mx-auto w-full">
         {/* Post Production Arsenal Header Card */}
         <div className="p-8 sm:p-14 rounded-3xl bg-[#111116]/95 border border-amber-500/30 mb-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-8 shadow-2xl backdrop-blur-2xl">

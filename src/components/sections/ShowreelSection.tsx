@@ -18,7 +18,7 @@ export const ShowreelSection: React.FC = () => {
   };
 
   return (
-    <section id="reel" className="relative py-28 px-6 sm:px-12 md:px-16 z-10">
+    <section id="reel" className="relative py-20 sm:py-28 px-4 sm:px-12 md:px-16 z-10">
       <div className="max-w-6xl mx-auto w-full">
         {/* Section Header */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16 p-8 rounded-3xl bg-black/40 border border-white/10 backdrop-blur-xl">
