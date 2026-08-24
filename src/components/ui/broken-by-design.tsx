@@ -809,21 +809,21 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
       // ignore
     }
 
-    // Zero-Gravity Slow-Motion Glass Splinters Confetti
+    // Zero-Gravity Ultra Slow-Motion Glass Splinters Confetti
     confetti({
-      particleCount: 110,
-      spread: 140,
-      startVelocity: 38,
-      ticks: 450,
-      gravity: 0.22,
-      decay: 0.95,
+      particleCount: 120,
+      spread: 150,
+      startVelocity: 28,
+      ticks: 600,
+      gravity: 0.14,
+      decay: 0.97,
       origin: { x: 0.5, y: 0.5 },
       colors: ['#ffffff', '#f59e0b', '#38bdf8', '#e2e8f0', '#fbbf24'],
       shapes: ['square'],
       scalar: 1.3,
     });
 
-    // Multi-Phase Slow-Motion 3D Glass Shatter Dispersal (2.5 seconds graceful float)
+    // Multi-Phase Ultra Slow-Motion 3D Glass Shatter Dispersal (4.2 seconds graceful float)
     const root = rootRef.current;
     if (root) {
       const shards = Array.from(root.querySelectorAll<HTMLElement>('[data-shard]'));
@@ -848,27 +848,33 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
               offset: 0,
             },
             {
-              transform: `translate3d(${ux * 240}px, ${uy * 240}px, 220px) rotateX(${randomRotX * 0.25}deg) rotateY(${randomRotY * 0.25}deg) scale(0.95)`,
+              transform: `translate3d(${ux * 180}px, ${uy * 180}px, 160px) rotateX(${randomRotX * 0.2}deg) rotateY(${randomRotY * 0.2}deg) scale(0.96)`,
               opacity: 1,
               filter: 'brightness(2.0) drop-shadow(0 0 25px rgba(245, 158, 11, 0.7))',
-              offset: 0.18,
+              offset: 0.2,
             },
             {
-              transform: `translate3d(${ux * 750}px, ${uy * 750}px, 480px) rotateX(${randomRotX * 0.65}deg) rotateY(${randomRotY * 0.65}deg) scale(0.72)`,
-              opacity: 0.85,
-              filter: 'brightness(1.6)',
-              offset: 0.6,
+              transform: `translate3d(${ux * 580}px, ${uy * 580}px, 380px) rotateX(${randomRotX * 0.55}deg) rotateY(${randomRotY * 0.55}deg) scale(0.8)`,
+              opacity: 0.9,
+              filter: 'brightness(1.7)',
+              offset: 0.55,
             },
             {
-              transform: `translate3d(${ux * 1700}px, ${uy * 1700}px, 900px) rotateX(${randomRotX}deg) rotateY(${randomRotY}deg) rotateZ(${randomRotZ}deg) scale(0.12)`,
+              transform: `translate3d(${ux * 1100}px, ${uy * 1100}px, 650px) rotateX(${randomRotX * 0.85}deg) rotateY(${randomRotY * 0.85}deg) scale(0.4)`,
+              opacity: 0.6,
+              filter: 'brightness(1.8)',
+              offset: 0.8,
+            },
+            {
+              transform: `translate3d(${ux * 1800}px, ${uy * 1800}px, 950px) rotateX(${randomRotX}deg) rotateY(${randomRotY}deg) rotateZ(${randomRotZ}deg) scale(0.08)`,
               opacity: 0,
-              filter: 'brightness(3.0) blur(16px)',
+              filter: 'brightness(3.0) blur(18px)',
               offset: 1,
             },
           ],
           {
-            duration: 2500, // 2.5s cinematic slow motion float!
-            easing: 'cubic-bezier(0.12, 0.85, 0.2, 1)',
+            duration: 4200, // 4.2s ultra slow motion float!
+            easing: 'cubic-bezier(0.08, 0.9, 0.18, 1)',
             fill: 'forwards',
           }
         );
@@ -883,7 +889,7 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
     // Call onEnter to crossfade into main portfolio website
     setTimeout(() => {
       if (onEnter) onEnter();
-    }, 1800);
+    }, 3000);
   };
 
   /* Portrait vs Landscape title node */
