@@ -571,8 +571,10 @@ function jitter(_seed: number) {
 }
 
 /* Highly Audible Realistic Broken Glass Touch & Edge Scrape Sound */
-function playGlassHoverChime(ctx: AudioContext) {
+function playGlassHoverChime() {
   try {
+    const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+    const ctx = new AudioCtx();
     const now = ctx.currentTime;
 
     // 1. Crystal Glass Edge Ping / Delicate Clink
@@ -593,23 +595,7 @@ function playGlassHoverChime(ctx: AudioContext) {
     pingOsc.start(now);
     pingOsc.stop(now + 0.09);
 
-    // 2. Secondary Harmonic Crystal Ping
-    const ping2 = ctx.createOscillator();
-    const ping2Gain = ctx.createGain();
-    ping2.type = 'triangle';
-    ping2.frequency.setValueAtTime(baseFreq * 1.5, now);
-    ping2.frequency.exponentialRampToValueAtTime(baseFreq * 1.4, now + 0.06);
-
-    ping2Gain.gain.setValueAtTime(0.18, now);
-    ping2Gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.06);
-
-    ping2.connect(ping2Gain);
-    ping2Gain.connect(ctx.destination);
-
-    ping2.start(now);
-    ping2.stop(now + 0.06);
-
-    // 3. Crisp Glass Friction & Edge Scratch
+    // 2. Crisp Glass Friction & Edge Scratch
     const size = Math.floor(ctx.sampleRate * 0.04);
     const buffer = ctx.createBuffer(1, size, ctx.sampleRate);
     const data = buffer.getChannelData(0);
@@ -634,43 +620,24 @@ function playGlassHoverChime(ctx: AudioContext) {
     noiseGain.connect(ctx.destination);
 
     noise.start(now);
+
+    setTimeout(() => {
+      ctx.close().catch(() => {});
+    }, 150);
   } catch {
     // ignore
   }
 }
 
 /* Standalone, 100% Reliable HTML5 Audio Player for YouTube Glass Shatter */
-let globalShatterAudio: HTMLAudioElement | null = null;
-
-function getShatterAudioInstance(): HTMLAudioElement | null {
-  if (typeof Audio === 'undefined') return null;
-  if (!globalShatterAudio) {
-    globalShatterAudio = new Audio('/sounds/glass-shatter.webm');
-    globalShatterAudio.preload = 'auto';
-    globalShatterAudio.load();
-  }
-  return globalShatterAudio;
-}
-
 function playUserGlassAudio() {
   try {
-    const audio = getShatterAudioInstance() || new Audio('/sounds/glass-shatter.webm');
+    const audio = new Audio('/sounds/glass-shatter.webm');
     audio.currentTime = 0.22; // exact impact point
     audio.volume = 1.0;
     const p = audio.play();
     if (p && typeof p.catch === 'function') {
       p.catch(() => {});
-    }
-  } catch {
-    // ignore
-  }
-}
-
-function stopAllIntroAudio() {
-  try {
-    if (globalShatterAudio) {
-      globalShatterAudio.pause();
-      globalShatterAudio.currentTime = 0;
     }
   } catch {
     // ignore
@@ -767,7 +734,9 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
 
     // Preload shatter audio
     try {
-      getShatterAudioInstance();
+      const a = new Audio('/sounds/glass-shatter.webm');
+      a.preload = 'auto';
+      a.load();
     } catch {
       // ignore
     }
@@ -914,7 +883,6 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
 
     // Crossfade to main website as the giant shard expands past the camera
     setTimeout(() => {
-      stopAllIntroAudio();
       if (onEnter) onEnter();
     }, 4800);
   };
@@ -1044,17 +1012,7 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
 
         // Play audible crisp glass friction & chime tone on hover!
         if (soundOn) {
-          try {
-            if (!audioRef.current || audioRef.current.state === 'closed') {
-              const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-              audioRef.current = new AudioCtx();
-            }
-            const ctx = audioRef.current;
-            if (ctx.state === 'suspended') ctx.resume().catch(() => {});
-            playGlassHoverChime(ctx);
-          } catch {
-            /* ignore */
-          }
+          playGlassHoverChime();
         }
       };
 
