@@ -775,13 +775,17 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
       scalar: 1.35,
     });
 
-    // Multi-Phase Super Ultra Slow-Motion 3D Glass Shatter Dispersal (9.5 seconds zero-G float)
+    // Multi-Phase Super Ultra Slow-Motion 3D Glass Shatter with Giant Zooming Hero Shard
     const root = rootRef.current;
     if (root) {
       const shards = Array.from(root.querySelectorAll<HTMLElement>('[data-shard]'));
       const P = setKey === 'mobile' ? MOBILE : DESKTOP;
       shards.forEach((el, i) => {
         const p = P[i];
+        const isHeroShard =
+          (setKey === 'desktop' && (p.id === 'desktop-05b' || p.id === 'desktop-04a')) ||
+          (setKey === 'mobile' && (p.id === 'mobile-04a' || p.id === 'mobile-02b'));
+
         const dx = p.cx - 50;
         const dy = p.cy - 50;
         const dist = Math.hypot(dx, dy) || 1;
@@ -791,45 +795,84 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
         const randomRotY = (Math.random() - 0.5) * 450;
         const randomRotZ = (Math.random() - 0.5) * 320;
 
-        el.animate(
-          [
+        if (isHeroShard) {
+          // HERO SHARD: Zooms directly into screen, expands huge across viewport, then dissolves into website
+          el.style.zIndex = '999';
+          el.animate(
+            [
+              {
+                transform: el.style.transform,
+                opacity: 1,
+                filter: 'brightness(2.2) drop-shadow(0 0 35px #fbbf24)',
+                offset: 0,
+              },
+              {
+                transform: `translate3d(${-p.x * 0.4}vw, ${-p.y * 0.3}vh, 250px) rotateX(12deg) rotateY(-10deg) scale(2.2)`,
+                opacity: 1,
+                filter: 'brightness(2.4) drop-shadow(0 0 50px rgba(245, 158, 11, 0.9))',
+                offset: 0.25,
+              },
+              {
+                transform: `translate3d(${-p.x * 0.6}vw, ${-p.y * 0.5}vh, 580px) rotateX(6deg) rotateY(-5deg) scale(6.8)`,
+                opacity: 0.95,
+                filter: 'brightness(2.6) drop-shadow(0 0 80px rgba(56, 189, 248, 0.8))',
+                offset: 0.62,
+              },
+              {
+                transform: `translate3d(${-p.x * 0.8}vw, ${-p.y * 0.7}vh, 1100px) rotateX(20deg) rotateY(-12deg) scale(18)`,
+                opacity: 0,
+                filter: 'brightness(3.5) blur(20px)',
+                offset: 1,
+              },
+            ],
             {
-              transform: el.style.transform,
-              opacity: 1,
-              filter: 'brightness(2.2) drop-shadow(0 0 35px #fbbf24)',
-              offset: 0,
-            },
+              duration: 8500, // 8.5s majestic slow motion hero zoom!
+              easing: 'cubic-bezier(0.08, 0.9, 0.16, 1)',
+              fill: 'forwards',
+            }
+          );
+        } else {
+          // SURROUNDING SHARDS: Float outward gracefully in zero-G
+          el.animate(
+            [
+              {
+                transform: el.style.transform,
+                opacity: 1,
+                filter: 'brightness(2.2) drop-shadow(0 0 35px #fbbf24)',
+                offset: 0,
+              },
+              {
+                transform: `translate3d(${ux * 120}px, ${uy * 120}px, 130px) rotateX(${randomRotX * 0.12}deg) rotateY(${randomRotY * 0.12}deg) scale(0.98)`,
+                opacity: 1,
+                filter: 'brightness(2.0) drop-shadow(0 0 25px rgba(245, 158, 11, 0.7))',
+                offset: 0.15,
+              },
+              {
+                transform: `translate3d(${ux * 360}px, ${uy * 360}px, 280px) rotateX(${randomRotX * 0.35}deg) rotateY(${randomRotY * 0.35}deg) scale(0.88)`,
+                opacity: 0.92,
+                filter: 'brightness(1.8)',
+                offset: 0.45,
+              },
+              {
+                transform: `translate3d(${ux * 750}px, ${uy * 750}px, 480px) rotateX(${randomRotX * 0.65}deg) rotateY(${randomRotY * 0.65}deg) scale(0.58)`,
+                opacity: 0.78,
+                filter: 'brightness(1.8)',
+                offset: 0.75,
+              },
+              {
+                transform: `translate3d(${ux * 1800}px, ${uy * 1800}px, 950px) rotateX(${randomRotX}deg) rotateY(${randomRotY}deg) rotateZ(${randomRotZ}deg) scale(0.04)`,
+                opacity: 0,
+                filter: 'brightness(3.0) blur(18px)',
+                offset: 1,
+              },
+            ],
             {
-              transform: `translate3d(${ux * 110}px, ${uy * 110}px, 120px) rotateX(${randomRotX * 0.12}deg) rotateY(${randomRotY * 0.12}deg) scale(0.98)`,
-              opacity: 1,
-              filter: 'brightness(2.0) drop-shadow(0 0 25px rgba(245, 158, 11, 0.7))',
-              offset: 0.15,
-            },
-            {
-              transform: `translate3d(${ux * 340}px, ${uy * 340}px, 260px) rotateX(${randomRotX * 0.35}deg) rotateY(${randomRotY * 0.35}deg) scale(0.88)`,
-              opacity: 0.95,
-              filter: 'brightness(1.8)',
-              offset: 0.45,
-            },
-            {
-              transform: `translate3d(${ux * 720}px, ${uy * 720}px, 450px) rotateX(${randomRotX * 0.65}deg) rotateY(${randomRotY * 0.65}deg) scale(0.6)`,
-              opacity: 0.8,
-              filter: 'brightness(1.8)',
-              offset: 0.75,
-            },
-            {
-              transform: `translate3d(${ux * 1800}px, ${uy * 1800}px, 950px) rotateX(${randomRotX}deg) rotateY(${randomRotY}deg) rotateZ(${randomRotZ}deg) scale(0.04)`,
-              opacity: 0,
-              filter: 'brightness(3.0) blur(18px)',
-              offset: 1,
-            },
-          ],
-          {
-            duration: 9500, // 9.5s super ultra slow motion float!
-            easing: 'cubic-bezier(0.04, 0.92, 0.12, 1)',
-            fill: 'forwards',
-          }
-        );
+              duration: 8500,
+              easing: 'cubic-bezier(0.05, 0.9, 0.15, 1)',
+              fill: 'forwards',
+            }
+          );
+        }
       });
     }
 
@@ -838,10 +881,10 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
       setScreenShake(false);
     }, 700);
 
-    // Call onEnter to crossfade into main portfolio website
+    // Crossfade to main website as the giant shard expands past the camera
     setTimeout(() => {
       if (onEnter) onEnter();
-    }, 5500);
+    }, 4800);
   };
 
   /* Portrait vs Landscape title node */
