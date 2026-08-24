@@ -605,70 +605,88 @@ function playGlassHoverChime(ctx: AudioContext) {
   noise.start(now);
 }
 
-/* Multi-layered Cinematic Slow-Motion Glass Shatter & Explosion Sound */
+/* Authentic Realistic Glass Block & Window Smashing Sound Synthesizer */
 function playEpicGlassShatter(ctx: AudioContext) {
   const now = ctx.currentTime;
 
-  // Layer 1: Heavy Cinematic Low-End Rumble Drone (2.2s slow-mo decay)
-  const bassOsc = ctx.createOscillator();
-  const bassGain = ctx.createGain();
-  bassOsc.type = 'sine';
-  bassOsc.frequency.setValueAtTime(110, now);
-  bassOsc.frequency.exponentialRampToValueAtTime(32, now + 2.0);
+  // 1. Initial Hard Strike / Hammer Impact on Glass Pane
+  const strikeOsc = ctx.createOscillator();
+  const strikeGain = ctx.createGain();
+  strikeOsc.type = 'triangle';
+  strikeOsc.frequency.setValueAtTime(320, now);
+  strikeOsc.frequency.exponentialRampToValueAtTime(75, now + 0.12);
+  strikeGain.gain.setValueAtTime(0.9, now);
+  strikeGain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+  strikeOsc.connect(strikeGain);
+  strikeGain.connect(ctx.destination);
+  strikeOsc.start(now);
+  strikeOsc.stop(now + 0.15);
 
-  bassGain.gain.setValueAtTime(0.75, now);
-  bassGain.gain.exponentialRampToValueAtTime(0.001, now + 2.2);
-
-  bassOsc.connect(bassGain);
-  bassGain.connect(ctx.destination);
-  bassOsc.start(now);
-  bassOsc.stop(now + 2.2);
-
-  // Layer 2: Initial Sharp High-Pass Glass Fracture Snap
-  const noiseSize = Math.floor(ctx.sampleRate * 0.9);
-  const noiseBuffer = ctx.createBuffer(1, noiseSize, ctx.sampleRate);
-  const noiseData = noiseBuffer.getChannelData(0);
-  for (let i = 0; i < noiseSize; i++) {
-    noiseData[i] = (Math.random() * 2 - 1) * (1 - i / noiseSize) ** 1.8;
+  // 2. High-Energy Crunchy Glass Fracture Burst (Sharp glass crunch & smash)
+  const smashBuffer = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.75), ctx.sampleRate);
+  const smashData = smashBuffer.getChannelData(0);
+  for (let i = 0; i < smashData.length; i++) {
+    smashData[i] = (Math.random() * 2 - 1) * (1 - i / smashData.length) ** 1.4;
   }
+  const smashSource = ctx.createBufferSource();
+  smashSource.buffer = smashBuffer;
 
-  const crashNoise = ctx.createBufferSource();
-  crashNoise.buffer = noiseBuffer;
+  const bandFilter = ctx.createBiquadFilter();
+  bandFilter.type = 'bandpass';
+  bandFilter.frequency.setValueAtTime(3800, now);
+  bandFilter.Q.setValueAtTime(1.8, now);
 
-  const crashFilter = ctx.createBiquadFilter();
-  crashFilter.type = 'highpass';
-  crashFilter.frequency.setValueAtTime(1900, now);
-  crashFilter.frequency.exponentialRampToValueAtTime(800, now + 0.8);
+  const highFilter = ctx.createBiquadFilter();
+  highFilter.type = 'highpass';
+  highFilter.frequency.setValueAtTime(2400, now);
 
-  const crashGain = ctx.createGain();
-  crashGain.gain.setValueAtTime(0.9, now);
-  crashGain.gain.exponentialRampToValueAtTime(0.001, now + 0.9);
+  const smashGain = ctx.createGain();
+  smashGain.gain.setValueAtTime(1.0, now);
+  smashGain.gain.exponentialRampToValueAtTime(0.001, now + 0.75);
 
-  crashNoise.connect(crashFilter);
-  crashFilter.connect(crashGain);
-  crashGain.connect(ctx.destination);
-  crashNoise.start(now);
+  smashSource.connect(bandFilter);
+  bandFilter.connect(highFilter);
+  highFilter.connect(smashGain);
+  smashGain.connect(ctx.destination);
+  smashSource.start(now);
 
-  // Layer 3: Cascading Slow-Motion Glass Shard Tinkles (spread across 2.2s)
-  const frequencies = [1600, 2100, 2800, 3500, 4200, 5100, 6200, 7400, 8500, 9200];
-  frequencies.forEach((freq, idx) => {
-    const delay = idx * 0.18 + Math.random() * 0.08;
+  // 3. Resonant Metallic & Crystal Ring Modes (Glass ringing during fracture)
+  const resonantModes = [2850, 4320, 5740, 7120, 8890, 10400];
+  resonantModes.forEach((freq) => {
     const osc = ctx.createOscillator();
     const g = ctx.createGain();
-
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(freq + (Math.random() - 0.5) * 300, now + delay);
-    osc.frequency.exponentialRampToValueAtTime(freq * 0.65, now + delay + 0.5);
-
-    g.gain.setValueAtTime(0.2, now + delay);
-    g.gain.exponentialRampToValueAtTime(0.0001, now + delay + 0.5);
-
+    osc.frequency.setValueAtTime(freq, now);
+    osc.frequency.exponentialRampToValueAtTime(freq * 0.95, now + 0.35);
+    g.gain.setValueAtTime(0.25, now);
+    g.gain.exponentialRampToValueAtTime(0.0001, now + 0.35);
     osc.connect(g);
     g.connect(ctx.destination);
-
-    osc.start(now + delay);
-    osc.stop(now + delay + 0.5);
+    osc.start(now);
+    osc.stop(now + 0.35);
   });
+
+  // 4. Realistic Falling & Scattering Glass Shards (35+ falling tinkles on the floor)
+  for (let i = 0; i < 38; i++) {
+    const delay = 0.05 + Math.pow(Math.random(), 1.6) * 1.5; // scattered over 1.5s
+    const shardOsc = ctx.createOscillator();
+    const shardGain = ctx.createGain();
+    const shardFreq = 2200 + Math.random() * 6500; // 2.2kHz - 8.7kHz crystal shards
+
+    shardOsc.type = Math.random() > 0.4 ? 'sine' : 'triangle';
+    shardOsc.frequency.setValueAtTime(shardFreq, now + delay);
+    shardOsc.frequency.exponentialRampToValueAtTime(shardFreq * 0.7, now + delay + 0.09);
+
+    const shardVol = 0.08 + Math.random() * 0.15;
+    shardGain.gain.setValueAtTime(shardVol, now + delay);
+    shardGain.gain.exponentialRampToValueAtTime(0.0001, now + delay + 0.09);
+
+    shardOsc.connect(shardGain);
+    shardGain.connect(ctx.destination);
+
+    shardOsc.start(now + delay);
+    shardOsc.stop(now + delay + 0.09);
+  }
 }
 
 type SpringState = { rx: number; ry: number; tz: number; px: number; py: number; sc: number };
