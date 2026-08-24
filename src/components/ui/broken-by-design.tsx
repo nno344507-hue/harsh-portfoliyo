@@ -1092,12 +1092,35 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
         <div className="bbd2-stage">
           {ready && (
             <>
-              {/* Exposed word in the gaps: transitions to ENTERING PORTFOLIO on shatter */}
+              {/* Exposed word in the gaps: transitions to ENTERING PORTFOLIO with infinite neon glow pulse */}
               <div className="bbd2-title bbd2-title--under" aria-hidden="true">
                 {isShattered ? (
-                  <span className="text-amber-400 font-extrabold tracking-widest animate-pulse drop-shadow-[0_0_35px_rgba(245,158,11,0.9)]">
+                  <motion.span
+                    initial={{ scale: 0.95, opacity: 0 }}
+                    animate={{
+                      scale: [1, 1.07, 0.98, 1.05, 1],
+                      opacity: [0.9, 1, 0.85, 1, 0.9],
+                      filter: [
+                        'drop-shadow(0 0 20px rgba(245,158,11,0.8)) drop-shadow(0 0 40px rgba(245,158,11,0.5))',
+                        'drop-shadow(0 0 45px rgba(245,158,11,1)) drop-shadow(0 0 80px rgba(56,189,248,0.9)) drop-shadow(0 0 120px rgba(245,158,11,0.8))',
+                        'drop-shadow(0 0 25px rgba(245,158,11,0.8)) drop-shadow(0 0 50px rgba(56,189,248,0.6))',
+                        'drop-shadow(0 0 50px rgba(245,158,11,1)) drop-shadow(0 0 90px rgba(245,158,11,0.9))',
+                        'drop-shadow(0 0 20px rgba(245,158,11,0.8)) drop-shadow(0 0 40px rgba(245,158,11,0.5))',
+                      ],
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                    }}
+                    className="inline-block text-amber-300 font-black tracking-[0.16em] uppercase"
+                    style={{
+                      textShadow:
+                        '0 0 20px #f59e0b, 0 0 45px #f59e0b, 0 0 75px #38bdf8',
+                    }}
+                  >
                     ENTERING PORTFOLIO...
-                  </span>
+                  </motion.span>
                 ) : (
                   titleNode
                 )}
