@@ -771,6 +771,11 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
       clearTimeout(timeout);
       window.removeEventListener('pointermove', unlockAudio);
       window.removeEventListener('pointerdown', unlockAudio);
+      try {
+        if (audioRef.current && audioRef.current.state !== 'closed') {
+          audioRef.current.close().catch(() => {});
+        }
+      } catch {}
     };
   }, [assetsBase, setKey]);
 
@@ -1092,35 +1097,32 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
         <div className="bbd2-stage">
           {ready && (
             <>
-              {/* Exposed word in the gaps: transitions to ENTERING PORTFOLIO with infinite neon glow pulse */}
+              {/* Exposed word in the gaps: transitions to ENTERING PORTFOLIO with slow, gentle breathing glow */}
               <div className="bbd2-title bbd2-title--under" aria-hidden="true">
                 {isShattered ? (
-                  <motion.span
-                    initial={{ scale: 0.95, opacity: 0 }}
+                  <motion.div
+                    initial={{ scale: 0.92, opacity: 0 }}
                     animate={{
-                      scale: [1, 1.07, 0.98, 1.05, 1],
-                      opacity: [0.9, 1, 0.85, 1, 0.9],
+                      scale: [1, 1.03, 1],
+                      opacity: [0.85, 1, 0.85],
                       filter: [
-                        'drop-shadow(0 0 20px rgba(245,158,11,0.8)) drop-shadow(0 0 40px rgba(245,158,11,0.5))',
-                        'drop-shadow(0 0 45px rgba(245,158,11,1)) drop-shadow(0 0 80px rgba(56,189,248,0.9)) drop-shadow(0 0 120px rgba(245,158,11,0.8))',
-                        'drop-shadow(0 0 25px rgba(245,158,11,0.8)) drop-shadow(0 0 50px rgba(56,189,248,0.6))',
-                        'drop-shadow(0 0 50px rgba(245,158,11,1)) drop-shadow(0 0 90px rgba(245,158,11,0.9))',
-                        'drop-shadow(0 0 20px rgba(245,158,11,0.8)) drop-shadow(0 0 40px rgba(245,158,11,0.5))',
+                        'drop-shadow(0 0 12px rgba(245,158,11,0.5)) drop-shadow(0 0 25px rgba(245,158,11,0.3))',
+                        'drop-shadow(0 0 30px rgba(245,158,11,0.85)) drop-shadow(0 0 55px rgba(56,189,248,0.6))',
+                        'drop-shadow(0 0 12px rgba(245,158,11,0.5)) drop-shadow(0 0 25px rgba(245,158,11,0.3))',
                       ],
                     }}
                     transition={{
-                      duration: 1.5,
+                      duration: 3.2, // slow, gentle, relaxed breathing glow!
                       repeat: Infinity,
                       ease: 'easeInOut',
                     }}
-                    className="inline-block text-amber-300 font-black tracking-[0.16em] uppercase"
+                    className="flex items-center justify-center !text-lg sm:!text-2xl md:!text-3xl text-amber-300 font-bold tracking-[0.25em] uppercase font-mono"
                     style={{
-                      textShadow:
-                        '0 0 20px #f59e0b, 0 0 45px #f59e0b, 0 0 75px #38bdf8',
+                      textShadow: '0 0 15px #f59e0b, 0 0 30px rgba(245,158,11,0.6)',
                     }}
                   >
                     ENTERING PORTFOLIO...
-                  </motion.span>
+                  </motion.div>
                 ) : (
                   titleNode
                 )}

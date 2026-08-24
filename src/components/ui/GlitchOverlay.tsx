@@ -13,38 +13,6 @@ export const GlitchOverlay: React.FC<GlitchOverlayProps> = ({ active, onComplete
     if (active) {
       setShow(true);
 
-      // Play subtle high-tech digital glitch zap audio
-      try {
-        const ctx = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
-        const now = ctx.currentTime;
-
-        const size = Math.floor(ctx.sampleRate * 0.25);
-        const buffer = ctx.createBuffer(1, size, ctx.sampleRate);
-        const data = buffer.getChannelData(0);
-        for (let i = 0; i < size; i++) {
-          data[i] = (Math.random() * 2 - 1) * (1 - i / size);
-        }
-
-        const noise = ctx.createBufferSource();
-        noise.buffer = buffer;
-
-        const filter = ctx.createBiquadFilter();
-        filter.type = 'bandpass';
-        filter.frequency.setValueAtTime(3200, now);
-        filter.frequency.exponentialRampToValueAtTime(1200, now + 0.25);
-
-        const gain = ctx.createGain();
-        gain.gain.setValueAtTime(0.4, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
-
-        noise.connect(filter);
-        filter.connect(gain);
-        gain.connect(ctx.destination);
-        noise.start(now);
-      } catch {
-        // ignore
-      }
-
       const timer = setTimeout(() => {
         setShow(false);
         if (onComplete) onComplete();
