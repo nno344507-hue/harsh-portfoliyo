@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy-github": "node scripts/push_repo.cjs"
   },
   "dependencies": {
     "@react-three/drei": "^9.106.0",
