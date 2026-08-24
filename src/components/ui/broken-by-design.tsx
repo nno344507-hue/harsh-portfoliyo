@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Volume2, VolumeX } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 /* Inlined styles for self-contained 3D Glass Fracture */
 const BBD2_CSS = `/* broken by design. ---------------------------------------------------- */
@@ -760,20 +759,6 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
     } catch {
       playUserGlassAudio(null);
     }
-
-    // Zero-Gravity Super Ultra Slow-Motion Glass Splinters Confetti
-    confetti({
-      particleCount: 140,
-      spread: 170,
-      startVelocity: 20,
-      ticks: 1000,
-      gravity: 0.05,
-      decay: 0.99,
-      origin: { x: 0.5, y: 0.5 },
-      colors: ['#ffffff', '#f59e0b', '#38bdf8', '#e2e8f0', '#fbbf24'],
-      shapes: ['square'],
-      scalar: 1.35,
-    });
 
     // Multi-Phase Super Ultra Slow-Motion 3D Glass Shatter with Giant Zooming Hero Shard
     const root = rootRef.current;
