@@ -605,31 +605,31 @@ function playGlassHoverChime(ctx: AudioContext) {
   noise.start(now);
 }
 
-/* Multi-layered Heavy Cinematic Glass Shatter & Explosion Sound */
+/* Multi-layered Cinematic Slow-Motion Glass Shatter & Explosion Sound */
 function playEpicGlassShatter(ctx: AudioContext) {
   const now = ctx.currentTime;
 
-  // Layer 1: Heavy Sub-Bass Impact Thud
+  // Layer 1: Heavy Cinematic Low-End Rumble Drone (2.2s slow-mo decay)
   const bassOsc = ctx.createOscillator();
   const bassGain = ctx.createGain();
   bassOsc.type = 'sine';
-  bassOsc.frequency.setValueAtTime(140, now);
-  bassOsc.frequency.exponentialRampToValueAtTime(35, now + 0.35);
+  bassOsc.frequency.setValueAtTime(110, now);
+  bassOsc.frequency.exponentialRampToValueAtTime(32, now + 2.0);
 
-  bassGain.gain.setValueAtTime(0.7, now);
-  bassGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+  bassGain.gain.setValueAtTime(0.75, now);
+  bassGain.gain.exponentialRampToValueAtTime(0.001, now + 2.2);
 
   bassOsc.connect(bassGain);
   bassGain.connect(ctx.destination);
   bassOsc.start(now);
-  bassOsc.stop(now + 0.4);
+  bassOsc.stop(now + 2.2);
 
-  // Layer 2: High-Pass Violent Glass Fracture Crash
-  const noiseSize = Math.floor(ctx.sampleRate * 0.6);
+  // Layer 2: Initial Sharp High-Pass Glass Fracture Snap
+  const noiseSize = Math.floor(ctx.sampleRate * 0.9);
   const noiseBuffer = ctx.createBuffer(1, noiseSize, ctx.sampleRate);
   const noiseData = noiseBuffer.getChannelData(0);
   for (let i = 0; i < noiseSize; i++) {
-    noiseData[i] = (Math.random() * 2 - 1) * (1 - i / noiseSize) ** 1.3;
+    noiseData[i] = (Math.random() * 2 - 1) * (1 - i / noiseSize) ** 1.8;
   }
 
   const crashNoise = ctx.createBufferSource();
@@ -637,36 +637,37 @@ function playEpicGlassShatter(ctx: AudioContext) {
 
   const crashFilter = ctx.createBiquadFilter();
   crashFilter.type = 'highpass';
-  crashFilter.frequency.setValueAtTime(2200, now);
+  crashFilter.frequency.setValueAtTime(1900, now);
+  crashFilter.frequency.exponentialRampToValueAtTime(800, now + 0.8);
 
   const crashGain = ctx.createGain();
-  crashGain.gain.setValueAtTime(0.85, now);
-  crashGain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
+  crashGain.gain.setValueAtTime(0.9, now);
+  crashGain.gain.exponentialRampToValueAtTime(0.001, now + 0.9);
 
   crashNoise.connect(crashFilter);
   crashFilter.connect(crashGain);
   crashGain.connect(ctx.destination);
   crashNoise.start(now);
 
-  // Layer 3: Cascading Tinkling Crystal Glass Splinters
-  const frequencies = [2400, 3200, 4100, 5200, 6400, 7800];
+  // Layer 3: Cascading Slow-Motion Glass Shard Tinkles (spread across 2.2s)
+  const frequencies = [1600, 2100, 2800, 3500, 4200, 5100, 6200, 7400, 8500, 9200];
   frequencies.forEach((freq, idx) => {
-    const delay = idx * 0.04 + Math.random() * 0.03;
+    const delay = idx * 0.18 + Math.random() * 0.08;
     const osc = ctx.createOscillator();
     const g = ctx.createGain();
 
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(freq + (Math.random() - 0.5) * 400, now + delay);
-    osc.frequency.exponentialRampToValueAtTime(freq * 0.7, now + delay + 0.25);
+    osc.frequency.setValueAtTime(freq + (Math.random() - 0.5) * 300, now + delay);
+    osc.frequency.exponentialRampToValueAtTime(freq * 0.65, now + delay + 0.5);
 
-    g.gain.setValueAtTime(0.25, now + delay);
-    g.gain.exponentialRampToValueAtTime(0.0001, now + delay + 0.25);
+    g.gain.setValueAtTime(0.2, now + delay);
+    g.gain.exponentialRampToValueAtTime(0.0001, now + delay + 0.5);
 
     osc.connect(g);
     g.connect(ctx.destination);
 
     osc.start(now + delay);
-    osc.stop(now + delay + 0.25);
+    osc.stop(now + delay + 0.5);
   });
 }
 
@@ -757,7 +758,7 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
     };
   }, [assetsBase, setKey]);
 
-  /* Dramatic High-Impact Shatter & Enter Handler */
+  /* Cinematic Slow-Motion Shatter & Enter Handler */
   const handleShatter = () => {
     if (isShattered) return;
     setIsShattered(true);
@@ -773,18 +774,21 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
       // ignore
     }
 
-    // Explode sharp silver & amber glass splinter particles across screen
+    // Zero-Gravity Slow-Motion Glass Splinters Confetti
     confetti({
-      particleCount: 85,
-      spread: 120,
-      startVelocity: 60,
+      particleCount: 110,
+      spread: 140,
+      startVelocity: 38,
+      ticks: 450,
+      gravity: 0.22,
+      decay: 0.95,
       origin: { x: 0.5, y: 0.5 },
       colors: ['#ffffff', '#f59e0b', '#38bdf8', '#e2e8f0', '#fbbf24'],
       shapes: ['square'],
-      scalar: 1.2,
+      scalar: 1.3,
     });
 
-    // High-Velocity 3D Physical Shard Dispersal
+    // Multi-Phase Slow-Motion 3D Glass Shatter Dispersal (2.5 seconds graceful float)
     const root = rootRef.current;
     if (root) {
       const shards = Array.from(root.querySelectorAll<HTMLElement>('[data-shard]'));
@@ -796,26 +800,40 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
         const dist = Math.hypot(dx, dy) || 1;
         const ux = dx / dist;
         const uy = dy / dist;
-        const randomRotX = (Math.random() - 0.5) * 540;
-        const randomRotY = (Math.random() - 0.5) * 540;
-        const randomRotZ = (Math.random() - 0.5) * 360;
+        const randomRotX = (Math.random() - 0.5) * 450;
+        const randomRotY = (Math.random() - 0.5) * 450;
+        const randomRotZ = (Math.random() - 0.5) * 320;
 
         el.animate(
           [
             {
               transform: el.style.transform,
               opacity: 1,
-              filter: 'brightness(2.2) drop-shadow(0 0 40px #fbbf24)',
+              filter: 'brightness(2.2) drop-shadow(0 0 35px #fbbf24)',
+              offset: 0,
             },
             {
-              transform: `translate3d(${ux * 1400}px, ${uy * 1400}px, 800px) rotateX(${randomRotX}deg) rotateY(${randomRotY}deg) rotateZ(${randomRotZ}deg) scale(0.15)`,
+              transform: `translate3d(${ux * 240}px, ${uy * 240}px, 220px) rotateX(${randomRotX * 0.25}deg) rotateY(${randomRotY * 0.25}deg) scale(0.95)`,
+              opacity: 1,
+              filter: 'brightness(2.0) drop-shadow(0 0 25px rgba(245, 158, 11, 0.7))',
+              offset: 0.18,
+            },
+            {
+              transform: `translate3d(${ux * 750}px, ${uy * 750}px, 480px) rotateX(${randomRotX * 0.65}deg) rotateY(${randomRotY * 0.65}deg) scale(0.72)`,
+              opacity: 0.85,
+              filter: 'brightness(1.6)',
+              offset: 0.6,
+            },
+            {
+              transform: `translate3d(${ux * 1700}px, ${uy * 1700}px, 900px) rotateX(${randomRotX}deg) rotateY(${randomRotY}deg) rotateZ(${randomRotZ}deg) scale(0.12)`,
               opacity: 0,
-              filter: 'brightness(3.0) blur(18px)',
+              filter: 'brightness(3.0) blur(16px)',
+              offset: 1,
             },
           ],
           {
-            duration: 900,
-            easing: 'cubic-bezier(0.1, 0.9, 0.2, 1)',
+            duration: 2500, // 2.5s cinematic slow motion float!
+            easing: 'cubic-bezier(0.12, 0.85, 0.2, 1)',
             fill: 'forwards',
           }
         );
@@ -825,12 +843,12 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
     setTimeout(() => {
       setFlash(false);
       setScreenShake(false);
-    }, 450);
+    }, 600);
 
-    // Call onEnter to reveal main portfolio website
+    // Call onEnter to crossfade into main portfolio website
     setTimeout(() => {
       if (onEnter) onEnter();
-    }, 800);
+    }, 1800);
   };
 
   /* Portrait vs Landscape title node */
