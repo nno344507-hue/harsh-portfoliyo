@@ -72,7 +72,8 @@ const BBD2_CSS = `/* broken by design. -----------------------------------------
 
 .bbd2-title--under span,
 .bbd2-title--under .bbd2-stack {
-  color: rgba(188, 198, 220, 0.22);
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 0 25px rgba(245, 158, 11, 0.5), 0 0 45px rgba(56, 189, 248, 0.35);
 }
 
 .bbd2--portrait .bbd2-title,
@@ -205,15 +206,13 @@ const BBD2_CSS = `/* broken by design. -----------------------------------------
 
 .bbd2-slice > span,
 .bbd2-slice > .bbd2-stack {
-  color: rgba(255, 255, 255, 0.9);
-  mix-blend-mode: screen;
-  filter: blur(0.3px);
+  color: #ffffff;
   transform: var(--jt);
-  text-shadow: 0 0 18px rgba(245, 158, 11, 0.5);
+  text-shadow: 0 0 12px rgba(245, 158, 11, 0.6), 0 0 25px rgba(255, 255, 255, 0.4);
 }
 
 .bbd2-slice > .bbd2-stack {
-  transform: var(--jt) rotate(-6deg);
+  transform: var(--jt) rotate(-3deg);
 }
 
 .bbd2-specular {
@@ -556,15 +555,11 @@ const BASE_POSE: Record<string, Partial<SpringState>> = {
   'mobile-01b': { rx: -2, ry: 2.6, tz: 10 },
 };
 
-function jitter(seed: number) {
-  const r = (n: number) => {
-    const s = Math.sin(seed * 127.1 + n * 311.7) * 43758.5453;
-    return s - Math.floor(s);
-  };
+function jitter(_seed: number) {
   return {
-    tx: (r(1) - 0.5) * 24,
-    ty: (r(2) - 0.5) * 18,
-    rot: (r(3) - 0.5) * 4.8,
+    tx: 0,
+    ty: 0,
+    rot: 0,
   };
 }
 
