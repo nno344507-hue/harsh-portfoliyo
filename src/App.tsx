@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
 import { AudioProvider } from './context/AudioContext';
 import { SmoothScroll } from './components/ui/SmoothScroll';
 import { CustomCursor } from './components/ui/CustomCursor';
@@ -12,8 +12,10 @@ import { FeaturedProjects } from './components/sections/FeaturedProjects';
 import { AboutSection } from './components/sections/AboutSection';
 import { LabsSection } from './components/sections/LabsSection';
 import { FooterSection } from './components/sections/FooterSection';
+import { BrokenByDesign } from './components/ui/broken-by-design';
 
 export const App: React.FC = () => {
+  const [isEntered, setIsEntered] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [timecode, setTimecode] = useState('00:00:00:00');
 
@@ -51,6 +53,23 @@ export const App: React.FC = () => {
 
   return (
     <AudioProvider>
+      {/* 3D Broken Glass Entry Gate */}
+      <AnimatePresence>
+        {!isEntered && (
+          <motion.div
+            key="glass-gate"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.8, ease: 'easeInOut' } }}
+            className="fixed inset-0 z-[100]"
+          >
+            <BrokenByDesign
+              title="VIEW HARSH PORTFOLIO"
+              onEnter={() => setIsEntered(true)}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <SmoothScroll>
         <div className="relative min-h-screen bg-[#060608] text-white selection:bg-amber-400 selection:text-black overflow-x-hidden">
           {/* Subtle noise grain texture overlay */}
