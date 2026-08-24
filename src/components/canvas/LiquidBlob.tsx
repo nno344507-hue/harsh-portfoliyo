@@ -2,7 +2,7 @@ import React, { useRef, useMemo } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
-// Custom GLSL Shaders for 3D liquid organic mesh with chromatic amber/cyan refraction
+// Custom GLSL Shaders for 3D Kinetic Motion Ribbon / Film Wave with chromatic amber/cyan refraction
 const vertexShader = `
   uniform float uTime;
   uniform vec2 uPointer;
@@ -12,57 +12,7 @@ const vertexShader = `
   varying vec3 vNormal;
   varying vec3 vPosition;
   varying vec2 vUv;
-  varying float vDisplacement;
-
-  // Simplex 3D noise functions
-  vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
-  vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
-
-  float snoise(vec3 v){
-    const vec2 C = vec2(1.0/6.0, 1.0/3.0);
-    const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
-    vec3 i  = floor(v + dot(v, C.yyy));
-    vec3 x0 = v - i + dot(i, C.xxx);
-    vec3 g = step(x0.yzx, x0.xyz);
-    vec3 l = 1.0 - g;
-    vec3 i1 = min(g.xyz, l.zxy);
-    vec3 i2 = max(g.xyz, l.zxy);
-    vec3 x1 = x0 - i1 + 1.0 * C.xxx;
-    vec3 x2 = x0 - i2 + 2.0 * C.xxx;
-    vec3 x3 = x0 - 1.0 + 3.0 * C.xxx;
-    i = mod(i, 289.0);
-    vec4 p = permute(permute(permute(
-              i.z + vec4(0.0, i1.z, i2.z, 1.0))
-            + i.y + vec4(0.0, i1.y, i2.y, 1.0))
-            + i.x + vec4(0.0, i1.x, i2.x, 1.0));
-    float n_ = 0.142857142857;
-    vec3 ns = n_ * D.wyz - D.xzx;
-    vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
-    vec4 x_ = floor(j * ns.z);
-    vec4 y_ = floor(j - 7.0 * x_);
-    vec4 x = x_ *ns.x + ns.yyyy;
-    vec4 y = y_ *ns.x + ns.yyyy;
-    vec4 h = 1.0 - abs(x) - abs(y);
-    vec4 b0 = vec4(x.xy, y.xy);
-    vec4 b1 = vec4(x.zw, y.zw);
-    vec4 s0 = floor(b0)*2.0 + 1.0;
-    vec4 s1 = floor(b1)*2.0 + 1.0;
-    vec4 sh = -step(h, vec4(0.0));
-    vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy;
-    vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww;
-    vec3 p0 = vec3(a0.xy, h.x);
-    vec3 p1 = vec3(a0.zw, h.y);
-    vec3 p2 = vec3(a1.xy, h.z);
-    vec3 p3 = vec3(a1.zw, h.w);
-    vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
-    p0 *= norm.x;
-    p1 *= norm.y;
-    p2 *= norm.z;
-    p3 *= norm.w;
-    vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
-    m = m * m;
-    return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
-  }
+  varying float vWave;
 
   void main() {
     vUv = uv;
@@ -70,18 +20,20 @@ const vertexShader = `
     vPosition = position;
 
     vec3 pos = position;
-    float noiseFreq = 1.1;
-    float noiseAmp = 0.32 + uDistortion * 0.2;
     
-    // Dynamic mouse proximity deformation
-    float mouseDist = length(pos.xy - vec3(uPointer * 2.2, 0.0).xy);
-    float mouseInfluence = smoothstep(2.2, 0.0, mouseDist) * 0.35;
+    // Wave motion equations simulating kinetic timeline soundwaves & film flow
+    float wave1 = sin(pos.x * 2.5 + pos.y * 1.5 + uTime * 1.2) * 0.18;
+    float wave2 = cos(pos.z * 3.0 + pos.x * 1.8 + uTime * 0.9) * 0.12;
+    float wave3 = sin(pos.y * 4.0 + uTime * 1.5 + uScroll * 4.0) * 0.08;
+    
+    // Mouse proximity repulsion and wave ripple
+    float mouseDist = length(pos.xy - vec3(uPointer * 2.5, 0.0).xy);
+    float mouseInfluence = smoothstep(2.5, 0.0, mouseDist) * 0.25;
 
-    float displacement = snoise(pos * noiseFreq + vec3(uTime * 0.3, uTime * 0.2 + uScroll * 0.3, uTime * 0.25)) * noiseAmp;
-    displacement += mouseInfluence;
-    
-    vDisplacement = displacement;
-    vec3 newPosition = pos + normal * displacement;
+    float totalWave = (wave1 + wave2 + wave3) * (1.0 + uDistortion * 0.5) + mouseInfluence;
+    vWave = totalWave;
+
+    vec3 newPosition = pos + normal * totalWave;
 
     gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
   }
@@ -93,41 +45,89 @@ const fragmentShader = `
   varying vec3 vNormal;
   varying vec3 vPosition;
   varying vec2 vUv;
-  varying float vDisplacement;
+  varying float vWave;
 
   void main() {
     vec3 viewDir = normalize(-vPosition);
     vec3 normal = normalize(vNormal);
 
-    // Fresnel rim refraction
-    float fresnel = pow(1.0 - max(0.0, dot(viewDir, normal)), 3.0);
+    // Fresnel rim light computation
+    float fresnel = pow(1.0 - max(dot(viewDir, normal), 0.0), 2.8);
+    float innerRim = pow(1.0 - max(dot(viewDir, normal), 0.0), 1.2);
 
-    // Vibrant Lusion palette: deep charcoal, warm amber, and electric cyan/blue
-    vec3 darkObsidian = vec3(0.04, 0.045, 0.06);
-    vec3 darkMetallic = vec3(0.12, 0.14, 0.18);
-    vec3 amberCore   = vec3(0.95, 0.55, 0.15);
-    vec3 electricCyan = vec3(0.2, 0.65, 0.95);
-    vec3 glassHighlight = vec3(0.9, 0.95, 1.0);
+    // Deep Obsidian / Dark Metallic Base
+    vec3 obsidianBase = vec3(0.04, 0.04, 0.06);
 
-    float colorMix = sin(vDisplacement * 4.0 + uTime * 0.7) * 0.5 + 0.5;
-    vec3 baseColor = mix(darkObsidian, darkMetallic, colorMix);
+    // Amber Golden Glow (Harsh Editor Branding)
+    vec3 amberColor = vec3(0.98, 0.75, 0.15);
 
-    // Specular lighting
-    vec3 lightDir = normalize(vec3(1.0, 1.5, 2.0));
-    float diff = max(dot(normal, lightDir), 0.0);
-    vec3 diffuse = diff * vec3(0.2, 0.25, 0.32);
+    // Cyan Neon Accent
+    vec3 cyanColor = vec3(0.15, 0.85, 0.95);
 
-    // Iridescent rim effect
-    vec3 rimColor = mix(amberCore, electricCyan, colorMix);
-    vec3 finalColor = baseColor + diffuse + fresnel * rimColor * 0.95 + pow(fresnel, 5.0) * glassHighlight * 0.5;
+    // Kinetic wireframe / chromatic wave pulses
+    float pulse = sin(vUv.x * 40.0 + uTime * 2.0) * 0.5 + 0.5;
+    float scanline = step(0.92, sin(vUv.y * 80.0 + uTime * 1.5));
 
-    gl_FragColor = vec4(finalColor, 0.88);
+    // Dynamic color mixing
+    vec3 color = obsidianBase;
+    
+    // Mix Amber and Cyan along waves
+    vec3 waveColor = mix(amberColor, cyanColor, smoothstep(-0.2, 0.2, vWave));
+    
+    // Apply Fresnel and wave illumination
+    color += waveColor * fresnel * 1.4;
+    color += amberColor * innerRim * 0.25;
+    color += vec3(1.0) * scanline * 0.15 * fresnel;
+
+    // Specular highlight from camera direction
+    vec3 lightDir = normalize(vec3(1.0, 1.5, 1.2));
+    vec3 halfVector = normalize(lightDir + viewDir);
+    float specular = pow(max(dot(normal, halfVector), 0.0), 32.0);
+    color += amberColor * specular * 0.6;
+
+    // Alpha transparency with glowing rims
+    float alpha = smoothstep(0.0, 0.6, fresnel * 0.9 + 0.25);
+
+    gl_FragColor = vec4(color, alpha);
   }
 `;
 
 export const LiquidBlob: React.FC = () => {
   const meshRef = useRef<THREE.Mesh>(null);
-  const { viewport } = useThree();
+  const wireframeRef = useRef<THREE.Mesh>(null);
+  const ringRef = useRef<THREE.Mesh>(null);
+  const materialRef = useRef<THREE.ShaderMaterial>(null);
+
+  const { pointer } = useThree();
+
+  // Scroll tracking state
+  const scrollRef = useRef(0);
+  const targetScrollRef = useRef(0);
+  const distortionRef = useRef(0);
+
+  // Smooth mouse inertia
+  const smoothPointer = useRef(new THREE.Vector2(0, 0));
+
+  React.useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const currentScroll = window.scrollY;
+      const progress = Math.min(Math.max(currentScroll / maxScroll, 0), 1);
+      targetScrollRef.current = progress;
+
+      // Scroll speed distortion impulse
+      const delta = Math.abs(currentScroll - lastScrollY);
+      distortionRef.current = Math.min(distortionRef.current + delta * 0.003, 1.2);
+      lastScrollY = currentScroll;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const uniforms = useMemo(
     () => ({
@@ -139,79 +139,137 @@ export const LiquidBlob: React.FC = () => {
     []
   );
 
-  useFrame((state) => {
-    if (!meshRef.current) return;
-
+  useFrame((state, delta) => {
     const time = state.clock.getElapsedTime();
-    uniforms.uTime.value = time;
 
-    // Smooth pointer lerp
-    uniforms.uPointer.value.lerp(new THREE.Vector2(state.pointer.x, state.pointer.y), 0.07);
+    // Smooth scroll interpolation
+    scrollRef.current += (targetScrollRef.current - scrollRef.current) * 0.06;
 
-    // Normalized scroll progression (0.0 at top to 1.0 at footer bottom)
-    const scrollY = window.scrollY || 0;
-    const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-    const scrollProgress = scrollY / maxScroll;
-    uniforms.uScroll.value = THREE.MathUtils.lerp(uniforms.uScroll.value, scrollProgress * 3.0, 0.05);
+    // Decay distortion
+    distortionRef.current = Math.max(0, distortionRef.current - delta * 1.8);
 
-    // Mesh continuous fluid rotation
-    meshRef.current.rotation.y = time * 0.08 + state.pointer.x * 0.25;
-    meshRef.current.rotation.x = Math.sin(time * 0.05) * 0.18 - state.pointer.y * 0.2;
-    meshRef.current.rotation.z = time * 0.04;
+    // Smooth pointer inertia
+    smoothPointer.current.x += (pointer.x - smoothPointer.current.x) * 0.05;
+    smoothPointer.current.y += (pointer.y - smoothPointer.current.y) * 0.05;
 
-    // Smart Continuous Path across all sections, including the Footer at scrollProgress = 1.0!
-    // Hero (0.0): X ~ 1.2, Y ~ 0.0
-    // Featured (0.4): X ~ -1.0, Y ~ 0.2
-    // About/Labs (0.75): X ~ 0.8, Y ~ -0.2
-    // Footer (0.9 - 1.0): X ~ 0.3, Y ~ 0.15 (DIRECTLY behind "Let's talk" card!)
-    let targetX = 1.2;
-    let targetY = 0.0;
-    let targetZ = -0.5;
-
-    if (scrollProgress < 0.25) {
-      // Hero to Showreel
-      const t = scrollProgress / 0.25;
-      targetX = THREE.MathUtils.lerp(1.2, 1.4, t);
-      targetY = THREE.MathUtils.lerp(0.0, -0.2, t);
-    } else if (scrollProgress < 0.6) {
-      // Projects section
-      const t = (scrollProgress - 0.25) / 0.35;
-      targetX = THREE.MathUtils.lerp(1.4, -1.0, t);
-      targetY = THREE.MathUtils.lerp(-0.2, 0.2, t);
-    } else if (scrollProgress < 0.85) {
-      // About & Labs section
-      const t = (scrollProgress - 0.6) / 0.25;
-      targetX = THREE.MathUtils.lerp(-1.0, 0.9, t);
-      targetY = THREE.MathUtils.lerp(0.2, -0.1, t);
-    } else {
-      // Footer section (Let's talk) - Placed directly behind the Let's talk card!
-      const t = (scrollProgress - 0.85) / 0.15;
-      targetX = THREE.MathUtils.lerp(0.9, 0.2, t);
-      targetY = THREE.MathUtils.lerp(-0.1, 0.25, t);
-      targetZ = THREE.MathUtils.lerp(-0.5, -0.2, t);
+    // Update uniform values
+    if (materialRef.current) {
+      materialRef.current.uniforms.uTime.value = time;
+      materialRef.current.uniforms.uPointer.value.copy(smoothPointer.current);
+      materialRef.current.uniforms.uScroll.value = scrollRef.current;
+      materialRef.current.uniforms.uDistortion.value = distortionRef.current;
     }
 
-    meshRef.current.position.x = THREE.MathUtils.lerp(meshRef.current.position.x, targetX, 0.06);
-    meshRef.current.position.y = THREE.MathUtils.lerp(meshRef.current.position.y, targetY, 0.06);
-    meshRef.current.position.z = THREE.MathUtils.lerp(meshRef.current.position.z, targetZ, 0.06);
+    if (meshRef.current) {
+      const scroll = scrollRef.current;
 
-    // Responsive scaling
-    const isFooter = scrollProgress > 0.85;
-    const baseScale = Math.min(viewport.width * (isFooter ? 0.26 : 0.22), isFooter ? 2.2 : 1.8);
-    meshRef.current.scale.set(baseScale, baseScale, baseScale);
+      // Elegant 3D Rotation along time and scroll trajectory
+      meshRef.current.rotation.x = time * 0.25 + scroll * Math.PI * 1.8;
+      meshRef.current.rotation.y = time * 0.35 + scroll * Math.PI * 2.2;
+      meshRef.current.rotation.z = Math.sin(time * 0.2) * 0.2 + scroll * Math.PI;
+
+      // Smooth Piecewise 3D Camera/Object Path across sections
+      let targetX = 0;
+      let targetY = 0;
+      let targetZ = -0.4;
+      let targetScale = 1.0;
+
+      if (scroll < 0.2) {
+        // Hero section: Majestic floating right-center accent
+        targetX = 1.2 + smoothPointer.current.x * 0.4;
+        targetY = 0.1 + smoothPointer.current.y * 0.4;
+        targetZ = -0.3;
+        targetScale = 1.05;
+      } else if (scroll < 0.45) {
+        // Showreel section: Glides left
+        targetX = -1.6 + smoothPointer.current.x * 0.3;
+        targetY = -0.2 + smoothPointer.current.y * 0.3;
+        targetZ = -0.6;
+        targetScale = 0.9;
+      } else if (scroll < 0.7) {
+        // Portfolio / Projects: Centered ambient backdrop
+        targetX = 1.4 + smoothPointer.current.x * 0.3;
+        targetY = 0.3 + smoothPointer.current.y * 0.3;
+        targetZ = -0.8;
+        targetScale = 1.1;
+      } else if (scroll < 0.85) {
+        // About / Reviews section: Left side glow
+        targetX = -1.4 + smoothPointer.current.x * 0.2;
+        targetY = 0.0 + smoothPointer.current.y * 0.2;
+        targetZ = -0.5;
+        targetScale = 0.95;
+      } else {
+        // Footer: Center glow behind 'Let's talk'
+        targetX = 0.0 + smoothPointer.current.x * 0.3;
+        targetY = -0.3 + smoothPointer.current.y * 0.3;
+        targetZ = -0.2;
+        targetScale = 1.35;
+      }
+
+      meshRef.current.position.x += (targetX - meshRef.current.position.x) * 0.06;
+      meshRef.current.position.y += (targetY - meshRef.current.position.y) * 0.06;
+      meshRef.current.position.z += (targetZ - meshRef.current.position.z) * 0.06;
+
+      const currentScale = meshRef.current.scale.x;
+      const newScale = currentScale + (targetScale - currentScale) * 0.06;
+      meshRef.current.scale.set(newScale, newScale, newScale);
+    }
+
+    // Secondary Outer Orbiting Kinetic Ring
+    if (ringRef.current && meshRef.current) {
+      ringRef.current.position.copy(meshRef.current.position);
+      ringRef.current.rotation.x = -time * 0.15;
+      ringRef.current.rotation.y = time * 0.45;
+      ringRef.current.rotation.z = time * 0.2;
+      ringRef.current.scale.copy(meshRef.current.scale).multiplyScalar(1.4);
+    }
+
+    // Outer Wireframe Accent
+    if (wireframeRef.current && meshRef.current) {
+      wireframeRef.current.position.copy(meshRef.current.position);
+      wireframeRef.current.rotation.copy(meshRef.current.rotation);
+      wireframeRef.current.scale.copy(meshRef.current.scale).multiplyScalar(1.04);
+    }
   });
 
   return (
-    <mesh ref={meshRef} position={[1.2, 0, -0.5]}>
-      <icosahedronGeometry args={[1, 64]} />
-      <shaderMaterial
-        vertexShader={vertexShader}
-        fragmentShader={fragmentShader}
-        uniforms={uniforms}
-        wireframe={false}
-        transparent={true}
-        depthWrite={false}
-      />
-    </mesh>
+    <group>
+      {/* Primary 3D Kinetic Torus Knot Ribbon */}
+      <mesh ref={meshRef}>
+        <torusKnotGeometry args={[0.95, 0.32, 160, 32, 2, 3]} />
+        <shaderMaterial
+          ref={materialRef}
+          vertexShader={vertexShader}
+          fragmentShader={fragmentShader}
+          uniforms={uniforms}
+          transparent={true}
+          side={THREE.DoubleSide}
+          depthWrite={false}
+        />
+      </mesh>
+
+      {/* Cyber Wireframe Accent Layer */}
+      <mesh ref={wireframeRef}>
+        <torusKnotGeometry args={[0.95, 0.32, 80, 16, 2, 3]} />
+        <meshBasicMaterial
+          color="#f59e0b"
+          wireframe={true}
+          transparent={true}
+          opacity={0.12}
+          blending={THREE.AdditiveBlending}
+        />
+      </mesh>
+
+      {/* Outer Orbiting Anamorphic Light Ring */}
+      <mesh ref={ringRef}>
+        <torusGeometry args={[1.2, 0.015, 16, 100]} />
+        <meshBasicMaterial
+          color="#38bdf8"
+          transparent={true}
+          opacity={0.25}
+          blending={THREE.AdditiveBlending}
+        />
+      </mesh>
+    </group>
   );
 };
