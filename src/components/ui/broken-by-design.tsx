@@ -1092,9 +1092,15 @@ export const BrokenByDesign: React.FC<BrokenByDesignProps> = ({
         <div className="bbd2-stage">
           {ready && (
             <>
-              {/* Exposed word in the gaps */}
+              {/* Exposed word in the gaps: transitions to ENTERING PORTFOLIO on shatter */}
               <div className="bbd2-title bbd2-title--under" aria-hidden="true">
-                {titleNode}
+                {isShattered ? (
+                  <span className="text-amber-400 font-extrabold tracking-widest animate-pulse drop-shadow-[0_0_35px_rgba(245,158,11,0.9)]">
+                    ENTERING PORTFOLIO...
+                  </span>
+                ) : (
+                  titleNode
+                )}
               </div>
 
               {/* The fracture network lines */}
