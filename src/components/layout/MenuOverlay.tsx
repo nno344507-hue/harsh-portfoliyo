@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Instagram, Linkedin, Mail } from 'lucide-react';
 import { useAudio } from '../../context/AudioContext';
 import { SplineScene } from '../ui/splite';
 
@@ -150,14 +150,65 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
             </div>
           </div>
 
-          {/* Bottom Footer Info */}
-          <div className="max-w-7xl mx-auto w-full pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-white/40 gap-4 relative z-10 pointer-events-auto">
-            <div>© {new Date().getFullYear()} Harsh Portfolio. All rights reserved.</div>
-            <div className="flex space-x-6">
-              <a href="https://twitter.com" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">Twitter / X</a>
-              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">Instagram</a>
-              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
-              <a href="mailto:harshdhiman332@gmail.com" className="hover:text-amber-400 transition-colors">harshdhiman332@gmail.com</a>
+          {/* Bottom High-Contrast Frosted Glass Footer Bar */}
+          <div className="max-w-7xl mx-auto w-full pt-4 relative z-20 pointer-events-auto">
+            <div className="w-full bg-[#0b0c12]/92 backdrop-blur-2xl border border-white/20 px-5 sm:px-8 py-3 sm:py-3.5 rounded-2xl sm:rounded-full flex flex-col md:flex-row items-center justify-between shadow-2xl shadow-black/95 gap-3.5">
+              {/* Left Copyright */}
+              <div className="text-xs sm:text-sm font-mono text-zinc-200 flex items-center space-x-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="font-medium">© {new Date().getFullYear()} Harsh Portfolio. All rights reserved.</span>
+              </div>
+
+              {/* Right Social & Contact Badges */}
+              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+                {/* Twitter / X */}
+                <a
+                  href="https://twitter.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  onMouseEnter={playHoverSound}
+                  className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-amber-400/20 border border-white/20 hover:border-amber-400 text-xs font-mono font-bold text-white hover:text-amber-300 transition-all duration-300 shadow-md group"
+                >
+                  <span>Twitter / X</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-zinc-300 group-hover:text-amber-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </a>
+
+                {/* Instagram */}
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  onMouseEnter={playHoverSound}
+                  className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-pink-500/20 border border-white/20 hover:border-pink-400 text-xs font-mono font-bold text-white hover:text-pink-300 transition-all duration-300 shadow-md group"
+                >
+                  <Instagram className="w-3.5 h-3.5 text-pink-400" />
+                  <span>Instagram</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-zinc-300 group-hover:text-pink-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </a>
+
+                {/* LinkedIn */}
+                <a
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  onMouseEnter={playHoverSound}
+                  className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-sky-500/20 border border-white/20 hover:border-sky-400 text-xs font-mono font-bold text-white hover:text-sky-300 transition-all duration-300 shadow-md group"
+                >
+                  <Linkedin className="w-3.5 h-3.5 text-sky-400" />
+                  <span>LinkedIn</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-zinc-300 group-hover:text-sky-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </a>
+
+                {/* Direct Email */}
+                <a
+                  href="mailto:harshdhiman332@gmail.com"
+                  onMouseEnter={playHoverSound}
+                  className="inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-full bg-amber-400/20 hover:bg-amber-400 border border-amber-400/50 hover:border-amber-400 text-xs font-mono font-bold text-amber-300 hover:text-black transition-all duration-300 shadow-lg shadow-amber-400/10 group"
+                >
+                  <Mail className="w-3.5 h-3.5 text-amber-400 group-hover:text-black transition-colors" />
+                  <span>harshdhiman332@gmail.com</span>
+                </a>
+              </div>
             </div>
           </div>
         </motion.div>
