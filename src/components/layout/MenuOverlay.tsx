@@ -130,21 +130,96 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
             </div>
           </div>
 
-          {/* Bottom High-End Professional Studio Footer Bar */}
+          {/* Bottom Dock with Cyan Electric Neon Plasma Wave Interior (Matching User Reference Image) */}
           <div className="max-w-7xl mx-auto w-full pt-4 relative z-20 pointer-events-auto">
-            {/* Elegant Luxury Dual-Tone Hairline Border Frame */}
-            <div className="relative p-[1px] rounded-2xl sm:rounded-full bg-gradient-to-r from-amber-400/40 via-white/20 to-cyan-400/40 shadow-[0_0_25px_rgba(245,158,11,0.12)]">
-              {/* Refined Matte Obsidian Glass Container */}
-              <div className="w-full bg-[#0a0a0f]/90 backdrop-blur-2xl px-6 sm:px-8 py-3 sm:py-3.5 rounded-[calc(1rem-1px)] sm:rounded-full flex flex-col md:flex-row items-center justify-between shadow-2xl gap-3.5">
+            {/* Outer Container with Cyan Neon Glow & Border */}
+            <div className="relative rounded-2xl sm:rounded-full border border-cyan-400/50 shadow-[0_0_35px_rgba(6,182,212,0.35),inset_0_0_25px_rgba(6,182,212,0.2)] overflow-hidden">
+              
+              {/* Electric Cyan Plasma Wave / Caustics Background Layer (Image 2 style) */}
+              <div className="absolute inset-0 bg-[#021319] z-0 pointer-events-none overflow-hidden">
+                {/* Ambient Radial Cyan Glow Spots */}
+                <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-32 bg-cyan-400/30 blur-3xl rounded-full" />
+                <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-72 h-32 bg-teal-400/25 blur-3xl rounded-full" />
+                <div className="absolute top-0 right-10 w-48 h-24 bg-cyan-300/35 blur-2xl rounded-full" />
+                
+                {/* Luminous Organic SVG Laser Wave Arcs (Image 2 style) */}
+                <svg
+                  className="absolute inset-0 w-full h-full opacity-85"
+                  preserveAspectRatio="none"
+                  viewBox="0 0 1000 100"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <linearGradient id="neonCyanGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#00f5d4" stopOpacity="0.1" />
+                      <stop offset="30%" stopColor="#00e5ff" stopOpacity="0.95" />
+                      <stop offset="70%" stopColor="#38bdf8" stopOpacity="0.95" />
+                      <stop offset="100%" stopColor="#00f5d4" stopOpacity="0.2" />
+                    </linearGradient>
+                    <linearGradient id="neonCyanGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.2" />
+                      <stop offset="45%" stopColor="#00ffff" stopOpacity="1" />
+                      <stop offset="80%" stopColor="#06b6d4" stopOpacity="0.75" />
+                      <stop offset="100%" stopColor="#00e5ff" stopOpacity="0.1" />
+                    </linearGradient>
+                    <filter id="neonGlow" x="-20%" y="-50%" width="140%" height="200%">
+                      <feGaussianBlur stdDeviation="3.5" result="blur1" />
+                      <feGaussianBlur stdDeviation="7" result="blur2" />
+                      <feMerge>
+                        <feMergeNode in="blur2" />
+                        <feMergeNode in="blur1" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
+
+                  {/* Wave 1: Primary glowing cyan arc */}
+                  <path
+                    d="M-50,60 C150,-20 300,120 500,30 C700,-40 850,110 1050,40"
+                    stroke="url(#neonCyanGrad1)"
+                    strokeWidth="4"
+                    filter="url(#neonGlow)"
+                  />
+                  {/* Wave 2: Secondary intersecting high-luminosity wave */}
+                  <path
+                    d="M-50,20 C180,100 350,-30 550,70 C750,130 880,0 1050,80"
+                    stroke="url(#neonCyanGrad2)"
+                    strokeWidth="3.5"
+                    filter="url(#neonGlow)"
+                  />
+                  {/* Wave 3: Deep harmonic caustics curve */}
+                  <path
+                    d="M0,85 C220,10 400,95 650,20 C850,-10 950,90 1000,50"
+                    stroke="#00ffff"
+                    strokeOpacity="0.5"
+                    strokeWidth="2"
+                    filter="url(#neonGlow)"
+                  />
+                  {/* Wave 4: Ultra fine bright core beam */}
+                  <path
+                    d="M-50,45 C200,5 380,85 580,45 C780,15 900,75 1050,30"
+                    stroke="#ffffff"
+                    strokeOpacity="0.9"
+                    strokeWidth="1.2"
+                  />
+                </svg>
+
+                {/* Subtle dark vignette overlay to ensure text stays 100% crisp */}
+                <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-black/55 backdrop-blur-[1.5px]" />
+              </div>
+
+              {/* Inner Content Surface */}
+              <div className="relative z-10 w-full px-6 sm:px-8 py-3 sm:py-3.5 flex flex-col md:flex-row items-center justify-between gap-3.5">
                 {/* Left Copyright */}
-                <div className="text-xs sm:text-sm font-mono text-zinc-300 flex items-center space-x-3">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400/90 shadow-[0_0_8px_#34d399]" />
-                  <span className="font-medium tracking-wide">
+                <div className="text-xs sm:text-sm font-mono text-cyan-100 flex items-center space-x-3 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+                  <span className="w-2.5 h-2.5 rounded-full bg-cyan-300 shadow-[0_0_12px_#00ffff] animate-pulse" />
+                  <span className="font-semibold tracking-wide">
                     © {new Date().getFullYear()} Harsh Portfolio. All rights reserved.
                   </span>
                 </div>
 
-                {/* Right Social & Contact Links - Studio Minimalist Design */}
+                {/* Right Social & Contact Links */}
                 <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
                   {/* Twitter / X */}
                   <a
@@ -152,10 +227,10 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
                     target="_blank"
                     rel="noreferrer"
                     onMouseEnter={playHoverSound}
-                    className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.14] border border-white/10 hover:border-amber-400/50 text-xs font-mono text-zinc-200 hover:text-white transition-all duration-300 group"
+                    className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-black/65 hover:bg-cyan-400 border border-cyan-400/40 hover:border-cyan-300 text-xs font-mono font-bold text-cyan-100 hover:text-black transition-all duration-300 shadow-[0_0_12px_rgba(6,182,212,0.2)] group"
                   >
                     <span>Twitter / X</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400 group-hover:text-amber-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    <ArrowUpRight className="w-3.5 h-3.5 text-cyan-300 group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </a>
 
                   {/* Instagram */}
@@ -164,11 +239,11 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
                     target="_blank"
                     rel="noreferrer"
                     onMouseEnter={playHoverSound}
-                    className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.14] border border-white/10 hover:border-pink-400/50 text-xs font-mono text-zinc-200 hover:text-white transition-all duration-300 group"
+                    className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-black/65 hover:bg-cyan-400 border border-cyan-400/40 hover:border-cyan-300 text-xs font-mono font-bold text-cyan-100 hover:text-black transition-all duration-300 shadow-[0_0_12px_rgba(6,182,212,0.2)] group"
                   >
-                    <Instagram className="w-3.5 h-3.5 text-zinc-400 group-hover:text-pink-400 transition-colors" />
+                    <Instagram className="w-3.5 h-3.5 text-cyan-300 group-hover:text-black transition-colors" />
                     <span>Instagram</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400 group-hover:text-pink-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    <ArrowUpRight className="w-3.5 h-3.5 text-cyan-300 group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </a>
 
                   {/* LinkedIn */}
@@ -177,20 +252,20 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
                     target="_blank"
                     rel="noreferrer"
                     onMouseEnter={playHoverSound}
-                    className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.14] border border-white/10 hover:border-cyan-400/50 text-xs font-mono text-zinc-200 hover:text-white transition-all duration-300 group"
+                    className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-black/65 hover:bg-cyan-400 border border-cyan-400/40 hover:border-cyan-300 text-xs font-mono font-bold text-cyan-100 hover:text-black transition-all duration-300 shadow-[0_0_12px_rgba(6,182,212,0.2)] group"
                   >
-                    <Linkedin className="w-3.5 h-3.5 text-zinc-400 group-hover:text-cyan-400 transition-colors" />
+                    <Linkedin className="w-3.5 h-3.5 text-cyan-300 group-hover:text-black transition-colors" />
                     <span>LinkedIn</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400 group-hover:text-cyan-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    <ArrowUpRight className="w-3.5 h-3.5 text-cyan-300 group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </a>
 
                   {/* Direct Email */}
                   <a
                     href="mailto:harshdhiman332@gmail.com"
                     onMouseEnter={playHoverSound}
-                    className="inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-full bg-amber-400/15 hover:bg-amber-400 border border-amber-400/40 hover:border-amber-400 text-xs font-mono font-semibold text-amber-300 hover:text-black transition-all duration-300 shadow-sm group"
+                    className="inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-full bg-cyan-400/25 hover:bg-cyan-400 border border-cyan-300/60 hover:border-cyan-200 text-xs font-mono font-bold text-cyan-100 hover:text-black transition-all duration-300 shadow-[0_0_16px_rgba(0,255,255,0.35)] group"
                   >
-                    <Mail className="w-3.5 h-3.5 text-amber-400 group-hover:text-black transition-colors" />
+                    <Mail className="w-3.5 h-3.5 text-cyan-300 group-hover:text-black transition-colors" />
                     <span>harshdhiman332@gmail.com</span>
                   </a>
                 </div>
