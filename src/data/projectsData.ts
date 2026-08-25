@@ -16,136 +16,120 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
-    id: 'oryzo_ai',
-    title: 'Oryzo AI',
-    category: 'concept • web • design • development • 3d • animation',
-    tags: ['Next.js', 'WebGL', 'AI Interface', 'Realtime 3D'],
-    description: 'An intelligent creative platform combining AI automation with bespoke 3D visual storytelling and hyper-responsive user interactions.',
-    accentColor: '#d97706',
-    textColor: '#ffedd7',
+    id: 'redbull_desert_drift',
+    title: 'Red Bull // Desert Drift',
+    category: 'commercial • sound design • color grading • speed ramp',
+    tags: ['DaVinci Resolve', 'Sound Design', 'Speed Ramping', '4K 60FPS'],
+    description: 'High-octane commercial edit for Red Bull Motorsports featuring aggressive beat-synced cuts, custom engine Foley sound design, and master-grade cinematic sunset color grading.',
+    accentColor: '#f59e0b',
+    textColor: '#fffbeb',
     year: '2026',
-    client: 'Oryzo Technologies',
+    client: 'Red Bull Media House',
     featured: true,
-    coverImage: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
+    coverImage: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=1200&q=80',
     stats: [
-      { label: 'Awards', value: 'FWA of the Day' },
-      { label: 'Frame Rate', value: '60 FPS WebGL' },
-      { label: 'Engagement', value: '+340%' }
+      { label: 'Views', value: '4.8M+ Total' },
+      { label: 'Pacing', value: '140 BPM Sync' },
+      { label: 'Color Grade', value: 'Film Print 2383' }
     ]
   },
   {
-    id: 'atlas_motion',
-    title: 'Atlas Motion',
-    category: 'concept • web • design • development • 3d • animation',
-    tags: ['Kinetic Physics', 'Three.js', 'Sound Design'],
-    description: 'A revolutionary motion design studio experience driven by generative particle mechanics, fluid dynamics, and tactile audio feedback.',
-    accentColor: '#eab308',
-    textColor: '#FFFDE0',
-    year: '2026',
-    client: 'Atlas Motion Lab',
-    featured: true,
-    coverImage: 'https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=1200&q=80',
-    stats: [
-      { label: 'Awwwards', value: 'Site of the Month' },
-      { label: 'Interactions', value: 'Realtime Physics' }
-    ]
-  },
-  {
-    id: 'devin_ai',
-    title: 'Devin AI',
-    category: 'web • design • development • 3d',
-    tags: ['Autonomous AI', 'Digital Twin', 'GLSL Shaders'],
-    description: 'Immersive digital presence for the world’s first autonomous AI software engineer, featuring neural visualizers and dynamic data streams.',
+    id: 'cyberpunk_night_city',
+    title: 'Cyberpunk // Night City Cinematic',
+    category: 'trailer • vfx compositing • kinetic typography • sound mix',
+    tags: ['After Effects', 'Premiere Pro', 'Glitch VFX', '3D Camera'],
+    description: 'A gritty, futuristic game trailer edit weaving rapid jump-cuts with bespoke cybernetic glitch VFX, spatial neon typography, and bass-heavy audio mastering.',
     accentColor: '#06b6d4',
-    textColor: '#e0f2fe',
-    year: '2025',
-    client: 'Cognition AI',
+    textColor: '#ecfeff',
+    year: '2026',
+    client: 'Gaming & Entertainment',
     featured: true,
-    coverImage: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80',
+    coverImage: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80',
     stats: [
-      { label: 'Traffic', value: '2.5M+ Visits' },
-      { label: 'Render Tech', value: 'Custom Raymarching' }
+      { label: 'Retention', value: '88.4% AVD' },
+      { label: 'Resolution', value: '4K DCI Cinema' },
+      { label: 'Awards', value: 'Vimeo Staff Pick' }
     ]
   },
   {
-    id: 'of_the_oak',
-    title: 'Of The Oak',
-    category: 'web • design • development • 3d • animation',
-    tags: ['Organic 3D', 'Spatial Audio', 'Interactive Narrative'],
-    description: 'A poetic exploration of nature and digital consciousness, weaving organic procedural botanical simulations with ambient soundscapes.',
-    accentColor: '#10b981',
-    textColor: '#d1fae5',
-    year: '2025',
-    client: 'Oak Foundation',
-    featured: true,
-    coverImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
-    stats: [
-      { label: 'Webby', value: 'Best Visual Design' },
-      { label: 'Shader Tech', value: 'Volumetric Flora' }
-    ]
-  },
-  {
-    id: 'everswap',
-    title: 'Everswap',
-    category: 'concept • web • design • development • 3d • animation',
-    tags: ['Fintech', 'Liquid Glassmorphism', 'Micro-interactions'],
-    description: 'Next-generation decentralized exchange interface wrapped in futuristic glass refractions, fluid morphing tokens, and instantaneous feedback.',
-    accentColor: '#818cf8',
-    textColor: '#e0e7ff',
-    year: '2025',
-    client: 'Everswap Protocol',
-    featured: true,
-    coverImage: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=1200&q=80',
-    stats: [
-      { label: 'Awwwards', value: 'Developer Award' },
-      { label: 'Conversion', value: '+185%' }
-    ]
-  },
-  {
-    id: 'porsche_dream_machine',
-    title: 'Porsche: Dream Machine',
-    category: 'concept • 3D illustration • mograph • video',
-    tags: ['Automotive Configurator', 'Raytraced Materials', 'Cinematic'],
-    description: 'An interactive visceral journey celebrating the engineering majesty of Porsche electric hypercars through real-time ray-marched carbon reflections.',
-    accentColor: '#f43f5e',
-    textColor: '#ffe4e6',
-    year: '2024',
-    client: 'Porsche AG',
-    featured: true,
-    coverImage: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1200&q=80',
-    stats: [
-      { label: 'FWA', value: 'Site of the Month' },
-      { label: 'Shader Quality', value: 'PBR Chrome & Glass' }
-    ]
-  },
-  {
-    id: 'synthetic_human',
-    title: 'Synthetic Human',
-    category: 'concept • 3d • research • webgl',
-    tags: ['Neural Avatar', 'Face Tracking', 'Audio-reactive'],
-    description: 'Experimental biological cybernetics interface exploring synthetic humanoid consciousness with audio-reactive facial deformation.',
+    id: 'travis_scott_utopia',
+    title: 'Utopia // Music Video Edit',
+    category: 'music video • visual rhythm • trippy transitions • color fx',
+    tags: ['Music Video', 'Mask Transitions', 'Film Halation', 'Rhythm Cut'],
+    description: 'Dynamic music video edit driven by seamless fluid match-cuts, customized psychedelic film grain halation, dynamic speed ramps, and frame-accurate beat alignment.',
     accentColor: '#ec4899',
-    textColor: '#fce7f3',
-    year: '2024',
-    client: 'Lusion Labs',
+    textColor: '#fdf2f8',
+    year: '2025',
+    client: 'Sony Music / Artist Label',
     featured: true,
-    coverImage: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=1200&q=80',
+    coverImage: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80',
     stats: [
-      { label: 'Experiment', value: 'Lab Project #08' },
-      { label: 'Latency', value: '<12ms Reaction' }
+      { label: 'YouTube Views', value: '12.5M+' },
+      { label: 'VFX Layers', value: '180+ Tracks' }
+    ]
+  },
+  {
+    id: 'nike_air_max_viral',
+    title: 'Nike Air // 9:16 Viral Campaign',
+    category: 'reels & shorts • viral hooks • kinetic motion • audio design',
+    tags: ['Viral Reels', '9:16 Vertical', 'Animated Captions', 'Sound FX'],
+    description: 'High-converting social campaign crafted for TikTok and Instagram Reels with 3-second psychological hooks, pop-up animated typography, and explosive retention pacing.',
+    accentColor: '#10b981',
+    textColor: '#ecfdf5',
+    year: '2025',
+    client: 'Nike Global / Social Media',
+    featured: true,
+    coverImage: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=1200&q=80',
+    stats: [
+      { label: 'Total Reach', value: '28M+ Impressions' },
+      { label: 'Engagement', value: '+420% Shares' }
+    ]
+  },
+  {
+    id: 'apple_vision_commercial',
+    title: 'Vision Pro // Minimalist Product Film',
+    category: 'commercial • clean narrative • 3d camera projection • grade',
+    tags: ['Commercial', 'Clean Aesthetic', 'Macro B-Roll', 'Spatial Audio'],
+    description: 'Refined minimalist product commercial highlighting industrial design curves, macro lens footage pacing, and studio-calibrated clean white and obsidian color tones.',
+    accentColor: '#8b5cf6',
+    textColor: '#f5f3ff',
+    year: '2025',
+    client: 'Tech Brand Studio',
+    featured: true,
+    coverImage: 'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&fit=crop&w=1200&q=80',
+    stats: [
+      { label: 'Clio Award', value: 'Commercial Craft' },
+      { label: 'Format', value: 'ProRes 4444 XQ' }
+    ]
+  },
+  {
+    id: 'beast_documentary_story',
+    title: 'Inside The Arctic // Documentary Edit',
+    category: 'documentary • narrative pacing • atmospheric audio • color',
+    tags: ['Long Form', 'Story Pacing', 'Atmospheric Foley', 'HDR Grade'],
+    description: 'Full-length 35-minute cinematic documentary edit featuring emotional narrative arc building, ambient environmental audio design, and natural HDR landscape grading.',
+    accentColor: '#38bdf8',
+    textColor: '#f0f9ff',
+    year: '2024',
+    client: 'Independent Film & Documentary',
+    featured: true,
+    coverImage: 'https://images.unsplash.com/photo-1483921020237-2ff51e8e4b22?auto=format&fit=crop&w=1200&q=80',
+    stats: [
+      { label: 'Runtime', value: '34:20 Master' },
+      { label: 'Selection', value: 'Film Festival Finalist' }
     ]
   }
 ];
 
 export const AWARDS = [
-  { title: 'Awwwards Site of the Year', count: '3x' },
-  { title: 'Awwwards Site of the Day', count: '48x' },
-  { title: 'FWA of the Month', count: '12x' },
-  { title: 'FWA of the Day', count: '62x' },
-  { title: 'Webby Awards Nominee & Winner', count: '8x' },
-  { title: 'CSSDA Best UI/UX/Innovation', count: '35x' },
+  { title: 'Best Commercial Editing', count: '4x' },
+  { title: 'Vimeo Staff Pick Selection', count: '6x' },
+  { title: 'Clio Film Craft Award (Editing)', count: '2x' },
+  { title: 'YouTube Creator Impact (Retention)', count: '18x' },
+  { title: 'Shorty Award for Best Viral Video', count: '5x' },
+  { title: 'Cannes Lions Shortlist (Sound & Edit)', count: '3x' },
 ];
 
 export const CLIENTS = [
-  'Porsche', 'Nike', 'Google', 'Spotify', 'Cognition AI', 'Microsoft', 'Moncler', 'Apple', 'Prada', 'Sony Music'
+  'Red Bull', 'Nike', 'Sony Music', 'Apple', 'Spotify', 'boAt Audio', 'Universal Music', 'Warner Records', 'Puma', 'Beast Media'
 ];

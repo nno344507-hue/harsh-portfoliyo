@@ -165,7 +165,7 @@ export const FooterSection: React.FC = () => {
 
         {/* 4 Interactive Glowing Info Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 py-8 border-t border-white/15 text-xs font-mono">
-          {/* Card 1: London Studio Time */}
+          {/* Card 1: Studio Time (IST & Remote) */}
           <motion.div
             whileHover={{ y: -6, scale: 1.02 }}
             transition={{ type: 'spring', damping: 20, stiffness: 300 }}
@@ -179,16 +179,16 @@ export const FooterSection: React.FC = () => {
               </div>
               <div className="flex items-center space-x-2.5 text-lg text-white font-bold mb-1">
                 <span className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_12px_#34d399]" />
-                <span>{timeStr || '00:00:00'} GMT</span>
+                <span>{timeStr || '00:00:00'} IST</span>
               </div>
-              <p className="text-[11px] text-zinc-400">London & Bristol, UK</p>
+              <p className="text-[11px] text-zinc-400">India // Global Remote Delivery</p>
             </div>
             <div className="mt-4 pt-3 border-t border-white/10 text-[10px] text-emerald-400 font-semibold uppercase">
-              • Studio Open for Booking
+              • Studio Open for Rush Edits
             </div>
           </motion.div>
 
-          {/* Card 2: Headquarters */}
+          {/* Card 2: Production Base */}
           <motion.div
             whileHover={{ y: -6, scale: 1.02 }}
             transition={{ type: 'spring', damping: 20, stiffness: 300 }}
@@ -197,17 +197,17 @@ export const FooterSection: React.FC = () => {
           >
             <div>
               <div className="flex items-center justify-between mb-4">
-                <span className="text-zinc-400 uppercase font-semibold">Headquarters</span>
+                <span className="text-zinc-400 uppercase font-semibold">Base & Reach</span>
                 <MapPin className="w-4 h-4 text-cyan-400" />
               </div>
               <p className="text-sm text-zinc-200 leading-relaxed font-semibold">
-                Studio 4, Paintworks<br />
-                Bath Road, Bristol<br />
-                BS4 3EH, UK
+                New Delhi, India<br />
+                Remote Workstation<br />
+                Worldwide High-Speed Delivery
               </p>
             </div>
             <div className="mt-4 pt-3 border-t border-white/10 text-[10px] text-cyan-400 font-semibold uppercase">
-              Global Remote Available
+              Fast 1Gbps Fiber Uploads
             </div>
           </motion.div>
 
@@ -226,11 +226,11 @@ export const FooterSection: React.FC = () => {
               <p className="text-sm text-zinc-200 font-semibold leading-relaxed">
                 +91 9084772597<br />
                 harshdhiman332@gmail.com<br />
-                Direct Editorial Inquiries
+                Commercial & Creator Inquiries
               </p>
             </div>
             <div className="mt-4 pt-3 border-t border-white/10 text-[10px] text-amber-400 font-semibold uppercase">
-              New Projects Welcome
+              Instant 1-Hour Response
             </div>
           </motion.div>
 
@@ -247,29 +247,29 @@ export const FooterSection: React.FC = () => {
                 <Globe className="w-4 h-4 text-rose-400" />
               </div>
               <div className="flex flex-col space-y-2 text-sm text-zinc-200 font-semibold">
-                <a href="https://twitter.com/lusionltd" target="_blank" rel="noreferrer" className="hover:text-amber-400 transition-colors flex items-center justify-between">
-                  <span>X (Twitter)</span>
+                <a href="https://twitter.com" target="_blank" rel="noreferrer" className="hover:text-amber-400 transition-colors flex items-center justify-between">
+                  <span>Twitter / X</span>
                   <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
                 </a>
-                <a href="https://instagram.com/lusionltd" target="_blank" rel="noreferrer" className="hover:text-amber-400 transition-colors flex items-center justify-between">
+                <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:text-amber-400 transition-colors flex items-center justify-between">
                   <span>Instagram</span>
                   <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
                 </a>
-                <a href="https://linkedin.com/company/lusion" target="_blank" rel="noreferrer" className="hover:text-amber-400 transition-colors flex items-center justify-between">
+                <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="hover:text-amber-400 transition-colors flex items-center justify-between">
                   <span>LinkedIn</span>
                   <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
                 </a>
               </div>
             </div>
             <div className="mt-4 pt-3 border-t border-white/10 text-[10px] text-rose-400 font-semibold uppercase">
-              Follow Our Journey
+              Direct DM Welcome
             </div>
           </motion.div>
         </div>
 
         {/* Bottom Bar & Scroll to Top */}
         <div className="pt-8 border-t border-white/15 flex flex-col sm:flex-row items-center justify-between text-xs text-zinc-400 gap-4">
-          <p>© {new Date().getFullYear()} The Harsh Editor. Crafting the immersive web.</p>
+          <p>© {new Date().getFullYear()} The Harsh Editor. High-Retention Cinematic Video Editing & Motion Design.</p>
 
           <button
             onClick={scrollToTop}

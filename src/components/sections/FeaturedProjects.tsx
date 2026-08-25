@@ -25,14 +25,14 @@ export const FeaturedProjects: React.FC = () => {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-8 border-b border-white/15 gap-6 p-6 sm:p-8 rounded-3xl bg-black/40 border border-white/10 backdrop-blur-xl">
           <div>
             <span className="text-xs font-mono uppercase tracking-widest text-amber-400 font-bold block mb-2">
-              Portfolio // Selected Case Studies
+              Editorial Portfolio // Selected Works
             </span>
             <h3 className="text-3xl sm:text-5xl font-bold tracking-tight text-white drop-shadow-md">
-              Featured Work
+              Featured Commercials & Edits
             </h3>
           </div>
           <p className="text-sm sm:text-base text-zinc-200 max-w-md drop-shadow-sm font-normal">
-            A selection of immersive digital experiences created for ambitious brands and forward thinking teams.
+            A curated selection of high-retention commercial films, viral vertical campaigns, and cinematic music videos.
           </p>
         </div>
 
