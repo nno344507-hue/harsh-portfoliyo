@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { useAudio } from '../../context/AudioContext';
 import { SplineScene } from '../ui/splite';
-import { Card } from '../ui/card';
 import { Spotlight } from '../ui/spotlight';
 
 interface MenuOverlayProps {
@@ -42,21 +41,36 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.35 }}
-          className="fixed inset-0 z-50 bg-[#080808]/98 backdrop-blur-2xl flex flex-col justify-start sm:justify-between p-5 sm:p-10 md:p-14 pt-20 sm:pt-24 overflow-y-auto"
+          className="fixed inset-0 z-50 bg-[#050507]/98 backdrop-blur-2xl flex flex-col justify-between p-6 sm:p-12 md:p-16 pt-20 sm:pt-24 overflow-hidden select-none"
         >
+          {/* Full-Screen 3D Interactive Robot Spline Canvas */}
+          <div className="absolute inset-0 w-full h-full pointer-events-auto z-0 overflow-hidden">
+            <Spotlight
+              className="-top-40 left-1/3 md:-top-20"
+              fill="white"
+            />
+            <SplineScene 
+              scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+              className="w-full h-full scale-100 sm:scale-105 md:scale-115 lg:scale-125 translate-x-0 sm:translate-x-12 md:translate-x-32 lg:translate-x-48"
+            />
+          </div>
+
+          {/* Left Gradient Vignette for Clean Contrast on Nav Links */}
+          <div className="absolute inset-0 pointer-events-none z-[1] bg-gradient-to-r from-[#050507] via-[#050507]/80 to-transparent w-full md:w-3/4" />
+
           {/* Main Grid Content */}
-          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center my-auto">
+          <div className="max-w-7xl mx-auto w-full relative z-10 flex items-center my-auto pointer-events-none">
             {/* Nav Links Column */}
-            <div className="lg:col-span-5 flex flex-col space-y-2.5 sm:space-y-5">
+            <div className="flex flex-col space-y-3 sm:space-y-6 pointer-events-auto max-w-xl">
               {navLinks.map((link, idx) => (
                 <motion.button
                   key={link.name}
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: -30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 + idx * 0.04, duration: 0.35 }}
                   onClick={() => handleNavClick(link.target)}
                   onMouseEnter={playHoverSound}
-                  className="group flex items-center justify-between text-left text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white/80 hover:text-white transition-all duration-300 py-1"
+                  className="group flex items-center justify-between text-left text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter text-white/70 hover:text-white transition-all duration-300 py-1"
                 >
                   <span className="relative overflow-hidden inline-block">
                     <span className="inline-block transition-transform duration-500 group-hover:-translate-y-full">
@@ -66,35 +80,14 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
                       {link.name}
                     </span>
                   </span>
-                  <ArrowRight className="w-5 h-5 sm:w-7 sm:h-7 opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-amber-400" />
+                  <ArrowRight className="w-6 h-6 sm:w-8 sm:h-8 ml-6 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-amber-400" />
                 </motion.button>
               ))}
             </div>
-
-            {/* Right Column: 3D Interactive Spline Robot Card */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.25, duration: 0.5 }}
-              className="lg:col-span-7 w-full pt-4 lg:pt-0"
-            >
-              <Card className="w-full h-[400px] sm:h-[460px] lg:h-[500px] bg-black/[0.90] relative overflow-hidden border border-white/15 rounded-3xl shadow-2xl backdrop-blur-xl">
-                <Spotlight
-                  className="-top-40 left-0 md:left-60 md:-top-20"
-                  fill="white"
-                />
-                <div className="relative w-full h-full">
-                  <SplineScene 
-                    scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-                    className="w-full h-full"
-                  />
-                </div>
-              </Card>
-            </motion.div>
           </div>
 
           {/* Bottom Footer Info */}
-          <div className="max-w-7xl mx-auto w-full pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-white/40 gap-4">
+          <div className="max-w-7xl mx-auto w-full pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-white/40 gap-4 relative z-10">
             <div>© {new Date().getFullYear()} Harsh Portfolio. All rights reserved.</div>
             <div className="flex space-x-6">
               <a href="https://twitter.com" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">Twitter / X</a>
