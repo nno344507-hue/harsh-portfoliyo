@@ -130,66 +130,68 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
             </div>
           </div>
 
-          {/* Bottom Dock with Cyan Electric Neon Plasma Wave Interior (Matching User Reference Image) */}
+          {/* Bottom Luxury Cyber-Aurora Plasma Dock (Master-Level Studio Polish) */}
           <div className="max-w-7xl mx-auto w-full pt-4 relative z-20 pointer-events-auto">
-            {/* Outer Container with Cyan Neon Glow & Border */}
-            <div className="relative rounded-2xl sm:rounded-full border border-cyan-400/50 shadow-[0_0_35px_rgba(6,182,212,0.35),inset_0_0_25px_rgba(6,182,212,0.2)] overflow-hidden">
+            {/* Outer Container with Ambient Glow & Precision Border */}
+            <div className="relative rounded-2xl sm:rounded-full border border-cyan-400/40 shadow-[0_0_35px_rgba(6,182,212,0.25),inset_0_1px_2px_rgba(255,255,255,0.2)] overflow-hidden">
               
-              {/* Electric Cyan Plasma Wave / Caustics Background Layer (Live Flowing Animation) */}
-              <div className="absolute inset-0 bg-[#021319] z-0 pointer-events-none overflow-hidden">
-                {/* Live Animated Ambient Radial Cyan Glow Spots */}
-                <motion.div 
-                  animate={{ 
-                    x: [-40, 50, -40], 
-                    scale: [1, 1.25, 1],
-                    opacity: [0.3, 0.6, 0.3]
-                  }}
-                  transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
-                  className="absolute top-1/2 left-1/4 -translate-y-1/2 w-72 h-36 bg-cyan-400/35 blur-3xl rounded-full" 
-                />
-                <motion.div 
-                  animate={{ 
-                    x: [40, -50, 40], 
-                    scale: [1.2, 0.9, 1.2],
-                    opacity: [0.25, 0.5, 0.25]
-                  }}
-                  transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-                  className="absolute top-1/2 right-1/4 -translate-y-1/2 w-80 h-36 bg-teal-400/30 blur-3xl rounded-full" 
-                />
+              {/* Multi-Layered Fluid Cyber-Aurora Neon Plasma Background Layer */}
+              <div className="absolute inset-0 bg-[#020d12] z-0 pointer-events-none overflow-hidden">
+                {/* Harmonic Atmospheric Aurora Nodes */}
                 <motion.div 
                   animate={{ 
                     x: [-30, 40, -30],
-                    opacity: [0.3, 0.65, 0.3]
+                    y: [-8, 8, -8],
+                    scale: [1, 1.2, 1],
+                    opacity: [0.35, 0.6, 0.35]
                   }}
-                  transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}
-                  className="absolute top-0 right-10 w-56 h-28 bg-cyan-300/40 blur-2xl rounded-full" 
+                  transition={{ repeat: Infinity, duration: 7, ease: "easeInOut" }}
+                  className="absolute top-0 left-1/6 w-80 h-32 bg-cyan-400/25 blur-3xl rounded-full" 
                 />
-                
-                {/* Live Luminous Flowing Organic SVG Laser Waves */}
+                <motion.div 
+                  animate={{ 
+                    x: [40, -40, 40],
+                    y: [6, -6, 6],
+                    scale: [1.15, 0.95, 1.15],
+                    opacity: [0.3, 0.55, 0.3]
+                  }}
+                  transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+                  className="absolute bottom-0 right-1/4 w-96 h-36 bg-teal-400/25 blur-3xl rounded-full" 
+                />
+                <motion.div 
+                  animate={{ 
+                    opacity: [0.25, 0.5, 0.25],
+                    scale: [0.95, 1.15, 0.95]
+                  }}
+                  transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+                  className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-900/30 via-transparent to-transparent" 
+                />
+
+                {/* Fluid Harmonic Organic SVG Laser Waves */}
                 <svg
-                  className="absolute inset-0 w-[140%] -left-[20%] h-full opacity-90"
+                  className="absolute inset-0 w-[130%] -left-[15%] h-full opacity-90"
                   preserveAspectRatio="none"
-                  viewBox="0 0 1400 100"
+                  viewBox="0 0 1300 100"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <defs>
-                    <linearGradient id="neonCyanGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <linearGradient id="auroraGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
                       <stop offset="0%" stopColor="#00f5d4" stopOpacity="0.1" />
-                      <stop offset="25%" stopColor="#00e5ff" stopOpacity="0.95" />
+                      <stop offset="20%" stopColor="#00e5ff" stopOpacity="0.9" />
                       <stop offset="50%" stopColor="#38bdf8" stopOpacity="1" />
-                      <stop offset="75%" stopColor="#00ffff" stopOpacity="0.95" />
+                      <stop offset="80%" stopColor="#00ffff" stopOpacity="0.9" />
                       <stop offset="100%" stopColor="#00f5d4" stopOpacity="0.1" />
                     </linearGradient>
-                    <linearGradient id="neonCyanGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.2" />
-                      <stop offset="35%" stopColor="#00ffff" stopOpacity="1" />
-                      <stop offset="65%" stopColor="#06b6d4" stopOpacity="0.85" />
+                    <linearGradient id="auroraGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.15" />
+                      <stop offset="30%" stopColor="#00ffff" stopOpacity="0.95" />
+                      <stop offset="70%" stopColor="#06b6d4" stopOpacity="0.8" />
                       <stop offset="100%" stopColor="#00e5ff" stopOpacity="0.1" />
                     </linearGradient>
-                    <filter id="neonGlow" x="-20%" y="-50%" width="140%" height="200%">
-                      <feGaussianBlur stdDeviation="3.5" result="blur1" />
-                      <feGaussianBlur stdDeviation="7" result="blur2" />
+                    <filter id="auroraGlow" x="-20%" y="-50%" width="140%" height="200%">
+                      <feGaussianBlur stdDeviation="3" result="blur1" />
+                      <feGaussianBlur stdDeviation="6" result="blur2" />
                       <feMerge>
                         <feMergeNode in="blur2" />
                         <feMergeNode in="blur1" />
@@ -198,152 +200,141 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
                     </filter>
                   </defs>
 
-                  {/* Live Animated Wave 1: Left-to-Right Floating Motion */}
+                  {/* Primary Flowing Sine Ribbon */}
                   <motion.path
                     animate={{
-                      x: [-60, 40, -60],
-                      y: [-4, 6, -4],
+                      x: [-40, 30, -40],
+                      y: [-3, 4, -3],
                     }}
-                    transition={{
-                      repeat: Infinity,
-                      duration: 6,
-                      ease: "easeInOut"
-                    }}
-                    d="M-50,60 C150,-20 300,120 500,30 C700,-40 850,110 1050,40 C1200,-10 1350,90 1450,50"
-                    stroke="url(#neonCyanGrad1)"
-                    strokeWidth="4"
-                    filter="url(#neonGlow)"
-                  />
-
-                  {/* Live Animated Wave 2: Opposing Counter Phase Floating Wave */}
-                  <motion.path
-                    animate={{
-                      x: [50, -60, 50],
-                      y: [6, -5, 6],
-                    }}
-                    transition={{
-                      repeat: Infinity,
-                      duration: 7,
-                      ease: "easeInOut"
-                    }}
-                    d="M-50,20 C180,100 350,-30 550,70 C750,130 880,0 1050,80 C1220,130 1350,-20 1450,70"
-                    stroke="url(#neonCyanGrad2)"
+                    transition={{ repeat: Infinity, duration: 6.5, ease: "easeInOut" }}
+                    d="M-50,55 C120,-10 280,115 480,25 C680,-35 820,105 1020,35 C1150,-5 1250,85 1350,45"
+                    stroke="url(#auroraGrad1)"
                     strokeWidth="3.5"
-                    filter="url(#neonGlow)"
+                    filter="url(#auroraGlow)"
                   />
 
-                  {/* Live Animated Wave 3: Deep Harmonic Caustics Curve */}
+                  {/* Counter-Harmonic Cyan Ribbon */}
                   <motion.path
                     animate={{
-                      x: [-30, 30, -30],
-                      y: [3, -4, 3],
+                      x: [35, -45, 35],
+                      y: [4, -4, 4],
                     }}
-                    transition={{
-                      repeat: Infinity,
-                      duration: 5,
-                      ease: "easeInOut"
+                    transition={{ repeat: Infinity, duration: 7.5, ease: "easeInOut" }}
+                    d="M-50,25 C160,95 320,-25 520,65 C720,125 860,-5 1020,75 C1180,120 1280,-15 1350,65"
+                    stroke="url(#auroraGrad2)"
+                    strokeWidth="3"
+                    filter="url(#auroraGlow)"
+                  />
+
+                  {/* Deep Ambient Caustics Curve */}
+                  <motion.path
+                    animate={{
+                      x: [-25, 25, -25],
                     }}
-                    d="M-50,85 C220,10 400,95 650,20 C850,-10 950,90 1200,30 C1350,80 1450,40 1450,60"
+                    transition={{ repeat: Infinity, duration: 5.5, ease: "easeInOut" }}
+                    d="M-50,80 C180,15 360,90 600,20 C800,-5 920,85 1150,25 C1250,75 1300,35 1350,55"
                     stroke="#00ffff"
-                    strokeOpacity="0.6"
-                    strokeWidth="2"
-                    filter="url(#neonGlow)"
+                    strokeOpacity="0.5"
+                    strokeWidth="1.8"
+                    filter="url(#auroraGlow)"
                   />
 
-                  {/* Live Animated Wave 4: Ultra Fine Bright Core Laser Beam */}
+                  {/* Diamond-White Core Laser Beam */}
                   <motion.path
                     animate={{
-                      x: [-40, 50, -40],
+                      x: [-30, 40, -30],
                     }}
-                    transition={{
-                      repeat: Infinity,
-                      duration: 5.5,
-                      ease: "easeInOut"
-                    }}
-                    d="M-50,45 C200,5 380,85 580,45 C780,15 900,75 1050,30 C1250,70 1350,20 1450,45"
+                    transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+                    d="M-50,42 C180,8 350,80 550,40 C750,12 880,70 1020,28 C1200,65 1280,18 1350,42"
                     stroke="#ffffff"
-                    strokeOpacity="0.95"
-                    strokeWidth="1.2"
+                    strokeOpacity="0.9"
+                    strokeWidth="1"
                   />
                 </svg>
 
-                {/* Live Electric Light Pulse Shimmer Flare traversing continuously across the pill */}
+                {/* Shimmer Light Pulse traversing across the dock */}
                 <motion.div
-                  animate={{
-                    x: ['-100%', '200%'],
-                  }}
+                  animate={{ x: ['-100%', '200%'] }}
                   transition={{
                     repeat: Infinity,
-                    duration: 3.5,
+                    duration: 4,
                     ease: "easeInOut",
-                    repeatDelay: 0.5
+                    repeatDelay: 0.8
                   }}
-                  className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-cyan-400/25 to-transparent blur-md pointer-events-none"
+                  className="absolute inset-y-0 w-1/4 bg-gradient-to-r from-transparent via-cyan-300/20 to-transparent blur-md pointer-events-none"
                 />
 
-                {/* Subtle dark vignette overlay to ensure text stays 100% crisp */}
-                <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-black/55 backdrop-blur-[1.5px]" />
+                {/* Subtle Contrast Shield Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#020d12]/75 via-[#020d12]/40 to-[#020d12]/75 backdrop-blur-[1px]" />
               </div>
 
-              {/* Inner Content Surface */}
-              <div className="relative z-10 w-full px-6 sm:px-8 py-3 sm:py-3.5 flex flex-col md:flex-row items-center justify-between gap-3.5">
-                {/* Left Copyright */}
-                <div className="text-xs sm:text-sm font-mono text-cyan-100 flex items-center space-x-3 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+              {/* Inner Surface Content */}
+              <div className="relative z-10 w-full px-6 sm:px-8 py-3 sm:py-3.5 flex flex-col md:flex-row items-center justify-between gap-4">
+                {/* Left Copyright with Live Cyber Pulse */}
+                <div className="text-xs sm:text-sm font-mono text-cyan-50 flex items-center space-x-3 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
                   <span className="w-2.5 h-2.5 rounded-full bg-cyan-300 shadow-[0_0_12px_#00ffff] animate-pulse" />
                   <span className="font-semibold tracking-wide">
-                    © {new Date().getFullYear()} Harsh Portfolio. All rights reserved.
+                    © {new Date().getFullYear()} Harsh Portfolio. <span className="text-cyan-400/80 hidden sm:inline">// ALL RIGHTS RESERVED</span>
                   </span>
                 </div>
 
-                {/* Right Social & Contact Links */}
+                {/* Right Social & Contact Capsule Badges */}
                 <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
                   {/* Twitter / X */}
-                  <a
+                  <motion.a
+                    whileHover={{ y: -2, scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
                     href="https://twitter.com"
                     target="_blank"
                     rel="noreferrer"
                     onMouseEnter={playHoverSound}
-                    className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-black/65 hover:bg-cyan-400 border border-cyan-400/40 hover:border-cyan-300 text-xs font-mono font-bold text-cyan-100 hover:text-black transition-all duration-300 shadow-[0_0_12px_rgba(6,182,212,0.2)] group"
+                    className="inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-full bg-black/55 hover:bg-cyan-400 border border-cyan-400/35 hover:border-cyan-300 text-xs font-mono font-bold text-cyan-100 hover:text-black transition-all duration-300 shadow-md shadow-black/40 group"
                   >
                     <span>Twitter / X</span>
                     <ArrowUpRight className="w-3.5 h-3.5 text-cyan-300 group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </a>
+                  </motion.a>
 
                   {/* Instagram */}
-                  <a
+                  <motion.a
+                    whileHover={{ y: -2, scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
                     href="https://instagram.com"
                     target="_blank"
                     rel="noreferrer"
                     onMouseEnter={playHoverSound}
-                    className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-black/65 hover:bg-cyan-400 border border-cyan-400/40 hover:border-cyan-300 text-xs font-mono font-bold text-cyan-100 hover:text-black transition-all duration-300 shadow-[0_0_12px_rgba(6,182,212,0.2)] group"
+                    className="inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-full bg-black/55 hover:bg-cyan-400 border border-cyan-400/35 hover:border-cyan-300 text-xs font-mono font-bold text-cyan-100 hover:text-black transition-all duration-300 shadow-md shadow-black/40 group"
                   >
                     <Instagram className="w-3.5 h-3.5 text-cyan-300 group-hover:text-black transition-colors" />
                     <span>Instagram</span>
                     <ArrowUpRight className="w-3.5 h-3.5 text-cyan-300 group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </a>
+                  </motion.a>
 
                   {/* LinkedIn */}
-                  <a
+                  <motion.a
+                    whileHover={{ y: -2, scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
                     href="https://linkedin.com"
                     target="_blank"
                     rel="noreferrer"
                     onMouseEnter={playHoverSound}
-                    className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-black/65 hover:bg-cyan-400 border border-cyan-400/40 hover:border-cyan-300 text-xs font-mono font-bold text-cyan-100 hover:text-black transition-all duration-300 shadow-[0_0_12px_rgba(6,182,212,0.2)] group"
+                    className="inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-full bg-black/55 hover:bg-cyan-400 border border-cyan-400/35 hover:border-cyan-300 text-xs font-mono font-bold text-cyan-100 hover:text-black transition-all duration-300 shadow-md shadow-black/40 group"
                   >
                     <Linkedin className="w-3.5 h-3.5 text-cyan-300 group-hover:text-black transition-colors" />
                     <span>LinkedIn</span>
                     <ArrowUpRight className="w-3.5 h-3.5 text-cyan-300 group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </a>
+                  </motion.a>
 
-                  {/* Direct Email */}
-                  <a
+                  {/* Direct Email with Luminous Cyan Badge */}
+                  <motion.a
+                    whileHover={{ y: -2, scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
                     href="mailto:harshdhiman332@gmail.com"
                     onMouseEnter={playHoverSound}
-                    className="inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-full bg-cyan-400/25 hover:bg-cyan-400 border border-cyan-300/60 hover:border-cyan-200 text-xs font-mono font-bold text-cyan-100 hover:text-black transition-all duration-300 shadow-[0_0_16px_rgba(0,255,255,0.35)] group"
+                    className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-cyan-400/25 hover:bg-cyan-400 border border-cyan-300/60 hover:border-cyan-200 text-xs font-mono font-bold text-cyan-100 hover:text-black transition-all duration-300 shadow-[0_0_16px_rgba(0,255,255,0.3)] group"
                   >
                     <Mail className="w-3.5 h-3.5 text-cyan-300 group-hover:text-black transition-colors" />
                     <span>harshdhiman332@gmail.com</span>
-                  </a>
+                  </motion.a>
                 </div>
               </div>
             </div>
