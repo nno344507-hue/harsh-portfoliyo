@@ -13,13 +13,15 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
   const { playHoverSound, playClickSound } = useAudio();
   const [mousePos, setMousePos] = useState({ x: -1000, y: -1000 });
 
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+
   const navLinks = [
-    { name: 'Home', target: 'hero' },
-    { name: 'About us', target: 'about' },
-    { name: 'Projects', target: 'projects' },
-    { name: 'Showreel', target: 'reel' },
-    { name: 'Labs', target: 'labs' },
-    { name: 'Contact', target: 'contact' },
+    { num: '01', name: 'Home', tag: 'DISCOVER THE HUB', target: 'hero' },
+    { num: '02', name: 'About us', tag: 'THE VISION & STORY', target: 'about' },
+    { num: '03', name: 'Projects', tag: 'FEATURED WORKS', target: 'projects' },
+    { num: '04', name: 'Showreel', tag: '4K CINEMATIC REEL', target: 'reel' },
+    { num: '05', name: 'Labs', tag: 'EDITING ARSENAL', target: 'labs' },
+    { num: '06', name: 'Contact', tag: 'START A PROJECT', target: 'contact' },
   ];
 
   const handleNavClick = (targetId: string) => {
@@ -65,33 +67,86 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
           />
 
           {/* Subtle Left Vignette for Nav Contrast */}
-          <div className="absolute inset-0 pointer-events-none z-[2] bg-gradient-to-r from-[#050507]/90 via-[#050507]/40 to-transparent w-full md:w-1/2" />
+          <div className="absolute inset-0 pointer-events-none z-[2] bg-gradient-to-r from-[#050507]/95 via-[#050507]/60 to-transparent w-full md:w-3/5" />
 
           {/* Main Content: Nav Links Floating Elegantly */}
           <div className="max-w-7xl mx-auto w-full relative z-10 flex items-center my-auto pointer-events-none">
             {/* Nav Links Column */}
-            <div className="flex flex-col space-y-3 sm:space-y-6 pointer-events-auto max-w-xl">
-              {navLinks.map((link, idx) => (
-                <motion.button
-                  key={link.name}
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.05 + idx * 0.04, duration: 0.35 }}
-                  onClick={() => handleNavClick(link.target)}
-                  onMouseEnter={playHoverSound}
-                  className="group flex items-center justify-between text-left text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter text-white/80 hover:text-white transition-all duration-300 py-1"
-                >
-                  <span className="relative overflow-hidden inline-block">
-                    <span className="inline-block transition-transform duration-500 group-hover:-translate-y-full">
-                      {link.name}
-                    </span>
-                    <span className="absolute top-0 left-0 inline-block transition-transform duration-500 translate-y-full group-hover:translate-y-0 text-amber-400">
-                      {link.name}
-                    </span>
-                  </span>
-                  <ArrowRight className="w-6 h-6 sm:w-8 sm:h-8 ml-6 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-amber-400" />
-                </motion.button>
-              ))}
+            <div 
+              onMouseLeave={() => setHoveredIdx(null)}
+              className="flex flex-col space-y-2 sm:space-y-4 pointer-events-auto max-w-2xl"
+            >
+              {navLinks.map((link, idx) => {
+                const isItemHovered = hoveredIdx === idx;
+                const isDimmed = hoveredIdx !== null && !isItemHovered;
+
+                return (
+                  <motion.button
+                    key={link.name}
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ 
+                      opacity: isDimmed ? 0.28 : 1, 
+                      x: isItemHovered ? 16 : 0 
+                    }}
+                    transition={{ 
+                      duration: 0.3,
+                      ease: [0.16, 1, 0.3, 1]
+                    }}
+                    onClick={() => handleNavClick(link.target)}
+                    onMouseEnter={() => {
+                      setHoveredIdx(idx);
+                      playHoverSound();
+                    }}
+                    className="group relative flex flex-col items-start text-left py-1.5 transition-all duration-300 focus:outline-none"
+                  >
+                    <div className="flex items-center space-x-3 sm:space-x-5">
+                      {/* Numeric Index Tag */}
+                      <span className={`font-mono text-xs sm:text-sm tracking-widest transition-colors duration-300 ${
+                        isItemHovered ? 'text-amber-400 font-bold' : 'text-zinc-500'
+                      }`}>
+                        [{link.num}]
+                      </span>
+
+                      {/* Main Title with Luminous Metallic Radiant Glow */}
+                      <span className={`text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase transition-all duration-300 ${
+                        isItemHovered
+                          ? 'bg-clip-text text-transparent bg-gradient-to-r from-amber-100 via-amber-300 to-amber-500 drop-shadow-[0_0_28px_rgba(245,158,11,0.65)]'
+                          : 'text-white/80'
+                      }`}>
+                        {link.name}
+                      </span>
+
+                      {/* Golden Arrow indicator that glides in */}
+                      <ArrowRight className={`w-5 h-5 sm:w-7 sm:h-7 text-amber-400 transition-all duration-300 ${
+                        isItemHovered 
+                          ? 'opacity-100 translate-x-2' 
+                          : 'opacity-0 -translate-x-3'
+                      }`} />
+                    </div>
+
+                    {/* Micro Tech Tag Subtitle on hover */}
+                    <div className="flex items-center space-x-2 pl-9 sm:pl-14 h-4 overflow-hidden mt-0.5">
+                      {isItemHovered && (
+                        <motion.span
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -8 }}
+                          transition={{ duration: 0.2 }}
+                          className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] text-cyan-400 font-bold flex items-center space-x-1.5"
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping mr-1" />
+                          <span>// {link.tag}</span>
+                        </motion.span>
+                      )}
+                    </div>
+
+                    {/* Laser Underline Accent that expands smoothly */}
+                    <div className={`h-[2px] bg-gradient-to-r from-amber-400 via-cyan-400 to-transparent transition-all duration-500 rounded-full mt-1 ${
+                      isItemHovered ? 'w-full opacity-100' : 'w-0 opacity-0'
+                    }`} />
+                  </motion.button>
+                );
+              })}
             </div>
           </div>
 
