@@ -4,6 +4,8 @@ import { Video, Smartphone, Sparkles, Volume2, Star, CheckCircle2, Quote, Plus, 
 import confetti from 'canvas-confetti';
 import { CLIENTS } from '../../data/projectsData';
 import { useAudio } from '../../context/AudioContext';
+import { SoundBoard } from '../ui/SoundBoard';
+import { ProjectEstimator } from '../ui/ProjectEstimator';
 
 interface ReviewItem {
   id: string;
@@ -467,6 +469,12 @@ export const AboutSection: React.FC = () => {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Interactive Foley & SFX Soundboard */}
+        <SoundBoard />
+
+        {/* Interactive Instant Project Quote & Booking Calculator */}
+        <ProjectEstimator />
 
         {/* Trusted By Client Marquee */}
         <div className="relative overflow-hidden py-8 border-y border-white/15 bg-black/40 backdrop-blur-lg rounded-2xl">

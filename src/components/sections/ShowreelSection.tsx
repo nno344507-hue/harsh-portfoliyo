@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, X, ArrowRight, Film, Smartphone, Monitor } from 'lucide-react';
 import { useAudio } from '../../context/AudioContext';
+import { ColorGradeSlider } from '../ui/ColorGradeSlider';
+import { InteractiveTimeline } from '../ui/InteractiveTimeline';
 
 export const ShowreelSection: React.FC = () => {
   const [isPlayingReel, setIsPlayingReel] = useState(false);
@@ -164,6 +166,12 @@ export const ShowreelSection: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Interactive Before & After Color Grading Suite */}
+        <ColorGradeSlider />
+
+        {/* Interactive Multi-Track Sequence Timeline */}
+        <InteractiveTimeline />
       </div>
 
       {/* Video Modal Player */}
