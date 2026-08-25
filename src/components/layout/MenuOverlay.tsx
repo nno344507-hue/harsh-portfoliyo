@@ -130,72 +130,92 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
             </div>
           </div>
 
-          {/* Bottom Living Animated Cybernetic Dock (State-of-the-Art Luxury) */}
+          {/* Bottom Holographic Chromatic Prism Nebula Dock (Completely Fresh & Vibrant Aesthetic) */}
           <div className="max-w-7xl mx-auto w-full pt-4 relative z-20 pointer-events-auto">
-            {/* Outer Container with Infinite Rotating Laser Perimeter Glow */}
-            <div className="relative rounded-2xl sm:rounded-full p-[1.5px] overflow-hidden shadow-[0_0_40px_rgba(0,255,255,0.25)]">
-              {/* Infinite Rotating Electric Cyan Laser Beam Perimeter */}
+            {/* Outer Rotating Chromatic Spectrum Laser Perimeter */}
+            <div className="relative rounded-2xl sm:rounded-full p-[1.5px] overflow-hidden shadow-[0_0_50px_rgba(236,72,153,0.3)]">
+              {/* Rotating Prismatic Laser Beam (Violet -> Hot Pink -> Solar Amber -> Emerald) */}
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
-                className="absolute -inset-[200%] bg-[conic-gradient(from_0deg,_transparent_0_310deg,_#00ffff_345deg,_#38bdf8_360deg)] pointer-events-none"
+                transition={{ repeat: Infinity, duration: 5, ease: "linear" }}
+                className="absolute -inset-[200%] bg-[conic-gradient(from_0deg,_transparent_0_280deg,_#8b5cf6_310deg,_#ec4899_335deg,_#f59e0b_350deg,_#10b981_360deg)] pointer-events-none"
               />
 
-              {/* Inner Capsule Body */}
-              <div className="relative rounded-[calc(1rem-1.5px)] sm:rounded-full overflow-hidden border border-cyan-400/40 bg-[#020d14]">
-                {/* Multi-Layered Living Plasma Wave Caustics Background */}
-                <div className="absolute inset-0 bg-[#020d14] z-0 pointer-events-none overflow-hidden">
-                  {/* Floating Pulsing Aurora Blobs */}
+              {/* Inner Obsidian Liquid Capsule Surface */}
+              <div className="relative rounded-[calc(1rem-1.5px)] sm:rounded-full overflow-hidden border border-white/15 bg-[#06040a]/90 backdrop-blur-2xl">
+                {/* Chromatic Liquid Aurora Nebula Background Layer */}
+                <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+                  {/* Fluid Blobs: Violet / Purple */}
+                  <motion.div 
+                    animate={{ 
+                      x: [-50, 60, -50],
+                      y: [-10, 10, -10],
+                      scale: [1, 1.35, 1],
+                      opacity: [0.4, 0.75, 0.4]
+                    }}
+                    transition={{ repeat: Infinity, duration: 6.5, ease: "easeInOut" }}
+                    className="absolute top-1/2 left-[5%] -translate-y-1/2 w-80 h-40 bg-violet-600/40 blur-3xl rounded-full" 
+                  />
+
+                  {/* Fluid Blobs: Hot Magenta / Fuchsia */}
+                  <motion.div 
+                    animate={{ 
+                      x: [50, -50, 50],
+                      y: [12, -12, 12],
+                      scale: [1.3, 0.9, 1.3],
+                      opacity: [0.35, 0.7, 0.35]
+                    }}
+                    transition={{ repeat: Infinity, duration: 7.5, ease: "easeInOut" }}
+                    className="absolute top-1/2 left-[45%] -translate-y-1/2 w-96 h-40 bg-fuchsia-500/35 blur-3xl rounded-full" 
+                  />
+
+                  {/* Fluid Blobs: Solar Amber / Gold */}
                   <motion.div 
                     animate={{ 
                       x: [-40, 50, -40],
-                      scale: [1, 1.3, 1],
-                      opacity: [0.35, 0.7, 0.35]
+                      scale: [0.95, 1.25, 0.95],
+                      opacity: [0.3, 0.65, 0.3]
                     }}
-                    transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-                    className="absolute top-1/2 -left-10 -translate-y-1/2 w-80 h-36 bg-cyan-400/30 blur-3xl rounded-full" 
-                  />
-                  <motion.div 
-                    animate={{ 
-                      x: [40, -50, 40],
-                      scale: [1.2, 0.95, 1.2],
-                      opacity: [0.3, 0.6, 0.3]
-                    }}
-                    transition={{ repeat: Infinity, duration: 7, ease: "easeInOut" }}
-                    className="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-36 bg-teal-400/25 blur-3xl rounded-full" 
-                  />
-                  <motion.div 
-                    animate={{ 
-                      opacity: [0.3, 0.7, 0.3],
-                      scale: [1, 1.2, 1]
-                    }}
-                    transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}
-                    className="absolute top-0 right-10 w-64 h-28 bg-cyan-300/35 blur-2xl rounded-full" 
+                    transition={{ repeat: Infinity, duration: 5.5, ease: "easeInOut" }}
+                    className="absolute top-0 right-[5%] w-80 h-36 bg-amber-500/35 blur-3xl rounded-full" 
                   />
 
-                  {/* 4 Multi-Harmonic Flowing Electric Laser Waves */}
+                  {/* Fluid Blobs: Emerald Cyan Sparkle */}
+                  <motion.div 
+                    animate={{ 
+                      opacity: [0.2, 0.5, 0.2],
+                      scale: [1, 1.2, 1]
+                    }}
+                    transition={{ repeat: Infinity, duration: 4.8, ease: "easeInOut" }}
+                    className="absolute bottom-0 right-[30%] w-64 h-24 bg-cyan-400/25 blur-2xl rounded-full" 
+                  />
+
+                  {/* Organic Multi-Chromatic Harmonic Waves */}
                   <svg
-                    className="absolute inset-0 w-[140%] -left-[20%] h-full opacity-95"
+                    className="absolute inset-0 w-[140%] -left-[20%] h-full opacity-80"
                     preserveAspectRatio="none"
                     viewBox="0 0 1400 100"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <defs>
-                      <linearGradient id="liveLaserGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#00f5d4" stopOpacity="0.1" />
-                        <stop offset="25%" stopColor="#00e5ff" stopOpacity="0.95" />
-                        <stop offset="50%" stopColor="#38bdf8" stopOpacity="1" />
-                        <stop offset="75%" stopColor="#00ffff" stopOpacity="0.95" />
-                        <stop offset="100%" stopColor="#00f5d4" stopOpacity="0.1" />
+                      {/* Violet to Hot Pink to Amber Gradient */}
+                      <linearGradient id="chromaGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.2" />
+                        <stop offset="30%" stopColor="#ec4899" stopOpacity="0.95" />
+                        <stop offset="70%" stopColor="#f59e0b" stopOpacity="0.95" />
+                        <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.2" />
                       </linearGradient>
-                      <linearGradient id="liveLaserGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.2" />
-                        <stop offset="35%" stopColor="#00ffff" stopOpacity="1" />
-                        <stop offset="65%" stopColor="#06b6d4" stopOpacity="0.85" />
-                        <stop offset="100%" stopColor="#00e5ff" stopOpacity="0.1" />
+
+                      {/* Cyan to Fuchsia to Gold Gradient */}
+                      <linearGradient id="chromaGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.2" />
+                        <stop offset="40%" stopColor="#d946ef" stopOpacity="0.9" />
+                        <stop offset="80%" stopColor="#fbbf24" stopOpacity="0.8" />
+                        <stop offset="100%" stopColor="#ec4899" stopOpacity="0.2" />
                       </linearGradient>
-                      <filter id="liveLaserGlow" x="-20%" y="-50%" width="140%" height="200%">
+
+                      <filter id="chromaGlow" x="-20%" y="-50%" width="140%" height="200%">
                         <feGaussianBlur stdDeviation="3.5" result="blur1" />
                         <feGaussianBlur stdDeviation="7" result="blur2" />
                         <feMerge>
@@ -206,91 +226,77 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
                       </filter>
                     </defs>
 
-                    {/* Wave 1: Primary Undulating Ribbon */}
+                    {/* Chromatic Wave 1: Flowing Magenta/Amber Wave */}
                     <motion.path
                       animate={{
-                        x: [-50, 40, -50],
-                        y: [-4, 5, -4],
+                        x: [-60, 45, -60],
+                        y: [-5, 6, -5],
                       }}
-                      transition={{ repeat: Infinity, duration: 5.5, ease: "easeInOut" }}
-                      d="M-50,55 C120,-15 280,115 480,25 C680,-35 820,105 1020,35 C1150,-10 1280,90 1450,45"
-                      stroke="url(#liveLaserGrad1)"
-                      strokeWidth="4"
-                      filter="url(#liveLaserGlow)"
+                      transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+                      d="M-50,60 C140,-15 300,115 500,25 C700,-35 840,105 1040,35 C1180,-10 1300,90 1450,45"
+                      stroke="url(#chromaGrad1)"
+                      strokeWidth="3.8"
+                      filter="url(#chromaGlow)"
                     />
 
-                    {/* Wave 2: Opposing Counter Wave */}
+                    {/* Chromatic Wave 2: Cyan/Fuchsia Intersecting Curve */}
                     <motion.path
                       animate={{
-                        x: [40, -50, 40],
-                        y: [5, -5, 5],
+                        x: [45, -55, 45],
+                        y: [6, -6, 6],
                       }}
-                      transition={{ repeat: Infinity, duration: 6.5, ease: "easeInOut" }}
-                      d="M-50,25 C160,95 320,-25 520,65 C720,125 860,-5 1020,75 C1180,125 1300,-15 1450,65"
-                      stroke="url(#liveLaserGrad2)"
-                      strokeWidth="3.5"
-                      filter="url(#liveLaserGlow)"
+                      transition={{ repeat: Infinity, duration: 7, ease: "easeInOut" }}
+                      d="M-50,25 C180,95 340,-25 540,65 C740,125 880,-5 1040,75 C1200,125 1320,-15 1450,65"
+                      stroke="url(#chromaGrad2)"
+                      strokeWidth="3.2"
+                      filter="url(#chromaGlow)"
                     />
 
-                    {/* Wave 3: Deep Radiant Curve */}
-                    <motion.path
-                      animate={{
-                        x: [-30, 30, -30],
-                        y: [3, -3, 3],
-                      }}
-                      transition={{ repeat: Infinity, duration: 4.8, ease: "easeInOut" }}
-                      d="M-50,80 C180,15 360,90 600,20 C800,-5 920,85 1150,25 C1280,80 1350,30 1450,55"
-                      stroke="#00ffff"
-                      strokeOpacity="0.6"
-                      strokeWidth="2"
-                      filter="url(#liveLaserGlow)"
-                    />
-
-                    {/* Wave 4: Ultra Fine Core Beam */}
+                    {/* Chromatic Wave 3: Pure White Shimmer Core Beam */}
                     <motion.path
                       animate={{
                         x: [-40, 50, -40],
                       }}
-                      transition={{ repeat: Infinity, duration: 5.2, ease: "easeInOut" }}
-                      d="M-50,42 C180,8 350,80 550,40 C750,12 880,70 1020,28 C1220,68 1320,18 1450,42"
+                      transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+                      d="M-50,42 C180,8 360,80 560,40 C760,12 890,70 1030,28 C1230,68 1330,18 1450,42"
                       stroke="#ffffff"
-                      strokeOpacity="0.95"
+                      strokeOpacity="0.85"
                       strokeWidth="1.2"
                     />
                   </svg>
 
-                  {/* Traversing Light Pulse Flare */}
+                  {/* Traversing Chromatic Rainbow Shimmer Flare */}
                   <motion.div
                     animate={{ x: ['-100%', '200%'] }}
                     transition={{
                       repeat: Infinity,
-                      duration: 3.2,
+                      duration: 3.8,
                       ease: "easeInOut",
-                      repeatDelay: 0.5
+                      repeatDelay: 0.6
                     }}
-                    className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-cyan-300/30 to-transparent blur-md pointer-events-none"
+                    className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-fuchsia-400/25 to-transparent blur-md pointer-events-none"
                   />
 
-                  {/* Dark Contrast Glass Filter */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#020d14]/70 via-[#020d14]/30 to-[#020d14]/70 backdrop-blur-[1.5px]" />
+                  {/* Frosted Obsidian Glass Shade to ensure 100% crystal legibility */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#06040a]/80 via-[#06040a]/40 to-[#06040a]/80 backdrop-blur-[1px]" />
                 </div>
 
                 {/* Inner Content Surface */}
                 <div className="relative z-10 w-full px-6 sm:px-8 py-3.5 sm:py-4 flex flex-col md:flex-row items-center justify-between gap-4">
-                  {/* Left Copyright with Live Hologram Pulse */}
-                  <div className="text-xs sm:text-sm font-mono text-cyan-50 flex items-center space-x-3 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+                  {/* Left Status: Holographic Live Pulse */}
+                  <div className="text-xs sm:text-sm font-mono text-zinc-100 flex items-center space-x-3 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
                     <span className="relative flex h-3 w-3">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
-                      <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-300 shadow-[0_0_12px_#00ffff]" />
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-fuchsia-400 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-3 w-3 bg-gradient-to-tr from-amber-400 via-pink-500 to-violet-500 shadow-[0_0_14px_#ec4899]" />
                     </span>
                     <span className="font-semibold tracking-wide">
-                      © {new Date().getFullYear()} Harsh Portfolio. <span className="text-cyan-400/80 hidden sm:inline">// ALL RIGHTS RESERVED</span>
+                      © {new Date().getFullYear()} Harsh Portfolio. <span className="text-fuchsia-300/80 hidden sm:inline">// IMMERSIVE DIGITAL EXPERIENCE</span>
                     </span>
                   </div>
 
-                  {/* Right Social & Contact Capsule Badges */}
+                  {/* Right Social & Contact Chromatic Capsules */}
                   <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-                    {/* Twitter / X */}
+                    {/* Twitter / X (Violet Glow) */}
                     <motion.a
                       whileHover={{ y: -3, scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
@@ -298,13 +304,13 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
                       target="_blank"
                       rel="noreferrer"
                       onMouseEnter={playHoverSound}
-                      className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-black/60 hover:bg-cyan-400 border border-cyan-400/40 hover:border-cyan-200 text-xs font-mono font-bold text-cyan-100 hover:text-black transition-all duration-300 shadow-[0_0_15px_rgba(0,255,255,0.2)] group"
+                      className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-white/[0.07] hover:bg-violet-600 border border-white/15 hover:border-violet-400 text-xs font-mono font-bold text-zinc-100 hover:text-white transition-all duration-300 shadow-md shadow-black/40 hover:shadow-[0_0_20px_rgba(139,92,246,0.5)] group"
                     >
                       <span>Twitter / X</span>
-                      <ArrowUpRight className="w-3.5 h-3.5 text-cyan-300 group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      <ArrowUpRight className="w-3.5 h-3.5 text-violet-300 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </motion.a>
 
-                    {/* Instagram */}
+                    {/* Instagram (Hot Pink / Sunset Glow) */}
                     <motion.a
                       whileHover={{ y: -3, scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
@@ -312,14 +318,14 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
                       target="_blank"
                       rel="noreferrer"
                       onMouseEnter={playHoverSound}
-                      className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-black/60 hover:bg-cyan-400 border border-cyan-400/40 hover:border-cyan-200 text-xs font-mono font-bold text-cyan-100 hover:text-black transition-all duration-300 shadow-[0_0_15px_rgba(0,255,255,0.2)] group"
+                      className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-white/[0.07] hover:bg-gradient-to-r hover:from-pink-500 hover:to-rose-500 border border-white/15 hover:border-pink-400 text-xs font-mono font-bold text-zinc-100 hover:text-white transition-all duration-300 shadow-md shadow-black/40 hover:shadow-[0_0_20px_rgba(236,72,153,0.5)] group"
                     >
-                      <Instagram className="w-3.5 h-3.5 text-cyan-300 group-hover:text-black transition-colors" />
+                      <Instagram className="w-3.5 h-3.5 text-pink-300 group-hover:text-white transition-colors" />
                       <span>Instagram</span>
-                      <ArrowUpRight className="w-3.5 h-3.5 text-cyan-300 group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      <ArrowUpRight className="w-3.5 h-3.5 text-pink-300 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </motion.a>
 
-                    {/* LinkedIn */}
+                    {/* LinkedIn (Electric Cyan / Azure Glow) */}
                     <motion.a
                       whileHover={{ y: -3, scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
@@ -327,22 +333,22 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
                       target="_blank"
                       rel="noreferrer"
                       onMouseEnter={playHoverSound}
-                      className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-black/60 hover:bg-cyan-400 border border-cyan-400/40 hover:border-cyan-200 text-xs font-mono font-bold text-cyan-100 hover:text-black transition-all duration-300 shadow-[0_0_15px_rgba(0,255,255,0.2)] group"
+                      className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-white/[0.07] hover:bg-sky-500 border border-white/15 hover:border-sky-400 text-xs font-mono font-bold text-zinc-100 hover:text-white transition-all duration-300 shadow-md shadow-black/40 hover:shadow-[0_0_20px_rgba(14,165,233,0.5)] group"
                     >
-                      <Linkedin className="w-3.5 h-3.5 text-cyan-300 group-hover:text-black transition-colors" />
+                      <Linkedin className="w-3.5 h-3.5 text-sky-300 group-hover:text-white transition-colors" />
                       <span>LinkedIn</span>
-                      <ArrowUpRight className="w-3.5 h-3.5 text-cyan-300 group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      <ArrowUpRight className="w-3.5 h-3.5 text-sky-300 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </motion.a>
 
-                    {/* Direct Email with Luminous Cyan Badge */}
+                    {/* Direct Email (Luminous Molten Gold & Fuchsia Gradient Badge) */}
                     <motion.a
                       whileHover={{ y: -3, scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       href="mailto:harshdhiman332@gmail.com"
                       onMouseEnter={playHoverSound}
-                      className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-cyan-400/30 hover:bg-cyan-400 border border-cyan-300/70 hover:border-cyan-200 text-xs font-mono font-bold text-cyan-100 hover:text-black transition-all duration-300 shadow-[0_0_20px_rgba(0,255,255,0.4)] group"
+                      className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-400/20 via-pink-500/20 to-violet-500/20 hover:bg-gradient-to-r hover:from-amber-400 hover:via-pink-500 hover:to-violet-500 border border-amber-400/50 hover:border-amber-300 text-xs font-mono font-bold text-amber-200 hover:text-black transition-all duration-300 shadow-[0_0_25px_rgba(245,158,11,0.35)] group"
                     >
-                      <Mail className="w-3.5 h-3.5 text-cyan-300 group-hover:text-black transition-colors" />
+                      <Mail className="w-3.5 h-3.5 text-amber-300 group-hover:text-black transition-colors" />
                       <span>harshdhiman332@gmail.com</span>
                     </motion.a>
                   </div>
