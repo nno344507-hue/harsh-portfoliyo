@@ -135,32 +135,56 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
             {/* Outer Container with Cyan Neon Glow & Border */}
             <div className="relative rounded-2xl sm:rounded-full border border-cyan-400/50 shadow-[0_0_35px_rgba(6,182,212,0.35),inset_0_0_25px_rgba(6,182,212,0.2)] overflow-hidden">
               
-              {/* Electric Cyan Plasma Wave / Caustics Background Layer (Image 2 style) */}
+              {/* Electric Cyan Plasma Wave / Caustics Background Layer (Live Flowing Animation) */}
               <div className="absolute inset-0 bg-[#021319] z-0 pointer-events-none overflow-hidden">
-                {/* Ambient Radial Cyan Glow Spots */}
-                <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-32 bg-cyan-400/30 blur-3xl rounded-full" />
-                <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-72 h-32 bg-teal-400/25 blur-3xl rounded-full" />
-                <div className="absolute top-0 right-10 w-48 h-24 bg-cyan-300/35 blur-2xl rounded-full" />
+                {/* Live Animated Ambient Radial Cyan Glow Spots */}
+                <motion.div 
+                  animate={{ 
+                    x: [-40, 50, -40], 
+                    scale: [1, 1.25, 1],
+                    opacity: [0.3, 0.6, 0.3]
+                  }}
+                  transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+                  className="absolute top-1/2 left-1/4 -translate-y-1/2 w-72 h-36 bg-cyan-400/35 blur-3xl rounded-full" 
+                />
+                <motion.div 
+                  animate={{ 
+                    x: [40, -50, 40], 
+                    scale: [1.2, 0.9, 1.2],
+                    opacity: [0.25, 0.5, 0.25]
+                  }}
+                  transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+                  className="absolute top-1/2 right-1/4 -translate-y-1/2 w-80 h-36 bg-teal-400/30 blur-3xl rounded-full" 
+                />
+                <motion.div 
+                  animate={{ 
+                    x: [-30, 40, -30],
+                    opacity: [0.3, 0.65, 0.3]
+                  }}
+                  transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}
+                  className="absolute top-0 right-10 w-56 h-28 bg-cyan-300/40 blur-2xl rounded-full" 
+                />
                 
-                {/* Luminous Organic SVG Laser Wave Arcs (Image 2 style) */}
+                {/* Live Luminous Flowing Organic SVG Laser Waves */}
                 <svg
-                  className="absolute inset-0 w-full h-full opacity-85"
+                  className="absolute inset-0 w-[140%] -left-[20%] h-full opacity-90"
                   preserveAspectRatio="none"
-                  viewBox="0 0 1000 100"
+                  viewBox="0 0 1400 100"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <defs>
                     <linearGradient id="neonCyanGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
                       <stop offset="0%" stopColor="#00f5d4" stopOpacity="0.1" />
-                      <stop offset="30%" stopColor="#00e5ff" stopOpacity="0.95" />
-                      <stop offset="70%" stopColor="#38bdf8" stopOpacity="0.95" />
-                      <stop offset="100%" stopColor="#00f5d4" stopOpacity="0.2" />
+                      <stop offset="25%" stopColor="#00e5ff" stopOpacity="0.95" />
+                      <stop offset="50%" stopColor="#38bdf8" stopOpacity="1" />
+                      <stop offset="75%" stopColor="#00ffff" stopOpacity="0.95" />
+                      <stop offset="100%" stopColor="#00f5d4" stopOpacity="0.1" />
                     </linearGradient>
                     <linearGradient id="neonCyanGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
                       <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.2" />
-                      <stop offset="45%" stopColor="#00ffff" stopOpacity="1" />
-                      <stop offset="80%" stopColor="#06b6d4" stopOpacity="0.75" />
+                      <stop offset="35%" stopColor="#00ffff" stopOpacity="1" />
+                      <stop offset="65%" stopColor="#06b6d4" stopOpacity="0.85" />
                       <stop offset="100%" stopColor="#00e5ff" stopOpacity="0.1" />
                     </linearGradient>
                     <filter id="neonGlow" x="-20%" y="-50%" width="140%" height="200%">
@@ -174,36 +198,88 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
                     </filter>
                   </defs>
 
-                  {/* Wave 1: Primary glowing cyan arc */}
-                  <path
-                    d="M-50,60 C150,-20 300,120 500,30 C700,-40 850,110 1050,40"
+                  {/* Live Animated Wave 1: Left-to-Right Floating Motion */}
+                  <motion.path
+                    animate={{
+                      x: [-60, 40, -60],
+                      y: [-4, 6, -4],
+                    }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 6,
+                      ease: "easeInOut"
+                    }}
+                    d="M-50,60 C150,-20 300,120 500,30 C700,-40 850,110 1050,40 C1200,-10 1350,90 1450,50"
                     stroke="url(#neonCyanGrad1)"
                     strokeWidth="4"
                     filter="url(#neonGlow)"
                   />
-                  {/* Wave 2: Secondary intersecting high-luminosity wave */}
-                  <path
-                    d="M-50,20 C180,100 350,-30 550,70 C750,130 880,0 1050,80"
+
+                  {/* Live Animated Wave 2: Opposing Counter Phase Floating Wave */}
+                  <motion.path
+                    animate={{
+                      x: [50, -60, 50],
+                      y: [6, -5, 6],
+                    }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 7,
+                      ease: "easeInOut"
+                    }}
+                    d="M-50,20 C180,100 350,-30 550,70 C750,130 880,0 1050,80 C1220,130 1350,-20 1450,70"
                     stroke="url(#neonCyanGrad2)"
                     strokeWidth="3.5"
                     filter="url(#neonGlow)"
                   />
-                  {/* Wave 3: Deep harmonic caustics curve */}
-                  <path
-                    d="M0,85 C220,10 400,95 650,20 C850,-10 950,90 1000,50"
+
+                  {/* Live Animated Wave 3: Deep Harmonic Caustics Curve */}
+                  <motion.path
+                    animate={{
+                      x: [-30, 30, -30],
+                      y: [3, -4, 3],
+                    }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 5,
+                      ease: "easeInOut"
+                    }}
+                    d="M-50,85 C220,10 400,95 650,20 C850,-10 950,90 1200,30 C1350,80 1450,40 1450,60"
                     stroke="#00ffff"
-                    strokeOpacity="0.5"
+                    strokeOpacity="0.6"
                     strokeWidth="2"
                     filter="url(#neonGlow)"
                   />
-                  {/* Wave 4: Ultra fine bright core beam */}
-                  <path
-                    d="M-50,45 C200,5 380,85 580,45 C780,15 900,75 1050,30"
+
+                  {/* Live Animated Wave 4: Ultra Fine Bright Core Laser Beam */}
+                  <motion.path
+                    animate={{
+                      x: [-40, 50, -40],
+                    }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 5.5,
+                      ease: "easeInOut"
+                    }}
+                    d="M-50,45 C200,5 380,85 580,45 C780,15 900,75 1050,30 C1250,70 1350,20 1450,45"
                     stroke="#ffffff"
-                    strokeOpacity="0.9"
+                    strokeOpacity="0.95"
                     strokeWidth="1.2"
                   />
                 </svg>
+
+                {/* Live Electric Light Pulse Shimmer Flare traversing continuously across the pill */}
+                <motion.div
+                  animate={{
+                    x: ['-100%', '200%'],
+                  }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 3.5,
+                    ease: "easeInOut",
+                    repeatDelay: 0.5
+                  }}
+                  className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-cyan-400/25 to-transparent blur-md pointer-events-none"
+                />
 
                 {/* Subtle dark vignette overlay to ensure text stays 100% crisp */}
                 <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-black/55 backdrop-blur-[1.5px]" />
