@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Video, Smartphone, Sparkles, Volume2, Star, CheckCircle2, Quote, Plus, X, Send, Users, Activity, MessageSquare } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { CLIENTS } from '../../data/projectsData';
 import { useAudio } from '../../context/AudioContext';
 import { SoundBoard } from '../ui/SoundBoard';
 import { ProjectEstimator } from '../ui/ProjectEstimator';
@@ -475,23 +474,6 @@ export const AboutSection: React.FC = () => {
 
         {/* Interactive Instant Project Quote & Booking Calculator */}
         <ProjectEstimator />
-
-        {/* Trusted By Client Marquee */}
-        <div className="relative overflow-hidden py-8 border-y border-white/15 bg-black/40 backdrop-blur-lg rounded-2xl">
-          <div className="text-xs font-mono uppercase tracking-widest text-zinc-400 text-center mb-6 font-semibold">
-            Collaborating with world-class partners
-          </div>
-          <div className="flex animate-marquee space-x-12">
-            {[...CLIENTS, ...CLIENTS].map((client, i) => (
-              <span
-                key={i}
-                className="text-2xl sm:text-3xl font-bold text-zinc-400 hover:text-white transition-colors cursor-default whitespace-nowrap tracking-wider font-mono uppercase"
-              >
-                {client}
-              </span>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );
