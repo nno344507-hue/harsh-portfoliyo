@@ -150,64 +150,70 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
             </div>
           </div>
 
-          {/* Bottom High-Contrast Frosted Glass Footer Bar */}
+          {/* Bottom High-Contrast Neon Gradient Dock / Footer Bar */}
           <div className="max-w-7xl mx-auto w-full pt-4 relative z-20 pointer-events-auto">
-            <div className="w-full bg-[#0b0c12]/92 backdrop-blur-2xl border border-white/20 px-5 sm:px-8 py-3 sm:py-3.5 rounded-2xl sm:rounded-full flex flex-col md:flex-row items-center justify-between shadow-2xl shadow-black/95 gap-3.5">
-              {/* Left Copyright */}
-              <div className="text-xs sm:text-sm font-mono text-zinc-200 flex items-center space-x-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="font-medium">© {new Date().getFullYear()} Harsh Portfolio. All rights reserved.</span>
-              </div>
+            {/* Outer Glowing Neon Gradient Border Frame */}
+            <div className="relative p-[1.5px] rounded-2xl sm:rounded-full bg-gradient-to-r from-cyan-400 via-fuchsia-500 via-amber-400 to-indigo-500 shadow-[0_0_30px_rgba(6,182,212,0.35),0_0_50px_rgba(236,72,153,0.25)] overflow-hidden group">
+              {/* Inner High-Tech Dark Glass Surface with soft Neon Gradient tint */}
+              <div className="w-full bg-gradient-to-r from-[#090b14]/95 via-[#0e0a17]/95 to-[#140e08]/95 backdrop-blur-2xl px-5 sm:px-8 py-3 sm:py-3.5 rounded-[calc(1rem-1.5px)] sm:rounded-full flex flex-col md:flex-row items-center justify-between shadow-2xl shadow-black/95 gap-3.5">
+                {/* Left Copyright */}
+                <div className="text-xs sm:text-sm font-mono text-zinc-100 flex items-center space-x-2.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_10px_#22d3ee] animate-pulse" />
+                  <span className="font-semibold tracking-wide">
+                    © {new Date().getFullYear()} Harsh Portfolio. <span className="text-cyan-400/80 hidden sm:inline">// ALL RIGHTS RESERVED</span>
+                  </span>
+                </div>
 
-              {/* Right Social & Contact Badges */}
-              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-                {/* Twitter / X */}
-                <a
-                  href="https://twitter.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  onMouseEnter={playHoverSound}
-                  className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-amber-400/20 border border-white/20 hover:border-amber-400 text-xs font-mono font-bold text-white hover:text-amber-300 transition-all duration-300 shadow-md group"
-                >
-                  <span>Twitter / X</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-zinc-300 group-hover:text-amber-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
+                {/* Right Social & Contact Badges */}
+                <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+                  {/* Twitter / X */}
+                  <a
+                    href="https://twitter.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    onMouseEnter={playHoverSound}
+                    className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-cyan-500/25 border border-white/25 hover:border-cyan-400 text-xs font-mono font-bold text-white hover:text-cyan-300 transition-all duration-300 shadow-[0_0_15px_rgba(6,182,212,0.2)] group"
+                  >
+                    <span>Twitter / X</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-zinc-300 group-hover:text-cyan-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </a>
 
-                {/* Instagram */}
-                <a
-                  href="https://instagram.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  onMouseEnter={playHoverSound}
-                  className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-pink-500/20 border border-white/20 hover:border-pink-400 text-xs font-mono font-bold text-white hover:text-pink-300 transition-all duration-300 shadow-md group"
-                >
-                  <Instagram className="w-3.5 h-3.5 text-pink-400" />
-                  <span>Instagram</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-zinc-300 group-hover:text-pink-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
+                  {/* Instagram */}
+                  <a
+                    href="https://instagram.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    onMouseEnter={playHoverSound}
+                    className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-fuchsia-500/25 border border-white/25 hover:border-fuchsia-400 text-xs font-mono font-bold text-white hover:text-fuchsia-300 transition-all duration-300 shadow-[0_0_15px_rgba(217,70,239,0.2)] group"
+                  >
+                    <Instagram className="w-3.5 h-3.5 text-fuchsia-400" />
+                    <span>Instagram</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-zinc-300 group-hover:text-fuchsia-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </a>
 
-                {/* LinkedIn */}
-                <a
-                  href="https://linkedin.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  onMouseEnter={playHoverSound}
-                  className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-sky-500/20 border border-white/20 hover:border-sky-400 text-xs font-mono font-bold text-white hover:text-sky-300 transition-all duration-300 shadow-md group"
-                >
-                  <Linkedin className="w-3.5 h-3.5 text-sky-400" />
-                  <span>LinkedIn</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-zinc-300 group-hover:text-sky-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
+                  {/* LinkedIn */}
+                  <a
+                    href="https://linkedin.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    onMouseEnter={playHoverSound}
+                    className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-sky-500/25 border border-white/25 hover:border-sky-400 text-xs font-mono font-bold text-white hover:text-sky-300 transition-all duration-300 shadow-[0_0_15px_rgba(56,189,248,0.2)] group"
+                  >
+                    <Linkedin className="w-3.5 h-3.5 text-sky-400" />
+                    <span>LinkedIn</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-zinc-300 group-hover:text-sky-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </a>
 
-                {/* Direct Email */}
-                <a
-                  href="mailto:harshdhiman332@gmail.com"
-                  onMouseEnter={playHoverSound}
-                  className="inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-full bg-amber-400/20 hover:bg-amber-400 border border-amber-400/50 hover:border-amber-400 text-xs font-mono font-bold text-amber-300 hover:text-black transition-all duration-300 shadow-lg shadow-amber-400/10 group"
-                >
-                  <Mail className="w-3.5 h-3.5 text-amber-400 group-hover:text-black transition-colors" />
-                  <span>harshdhiman332@gmail.com</span>
-                </a>
+                  {/* Direct Email with Neon Amber Glow */}
+                  <a
+                    href="mailto:harshdhiman332@gmail.com"
+                    onMouseEnter={playHoverSound}
+                    className="inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-full bg-amber-400/20 hover:bg-amber-400 border border-amber-400/60 hover:border-amber-400 text-xs font-mono font-bold text-amber-300 hover:text-black transition-all duration-300 shadow-[0_0_20px_rgba(245,158,11,0.35)] group"
+                  >
+                    <Mail className="w-3.5 h-3.5 text-amber-400 group-hover:text-black transition-colors" />
+                    <span>harshdhiman332@gmail.com</span>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
