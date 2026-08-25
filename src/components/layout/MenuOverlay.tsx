@@ -78,34 +78,16 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
               transition={{ delay: 0.25, duration: 0.5 }}
               className="lg:col-span-7 w-full pt-4 lg:pt-0"
             >
-              <Card className="w-full h-[400px] sm:h-[460px] lg:h-[480px] bg-black/[0.90] relative overflow-hidden border border-white/15 rounded-3xl shadow-2xl backdrop-blur-xl">
+              <Card className="w-full h-[400px] sm:h-[460px] lg:h-[500px] bg-black/[0.90] relative overflow-hidden border border-white/15 rounded-3xl shadow-2xl backdrop-blur-xl">
                 <Spotlight
                   className="-top-40 left-0 md:left-60 md:-top-20"
                   fill="white"
                 />
-                
-                <div className="flex flex-col md:flex-row h-full">
-                  {/* Left content */}
-                  <div className="flex-1 p-6 sm:p-8 relative z-10 flex flex-col justify-center">
-                    <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-amber-400/30 bg-amber-400/10 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-amber-300 w-fit mb-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping" />
-                      <span>Real-time Spline 3D</span>
-                    </div>
-                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 via-neutral-200 to-neutral-400">
-                      Interactive 3D
-                    </h3>
-                    <p className="mt-3 text-neutral-300 text-xs sm:text-sm leading-relaxed max-w-sm">
-                      Bring your UI to life with beautiful 3D scenes. Create immersive experiences that capture attention and enhance your design.
-                    </p>
-                  </div>
-
-                  {/* Right content: 3D Robot Spline Scene */}
-                  <div className="flex-1 relative w-full h-[220px] sm:h-[260px] md:h-full">
-                    <SplineScene 
-                      scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-                      className="w-full h-full"
-                    />
-                  </div>
+                <div className="relative w-full h-full">
+                  <SplineScene 
+                    scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                    className="w-full h-full"
+                  />
                 </div>
               </Card>
             </motion.div>
