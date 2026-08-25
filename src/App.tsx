@@ -3,7 +3,7 @@ import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motio
 import { AudioProvider } from './context/AudioContext';
 import { SmoothScroll } from './components/ui/SmoothScroll';
 import { CustomCursor } from './components/ui/CustomCursor';
-import { LusionScene } from './components/canvas/LusionScene';
+import { ConstellationGrid } from './components/ui/constellation-grid';
 import { Header } from './components/layout/Header';
 import { MenuOverlay } from './components/layout/MenuOverlay';
 import { HeroSection } from './components/sections/HeroSection';
@@ -121,8 +121,8 @@ export const App: React.FC = () => {
           {/* Fluid Magnetic Cursor */}
           <CustomCursor />
 
-          {/* Real-time 3D WebGL Three.js Canvas Scene */}
-          <LusionScene />
+          {/* High-Velocity Dynamic Constellation Mesh Background */}
+          <ConstellationGrid />
 
           {/* Header Navigation */}
           <Header
