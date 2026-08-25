@@ -95,19 +95,19 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
                       setHoveredIdx(idx);
                       playHoverSound();
                     }}
-                    className="group relative flex items-center text-left py-1.5 transition-all duration-300 focus:outline-none"
+                    className="group relative flex items-center text-left py-2 sm:py-2.5 transition-all duration-300 focus:outline-none"
                   >
                     {/* Minimalist Index Number */}
-                    <span className={`font-mono text-xs sm:text-sm mr-4 sm:mr-6 tracking-widest transition-colors duration-300 ${
-                      isItemHovered ? 'text-amber-400 font-bold' : 'text-zinc-600'
+                    <span className={`font-mono text-xs sm:text-sm mr-3 sm:mr-5 tracking-widest transition-colors duration-300 ${
+                      isItemHovered ? 'text-amber-400 font-bold' : 'text-zinc-500/70'
                     }`}>
                       {link.num}
                     </span>
 
-                    {/* Main Title - Clean Luxury Typography */}
-                    <span className={`text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter transition-all duration-300 ${
+                    {/* Main Title - Perfectly Proportioned Luxury Typography */}
+                    <span className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight transition-all duration-300 ${
                       isItemHovered
-                        ? 'text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.4)]'
+                        ? 'text-white drop-shadow-[0_0_25px_rgba(255,255,255,0.4)] translate-x-1'
                         : 'text-zinc-400/80 hover:text-white'
                     }`}>
                       {link.name}
@@ -117,12 +117,12 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose }) => 
                     <motion.div
                       animate={{
                         opacity: isItemHovered ? 1 : 0,
-                        x: isItemHovered ? 8 : -8,
+                        x: isItemHovered ? 6 : -6,
                       }}
-                      transition={{ duration: 0.25 }}
-                      className="ml-5 text-amber-400"
+                      transition={{ duration: 0.2 }}
+                      className="ml-4 text-amber-400"
                     >
-                      <ArrowRight className="w-6 h-6 sm:w-8 sm:h-8" />
+                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                     </motion.div>
                   </motion.button>
                 );
